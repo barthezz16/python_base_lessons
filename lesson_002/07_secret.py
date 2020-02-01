@@ -33,3 +33,5 @@ str4 = secret_message[3]
 str5 = secret_message[4]
 
 print(str1[3] + ' ' + str2[9: 13] + ' ' + str3[5: 15: 2] + ' ' + str4[12: 6: -1] + ' ' + str5[20: 15: -1])
+
+#зачет!

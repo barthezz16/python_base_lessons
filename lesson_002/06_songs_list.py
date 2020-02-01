@@ -57,3 +57,4 @@ total = (sweetest_perfection + policy_of_truth + blue_dress).__round__()
 total1 = str(total)
 
 print('Три песни звучат ' + total1 + ' минут')
+#зачет!
