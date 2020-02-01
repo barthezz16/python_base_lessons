@@ -25,6 +25,5 @@ my_family_height = [
     ['Igor', 186]
 ]
 print('Рост отца - ' + str(my_family_height[1][1]) + " см")
-# TODO Чтобы строки не вылезали за границы - в принтах лучше не оставлять много вычислений
-# TODO Их лучше вынести в отдельную переменную, а её уже распечатывать (кстати печатать можно через запятую)
-print('Общий рост моей семьи - ' + str(my_family_height[0][1] + my_family_height[1][1] + my_family_height[2][1]) + ' см')
+my_family_total = my_family_height[0][1] + my_family_height[1][1] + my_family_height[2][1]
+print('Общий рост моей семьи -', my_family_total, 'см')
