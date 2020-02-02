@@ -32,3 +32,4 @@ print(zoo)
 print(zoo.index('lion') + 1, zoo.index('lark') + 1)
 
 
+#зачет!
