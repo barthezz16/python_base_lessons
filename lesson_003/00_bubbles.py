@@ -45,9 +45,7 @@ def color_bubble(point, step, color):
 
 
 for _ in range(100):
-    for random_color in sd.random_color():  # TODO Этот цикл не имеет смысла
-        # TODO тк sd.random_color() вернёт только один элемент
-        point = sd.random_point()
-        color_bubble(point=point, step=5, color=random_color)
+    point = sd.random_point()
+    color_bubble(point=point, step=5, color=sd.random_color())
 
 sd.pause()
