@@ -49,3 +49,4 @@ for _ in range(100):
     color_bubble(point=point, step=5, color=sd.random_color())
 
 sd.pause()
+#зачет!

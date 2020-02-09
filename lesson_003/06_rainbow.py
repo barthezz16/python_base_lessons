@@ -25,3 +25,5 @@ sd.pause()
 
 
 sd.pause()
+
+#зачет!

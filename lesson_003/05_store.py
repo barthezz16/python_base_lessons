@@ -63,5 +63,5 @@ for name, item_code in goods.items():
         overall_total += store_items['quantity']
         overall_price += total
     print(name, '-', overall_total, 'шт, стоимость', overall_price, 'руб')
-    # print(name, item_code, in_storage)
 
+#зачет!

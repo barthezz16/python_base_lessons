@@ -24,3 +24,5 @@ while count < 10:
 
 else:
     print('Студенту надо попросить', need_help.__round__(2), 'рублей')
+
+#зачет!
