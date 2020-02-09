@@ -9,10 +9,10 @@
 # Формат вывода:
 #   Целочисленное деление ХХХ на YYY дает ZZZ
 
-a, b = 9, 3  # TODO А вот с такими числами не работает алгоритм
+a, b = 9, 3
 a_temp = a
 count = 0
-while a_temp > b:  # TODO Проблема тут
+while a_temp >= b:
     count += 1
     a_temp -= b
 else:
