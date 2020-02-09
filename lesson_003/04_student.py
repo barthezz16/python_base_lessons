@@ -14,9 +14,9 @@ educational_grant, expenses = 10000, 12000
 difference = 0
 inflation = 0
 need_help = 0
-i = 0  # TODO Нэйминг. Этой переменной тоже стоит придумать полезное имя
-while i < 10:
-    i += 1
+count = 0  # изначально я использовал переменную i как счетчик.
+while count < 10:
+    count += 1
     difference = expenses - educational_grant
     inflation = expenses / 100 * 3
     expenses = expenses + inflation
