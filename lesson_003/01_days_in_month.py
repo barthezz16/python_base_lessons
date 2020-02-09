@@ -19,5 +19,4 @@ if month in days_in_month:
     print(days_in_month[month])
 else:
     print('Введен некоректный номер месяца')
-
-
+#зачет!

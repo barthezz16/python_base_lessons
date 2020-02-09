@@ -63,6 +63,10 @@ store = {
 
 
 for name in goods:
+    # TODO Тут лучше испльзовать метод .items() и 2 переменные цикла
+    # TODO Пример for a, b in dict.items()
+    # TODO Тогда в "a" будет ключ, а в "b" - значение по этому ключу
+    # TODO Которое можно будет использовать для получения списка ниже
     item = goods[name]
     in_storage = store[item]
     overall_total = 0
@@ -70,6 +74,9 @@ for name in goods:
     for store_items in in_storage:
         items_in_store_quantity = store_items['quantity']
         items_in_store_price = store_items['price']
+        # TODO Мне кажется в этом случае для расчётов
+        # TODO лучше напрямую использовать store_items['quantity'] и store_items['price']
+        # TODO Замену стоило бы использовать, если бы дальше в коде эти переменные использовались ещё не один раз
         total = items_in_store_quantity * items_in_store_price
         overall_total += items_in_store_quantity
         overall_price += total
