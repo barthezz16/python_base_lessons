@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from random import random
 # (определение функций)
 import simple_draw as sd
 
@@ -8,32 +8,30 @@ import simple_draw as sd
 # Форма рожицы-смайлика на ваше усмотрение
 # Параметры функции: кордината X, координата Y, цвет.
 # Вывести 10 смайликов в произвольных точках экрана.
-# TODO Рисование смайлика надо вынести в отдельную функцию
-# TODO И точки для каждого элемента связать между собой через x и y
-# TODO Например если центр x, y, то глаз x + 10, y + 10 или что-то вроде этого
-# TODO Тогда можно будет передавать функции случайную точку, а вокруг неё отрисуются все элементы смайлика
 
-def smile(point):  # TODO Чтобы это работало - надо передавать x, y параметрами
-    point = sd.get_point(100, 100)  # TODO И от них уже строить остальные точки
-    smile_start_x = 152  # TODO А у вас все точки будут начинаться с 152 и 270
-    smile1_y = 270
-    smile_end_x = smile_start_x + 45
-    start_position = sd.get_point(smile_start_x, smile1_y)
-    end_position = sd.get_point(smile_end_x, smile1_y)
-    sd.line(start_point=start_position, end_point=end_position)
-    radius = 10
-    for x in range(150, 201, 50):  # TODO Такой цикл же сработает один раз, так ведь? он тогда бесполезен
-        point = sd.get_point(x, 300)
-        sd.circle(center_position=point, radius=radius, width=2)
-        point = sd.get_point(175, 290)
-        radius = 10
-        sd.circle(center_position=point, radius=50, width=2)
-    smile(sd.random_point())  # TODO Рекурсии (вызов функцией себя) пока не нужно использовать)
+def smile(point):
+    radius = 50
+    circle_center = sd.random_point()
+    mouth_x_start = circle_center.x - 20
+    mouth_y_start = circle_center.y - 20
+    mouth_start = sd.get_point(mouth_x_start, mouth_y_start)
+    mouth_x_end = circle_center.x + 20
+    mouth_y_end = circle_center.y - 20
+    mouth_end = sd.get_point(mouth_x_end, mouth_y_end)
+    sd.line(start_point=mouth_start, end_point=mouth_end)
+    sd.circle(center_position=circle_center, radius=radius)
+    left_eye_x = circle_center.x - 20
+    left_eye_y = circle_center.y + 13
+    left_eye = sd.get_point(left_eye_x, left_eye_y)
+    sd.circle(center_position=left_eye, radius=10)
+    right_eye_x = circle_center.x + 20
+    right_eye_y = circle_center.y + 13
+    right_eye = sd.get_point(right_eye_x, right_eye_y)
+    sd.circle(center_position=right_eye, radius=10)
 
 
 for _ in range(10):
-    smile(point=sd.random_point())
-
-sd.pause()
+    point = sd.random_point()
+    smile(point=point)
 
 sd.pause()
