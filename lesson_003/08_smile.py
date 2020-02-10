@@ -11,7 +11,7 @@ import simple_draw as sd
 
 def smile(point):
     radius = 50
-    circle_center = sd.random_point()
+    circle_center = point  # Теперь точку можно задавать извне :)
     mouth_x_start = circle_center.x - 20
     mouth_y_start = circle_center.y - 20
     mouth_start = sd.get_point(mouth_x_start, mouth_y_start)
@@ -35,3 +35,5 @@ for _ in range(10):
     smile(point=point)
 
 sd.pause()
+
+#зачет!
