@@ -27,7 +27,104 @@ import simple_draw as sd
 # sd.line()
 # Результат решения см lesson_004/results/exercise_01_shapes.jpg
 
-# TODO здесь ваш код
+import simple_draw as sd
+
+sd.set_screen_size(900, 900)
+
+length = 200
+point = sd.get_point(400, 400)
+start_point_triangle_x = point.x + 150
+start_point_triangle_y = point.y + 150
+triangle_point = sd.get_point(start_point_triangle_x, start_point_triangle_y)
+
+
+def triangle(triangle_point, angle=0):
+    first_line = sd.get_vector(start_point=triangle_point, angle=0, length=200, width=3)
+    first_line.draw()
+
+    second_line = sd.get_vector(start_point=first_line.end_point, angle=angle + 120, length=200, width=3)
+    second_line.draw()
+
+    third_line = sd.get_vector(start_point=second_line.end_point, angle=angle + 240, length=200, width=3)
+    third_line.draw()
+
+
+triangle(triangle_point)
+
+start_point_square_x = point.x - 150
+start_point_square_y = point.y + 150
+square_point = sd.get_point(start_point_square_x, start_point_square_y)
+
+
+def square(square_point, angle=0):
+    first_line = sd.get_vector(start_point=square_point, angle=0, length=200, width=3)
+    first_line.draw()
+
+    second_line = sd.get_vector(start_point=first_line.end_point, angle=angle + 90, length=200, width=3)
+    second_line.draw()
+
+    third_line = sd.get_vector(start_point=second_line.end_point, angle=angle + 180, length=200, width=3)
+    third_line.draw()
+
+    fourth_line = sd.get_vector(start_point=third_line.end_point, angle=angle + 270, length=200, width=3)
+    fourth_line.draw()
+
+
+square(square_point)
+
+start_point_pentagon_x = point.x - 150
+start_point_pentagon_y = point.y - 150
+pentagon_point = sd.get_point(start_point_pentagon_x, start_point_pentagon_y)
+
+
+def pentagon(pentagon_point, angle=0):
+    first_line = sd.get_vector(start_point=pentagon_point, angle=0, length=150, width=3)
+    first_line.draw()
+
+    second_line = sd.get_vector(start_point=first_line.end_point, angle=angle + 72, length=150, width=3)
+    second_line.draw()
+
+    third_line = sd.get_vector(start_point=second_line.end_point, angle=angle + 144, length=150, width=3)
+    third_line.draw()
+
+    fourth_line = sd.get_vector(start_point=third_line.end_point, angle=angle + 216, length=150, width=3)
+    fourth_line.draw()
+
+    fifth_line = sd.get_vector(start_point=fourth_line.end_point, angle=angle + 288, length=150, width=3)
+    fifth_line.draw()
+
+
+pentagon(pentagon_point)
+
+start_point_hexagon_x = point.x + 150
+start_point_hexagon_y = point.y - 150
+hexagon_point = sd.get_point(start_point_hexagon_x, start_point_hexagon_y)
+
+
+def hexagon(hexagon_point, angle=0):
+    first_line = sd.get_vector(start_point=hexagon_point, angle=0, length=125, width=3)
+    first_line.draw()
+
+    second_line = sd.get_vector(start_point=first_line.end_point, angle=angle + 60, length=125, width=3)
+    second_line.draw()
+
+    third_line = sd.get_vector(start_point=second_line.end_point, angle=angle + 120, length=125, width=3)
+    third_line.draw()
+
+    fourth_line = sd.get_vector(start_point=third_line.end_point, angle=angle + 180, length=125, width=3)
+    fourth_line.draw()
+
+    fifth_line = sd.get_vector(start_point=fourth_line.end_point, angle=angle + 240, length=125, width=3)
+    fifth_line.draw()
+
+    sixth_line = sd.get_vector(start_point=fifth_line.end_point, angle=angle + 300, length=125, width=3)
+    sixth_line.draw()
+
+
+hexagon(hexagon_point)
+
+sd.pause()
+# определить функци
 
 # Часть 1-бис.
 # Попробуйте прикинуть обьем работы, если нужно будет внести изменения в этот код.
