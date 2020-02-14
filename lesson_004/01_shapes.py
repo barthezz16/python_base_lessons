@@ -37,7 +37,9 @@ start_point_triangle_x = point.x + 150
 start_point_triangle_y = point.y + 150
 triangle_point = sd.get_point(start_point_triangle_x, start_point_triangle_y)
 
-
+# TODO Подобный тип кода(создание функций - def), который создает какой-то инструмент для дальнейшего использования
+# TODO Но сам по себе ничего не делает - надо располагать в начале, а "исполняемый" код
+# TODO В частности вызов функций - после этого "подготовительного" кода)
 def triangle(triangle_point, angle=0):
     first_line = sd.get_vector(start_point=triangle_point, angle=0, length=200, width=3)
     first_line.draw()
@@ -47,7 +49,13 @@ def triangle(triangle_point, angle=0):
 
     third_line = sd.get_vector(start_point=second_line.end_point, angle=angle + 240, length=200, width=3)
     third_line.draw()
-
+# TODO Если приблизить итоговую фигуру, нарисованную векторами, будет заметен разрыв между последней стороной
+# TODO и начальной точкой.
+# TODO Этот разрыв надо убрать.
+# TODO Происходит это потому, что вектор рисуется из одной точки, а координаты второй рассчитываются
+# TODO Расчёты округляются до целых чисел (тк нельзя нарисовать пол пикселя)
+# TODO Из-за этого появляются неточности, которые копятся с каждой стороной и в итоге происходит разрыв.
+# TODO В нашем случае решить это можно с помощью sd.line() вместо последнего вектора.
 
 triangle(triangle_point)
 
@@ -57,6 +65,13 @@ square_point = sd.get_point(start_point_square_x, start_point_square_y)
 
 
 def square(square_point, angle=0):
+    # TODO Помимо прочего можно заменить дублирование векторов вручную циклом
+    # TODO Цикл можно использовать не только для нужного количества итераций
+    # TODO Но так же и для расчёта нужных значений переменных.
+    # TODO Так мы можем задать цикл по значениям угла с нужным нам шагом и не считать угол отдельной операцией
+    # TODO Например для треугольнкиа это будет: for angle in range(0, 360 - 120, 120)
+    # TODO angle будет на первой итерации равен 0, на второй 120 (от третьей мы избавились отняв от 360 120)
+
     first_line = sd.get_vector(start_point=square_point, angle=0, length=200, width=3)
     first_line.draw()
 

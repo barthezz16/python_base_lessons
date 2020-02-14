@@ -15,10 +15,18 @@ sd.set_screen_size(900, 900)
 # sd.get_vector()
 # и константы COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_CYAN, COLOR_BLUE, COLOR_PURPLE
 # Результат решения см lesson_004/results/exercise_02_global_color.jpg
+# TODO Здесь тоже надо будет код местами поменять, все def с функциями поднять вверх, остальной код вниз.
+
 
 colors = (sd.COLOR_RED, sd.COLOR_ORANGE, sd.COLOR_YELLOW, sd.COLOR_GREEN, sd.COLOR_CYAN,
           sd.COLOR_BLUE, sd.COLOR_PURPLE)
-
+# TODO В этом случае удобнее создать словарь следующей структуры
+# TODO словарь = {'0': {'color_name': 'red', 'sd_name': sd.COLOR_RED},...}
+# TODO Таким образом для каждого цвета у нас будет свой словарь. И у каждого словаря будут одинаковые ключи
+# TODO 'color_name' и 'sd_name'
+# TODO Тогда можно будет легко проверить ввод (user_input in словарь)
+# TODO А если среди ключей есть выбор пользователя - по этому ключу мы получим нужный вложенный словарь
+# TODO А там все ключи одинаковые, можем получить как название цвета, так и sd_цвет
 print('Возможные цвета', '\n', '0 : red', '\n', '1 : orange', '\n', '2 : yellow', '\n', '3 : green', '\n',
       '4 : cyan', '\n', '5 : blue', '\n', '6 : purple')
 
