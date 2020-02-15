@@ -2,6 +2,8 @@
 
 import simple_draw as sd
 
+sd.resolution = (1200, 800)
+
 # 1) Написать функцию draw_branches, которая должна рисовать две ветви дерева из начальной точки
 # Функция должна принимать параметры:
 # - точка начала рисования,
@@ -26,7 +28,29 @@ import simple_draw as sd
 
 # можно поиграть -шрифтами- цветами и углами отклонения
 
-# TODO здесь ваш код
+root_point = sd.get_point(600, 0)
+
+
+def draw_branches(point, angle, length):
+    v1 = sd.get_vector(start_point=point, angle=angle, length=length, width=3)
+    v1.draw()
+    return v1.end_point
+
+
+angle_0 = 90
+length_0 = 200
+next_point = draw_branches(point=root_point, angle=angle_0, length=length_0)
+first_angle = angle_0 - 30
+next_length = length_0 * .75
+first_point = draw_branches(point=next_point, angle=first_angle, length=next_length)
+second_angle = angle_0 + 30
+second_point = draw_branches(point=next_point, angle=second_angle, length=next_length)
+
+point_0 = sd.get_point(600, 0)
+
+
+
+
 
 # 4) Усложненное задание (делать по желанию)
 # - сделать рандомное отклонение угла ветвей в пределах 40% от 30-ти градусов
@@ -37,5 +61,3 @@ import simple_draw as sd
 # sd.random_number()
 
 sd.pause()
-
-
