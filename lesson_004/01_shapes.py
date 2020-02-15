@@ -37,27 +37,16 @@ start_point_triangle_x = point.x + 150
 start_point_triangle_y = point.y + 150
 triangle_point = sd.get_point(start_point_triangle_x, start_point_triangle_y)
 
-# TODO Подобный тип кода(создание функций - def), который создает какой-то инструмент для дальнейшего использования
-# TODO Но сам по себе ничего не делает - надо располагать в начале, а "исполняемый" код
-# TODO В частности вызов функций - после этого "подготовительного" кода)
-def triangle(triangle_point, angle=0):
-    first_line = sd.get_vector(start_point=triangle_point, angle=0, length=200, width=3)
+
+def triangle(triangle_point, angle=0, ):
+    first_line = sd.get_vector(start_point=triangle_point, angle=angle, length=200, width=3)
     first_line.draw()
 
     second_line = sd.get_vector(start_point=first_line.end_point, angle=angle + 120, length=200, width=3)
     second_line.draw()
 
-    third_line = sd.get_vector(start_point=second_line.end_point, angle=angle + 240, length=200, width=3)
-    third_line.draw()
-# TODO Если приблизить итоговую фигуру, нарисованную векторами, будет заметен разрыв между последней стороной
-# TODO и начальной точкой.
-# TODO Этот разрыв надо убрать.
-# TODO Происходит это потому, что вектор рисуется из одной точки, а координаты второй рассчитываются
-# TODO Расчёты округляются до целых чисел (тк нельзя нарисовать пол пикселя)
-# TODO Из-за этого появляются неточности, которые копятся с каждой стороной и в итоге происходит разрыв.
-# TODO В нашем случае решить это можно с помощью sd.line() вместо последнего вектора.
+    sd.line(start_point=second_line.end_point, end_point=triangle_point, width=3)
 
-triangle(triangle_point)
 
 start_point_square_x = point.x - 150
 start_point_square_y = point.y + 150
@@ -65,13 +54,6 @@ square_point = sd.get_point(start_point_square_x, start_point_square_y)
 
 
 def square(square_point, angle=0):
-    # TODO Помимо прочего можно заменить дублирование векторов вручную циклом
-    # TODO Цикл можно использовать не только для нужного количества итераций
-    # TODO Но так же и для расчёта нужных значений переменных.
-    # TODO Так мы можем задать цикл по значениям угла с нужным нам шагом и не считать угол отдельной операцией
-    # TODO Например для треугольнкиа это будет: for angle in range(0, 360 - 120, 120)
-    # TODO angle будет на первой итерации равен 0, на второй 120 (от третьей мы избавились отняв от 360 120)
-
     first_line = sd.get_vector(start_point=square_point, angle=0, length=200, width=3)
     first_line.draw()
 
@@ -81,11 +63,8 @@ def square(square_point, angle=0):
     third_line = sd.get_vector(start_point=second_line.end_point, angle=angle + 180, length=200, width=3)
     third_line.draw()
 
-    fourth_line = sd.get_vector(start_point=third_line.end_point, angle=angle + 270, length=200, width=3)
-    fourth_line.draw()
+    sd.line(start_point=third_line.end_point, end_point=square_point, width=3)
 
-
-square(square_point)
 
 start_point_pentagon_x = point.x - 150
 start_point_pentagon_y = point.y - 150
@@ -105,11 +84,8 @@ def pentagon(pentagon_point, angle=0):
     fourth_line = sd.get_vector(start_point=third_line.end_point, angle=angle + 216, length=150, width=3)
     fourth_line.draw()
 
-    fifth_line = sd.get_vector(start_point=fourth_line.end_point, angle=angle + 288, length=150, width=3)
-    fifth_line.draw()
+    sd.line(start_point=fourth_line.end_point, end_point=pentagon_point, width=3)
 
-
-pentagon(pentagon_point)
 
 start_point_hexagon_x = point.x + 150
 start_point_hexagon_y = point.y - 150
@@ -132,10 +108,12 @@ def hexagon(hexagon_point, angle=0):
     fifth_line = sd.get_vector(start_point=fourth_line.end_point, angle=angle + 240, length=125, width=3)
     fifth_line.draw()
 
-    sixth_line = sd.get_vector(start_point=fifth_line.end_point, angle=angle + 300, length=125, width=3)
-    sixth_line.draw()
+    sd.line(start_point=fifth_line.end_point, end_point=hexagon_point, width=3)
 
 
+triangle(triangle_point)
+square(square_point)
+pentagon(pentagon_point)
 hexagon(hexagon_point)
 
 sd.pause()

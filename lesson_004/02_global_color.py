@@ -15,18 +15,11 @@ sd.set_screen_size(900, 900)
 # sd.get_vector()
 # и константы COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_CYAN, COLOR_BLUE, COLOR_PURPLE
 # Результат решения см lesson_004/results/exercise_02_global_color.jpg
-# TODO Здесь тоже надо будет код местами поменять, все def с функциями поднять вверх, остальной код вниз.
 
 
 colors = (sd.COLOR_RED, sd.COLOR_ORANGE, sd.COLOR_YELLOW, sd.COLOR_GREEN, sd.COLOR_CYAN,
           sd.COLOR_BLUE, sd.COLOR_PURPLE)
-# TODO В этом случае удобнее создать словарь следующей структуры
-# TODO словарь = {'0': {'color_name': 'red', 'sd_name': sd.COLOR_RED},...}
-# TODO Таким образом для каждого цвета у нас будет свой словарь. И у каждого словаря будут одинаковые ключи
-# TODO 'color_name' и 'sd_name'
-# TODO Тогда можно будет легко проверить ввод (user_input in словарь)
-# TODO А если среди ключей есть выбор пользователя - по этому ключу мы получим нужный вложенный словарь
-# TODO А там все ключи одинаковые, можем получить как название цвета, так и sd_цвет
+
 print('Возможные цвета', '\n', '0 : red', '\n', '1 : orange', '\n', '2 : yellow', '\n', '3 : green', '\n',
       '4 : cyan', '\n', '5 : blue', '\n', '6 : purple')
 
@@ -46,17 +39,14 @@ triangle_point = sd.get_point(start_point_triangle_x, start_point_triangle_y)
 
 
 def triangle(triangle_point, angle=0):
-    first_line = sd.get_vector(start_point=triangle_point, angle=0, length=200, width=3)
+    first_line = sd.get_vector(start_point=triangle_point, angle=angle, length=200, width=3)
     first_line.draw(color=colors[color_number])
 
     second_line = sd.get_vector(start_point=first_line.end_point, angle=angle + 120, length=200, width=3)
     second_line.draw(color=colors[color_number])
 
-    third_line = sd.get_vector(start_point=second_line.end_point, angle=angle + 240, length=200, width=3)
-    third_line.draw(color=colors[color_number])
+    sd.line(start_point=second_line.end_point, end_point=triangle_point, width=3, color=colors[color_number])
 
-
-triangle(triangle_point)
 
 start_point_square_x = point.x - 150
 start_point_square_y = point.y + 150
@@ -73,11 +63,8 @@ def square(square_point, angle=0):
     third_line = sd.get_vector(start_point=second_line.end_point, angle=angle + 180, length=200, width=3)
     third_line.draw(color=colors[color_number])
 
-    fourth_line = sd.get_vector(start_point=third_line.end_point, angle=angle + 270, length=200, width=3)
-    fourth_line.draw(color=colors[color_number])
+    sd.line(start_point=third_line.end_point, end_point=square_point, width=3, color=colors[color_number])
 
-
-square(square_point)
 
 start_point_pentagon_x = point.x - 150
 start_point_pentagon_y = point.y - 150
@@ -97,11 +84,9 @@ def pentagon(pentagon_point, angle=0):
     fourth_line = sd.get_vector(start_point=third_line.end_point, angle=angle + 216, length=150, width=3)
     fourth_line.draw(color=colors[color_number])
 
-    fifth_line = sd.get_vector(start_point=fourth_line.end_point, angle=angle + 288, length=150, width=3)
-    fifth_line.draw(color=colors[color_number])
+    sd.line(start_point=fourth_line.end_point, end_point=pentagon_point, width=3,
+            color=colors[color_number])
 
-
-pentagon(pentagon_point)
 
 start_point_hexagon_x = point.x + 150
 start_point_hexagon_y = point.y - 150
@@ -124,10 +109,12 @@ def hexagon(hexagon_point, angle=0):
     fifth_line = sd.get_vector(start_point=fourth_line.end_point, angle=angle + 240, length=125, width=3)
     fifth_line.draw(color=colors[color_number])
 
-    sixth_line = sd.get_vector(start_point=fifth_line.end_point, angle=angle + 300, length=125, width=3)
-    sixth_line.draw(color=colors[color_number])
+    sd.line(start_point=fifth_line.end_point, end_point=hexagon_point, width=3, color=colors[color_number])
 
 
+triangle(triangle_point)
+square(square_point)
+pentagon(pentagon_point)
 hexagon(hexagon_point)
 
 sd.pause()
