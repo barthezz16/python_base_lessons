@@ -9,9 +9,6 @@ import simple_draw as sd
 # Код функций из упр lesson_004/02_global_color.py скопировать сюда
 # Результат решения см lesson_004/results/exercise_03_shape_select.jpg
 
-length = 200
-point = sd.get_point(100, 100)
-
 
 def triangle(point, angle=0):
     first_line = sd.get_vector(start_point=point, angle=0, length=200, width=3)
@@ -75,6 +72,14 @@ def hexagon(point, angle=0):
     sixth_line.draw()
 
 
+length = 200
+point = sd.get_point(100, 100)
+# TODO Нам надо реализовать выбор функции пользователем
+# TODO Для этого мы выбираем тот же путь, что в 02 с выбором цвета.
+# TODO Берем ту же структуру данных. Чтобы хранить функции в словаре - надо указать их без скобок, только имя
+# TODO Запустить её можно будет следующим образом:
+# TODO функция = словарь[юзер_выбор]['func']
+# TODO функция(параметры)
 figures = ('triangle', 'квадрат', 'пятиугольник', 'шестиугольник')
 print('Возможные фигуры', '\n', '0 : треугольник', '\n', '1 : квадрат', '\n', '2 : пятиугольник', '\n',
       '3 : шестиугольник')

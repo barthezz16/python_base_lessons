@@ -15,7 +15,9 @@ sd.set_screen_size(900, 900)
 # sd.get_vector()
 # и константы COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_CYAN, COLOR_BLUE, COLOR_PURPLE
 # Результат решения см lesson_004/results/exercise_02_global_color.jpg
-
+# TODO Обратите внимание как я перенес ваш код в 01.
+# TODO Структура программы сейчас такая Импорты >> Определение функций >> код
+# TODO Таким же образом надо будет отформатировать 2 и 3 модули
 
 colors = (sd.COLOR_RED, sd.COLOR_ORANGE, sd.COLOR_YELLOW, sd.COLOR_GREEN, sd.COLOR_CYAN,
           sd.COLOR_BLUE, sd.COLOR_PURPLE)

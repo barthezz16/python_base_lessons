@@ -32,9 +32,15 @@ root_point = sd.get_point(600, 0)
 
 
 def draw_branches(point, angle, length):
+    # TODO Примерный код, с объяснениями показан в лекции
+    # https://go.skillbox.ru/course/python-razrabotchik-s-nulya/5e939d5a-3ae1-4548-9a61-a6aae4d6c644
+    # TODO Начиная с 14-ой минуты идёт подробное объяснение этого алгоритма
     v1 = sd.get_vector(start_point=point, angle=angle, length=length, width=3)
     v1.draw()
     return v1.end_point
+# TODO Только там пример ограничивается одним вызовом функцией самой себя, а нам нужно будет 2 вызова
+# TODO Чтобы мы передавали одну точку в два вызова функции с разными углами,
+# TODO тогда из этой точки будет нарисовано 2 ветви
 
 
 angle_0 = 90
@@ -47,10 +53,6 @@ second_angle = angle_0 + 30
 second_point = draw_branches(point=next_point, angle=second_angle, length=next_length)
 
 point_0 = sd.get_point(600, 0)
-
-
-
-
 
 # 4) Усложненное задание (делать по желанию)
 # - сделать рандомное отклонение угла ветвей в пределах 40% от 30-ти градусов
