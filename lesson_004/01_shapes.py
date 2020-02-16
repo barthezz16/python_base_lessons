@@ -32,86 +32,120 @@ import simple_draw as sd
 sd.set_screen_size(900, 900)
 
 
-def triangle(triangle_point, angle=0, ):
-    first_line = sd.get_vector(start_point=triangle_point, angle=angle, length=200, width=3)
-    first_line.draw()
+# def triangle(triangle_point, angle=0, ):
+#     first_line = sd.get_vector(start_point=triangle_point, angle=angle, length=200, width=3)
+#     first_line.draw()
+#
+#     second_line = sd.get_vector(start_point=first_line.end_point, angle=angle + 120, length=200, width=3)
+#     second_line.draw()
+#
+#     sd.line(start_point=second_line.end_point, end_point=triangle_point, width=3)
+#
+#
+# def square(square_point, angle=0):
+#     first_line = sd.get_vector(start_point=square_point, angle=0, length=200, width=3)
+#     first_line.draw()
+#
+#     second_line = sd.get_vector(start_point=first_line.end_point, angle=angle + 90, length=200, width=3)
+#     second_line.draw()
+#
+#     third_line = sd.get_vector(start_point=second_line.end_point, angle=angle + 180, length=200, width=3)
+#     third_line.draw()
+#
+#     sd.line(start_point=third_line.end_point, end_point=square_point, width=3)
+#
+#
+# def pentagon(pentagon_point, angle=0):
+#     first_line = sd.get_vector(start_point=pentagon_point, angle=0, length=150, width=3)
+#     first_line.draw()
+#
+#     second_line = sd.get_vector(start_point=first_line.end_point, angle=angle + 72, length=150, width=3)
+#     second_line.draw()
+#
+#     third_line = sd.get_vector(start_point=second_line.end_point, angle=angle + 144, length=150, width=3)
+#     third_line.draw()
+#
+#     fourth_line = sd.get_vector(start_point=third_line.end_point, angle=angle + 216, length=150, width=3)
+#     fourth_line.draw()
+#
+#     sd.line(start_point=fourth_line.end_point, end_point=pentagon_point, width=3)
+#
+#
+# def hexagon(hexagon_point, angle=0):
+#     first_line = sd.get_vector(start_point=hexagon_point, angle=0, length=125, width=3)
+#     first_line.draw()
+#
+#     second_line = sd.get_vector(start_point=first_line.end_point, angle=angle + 60, length=125, width=3)
+#     second_line.draw()
+#
+#     third_line = sd.get_vector(start_point=second_line.end_point, angle=angle + 120, length=125, width=3)
+#     third_line.draw()
+#
+#     fourth_line = sd.get_vector(start_point=third_line.end_point, angle=angle + 180, length=125, width=3)
+#     fourth_line.draw()
+#
+#     fifth_line = sd.get_vector(start_point=fourth_line.end_point, angle=angle + 240, length=125, width=3)
+#     fifth_line.draw()
+#
+#     sd.line(start_point=fifth_line.end_point, end_point=hexagon_point, width=3)
+#
+#
+# def triangle(triangle_point, angle=0, ):
+#     first_line = sd.get_vector(start_point=triangle_point, angle=angle, length=200, width=3)
+#     first_line.draw()
+#
+#     second_line = sd.get_vector(start_point=first_line.end_point, angle=angle + 120, length=200, width=3)
+#     second_line.draw()
+#
+#     sd.line(start_point=second_line.end_point, end_point=triangle_point, width=3)
 
-    second_line = sd.get_vector(start_point=first_line.end_point, angle=angle + 120, length=200, width=3)
-    second_line.draw()
-
-    sd.line(start_point=second_line.end_point, end_point=triangle_point, width=3)
-
-
-def square(square_point, angle=0):
-    first_line = sd.get_vector(start_point=square_point, angle=0, length=200, width=3)
-    first_line.draw()
-
-    second_line = sd.get_vector(start_point=first_line.end_point, angle=angle + 90, length=200, width=3)
-    second_line.draw()
-
-    third_line = sd.get_vector(start_point=second_line.end_point, angle=angle + 180, length=200, width=3)
-    third_line.draw()
-
-    sd.line(start_point=third_line.end_point, end_point=square_point, width=3)
+def figures(start_point, angle=0, length=200, width=3):                         # TODO вот что и не понятно, поидее эта функция доджна рисовать одну линию и возвращать
+    line = sd.get_vector(start_point=point, angle=angle, length=200, width=3)   # TODO последнюю точку этой линии
+    line.draw()
+    return line.end_point
 
 
-def pentagon(pentagon_point, angle=0):
-    first_line = sd.get_vector(start_point=pentagon_point, angle=0, length=150, width=3)
-    first_line.draw()
 
-    second_line = sd.get_vector(start_point=first_line.end_point, angle=angle + 72, length=150, width=3)
-    second_line.draw()
-
-    third_line = sd.get_vector(start_point=second_line.end_point, angle=angle + 144, length=150, width=3)
-    third_line.draw()
-
-    fourth_line = sd.get_vector(start_point=third_line.end_point, angle=angle + 216, length=150, width=3)
-    fourth_line.draw()
-
-    sd.line(start_point=fourth_line.end_point, end_point=pentagon_point, width=3)
-
-
-def hexagon(hexagon_point, angle=0):
-    first_line = sd.get_vector(start_point=hexagon_point, angle=0, length=125, width=3)
-    first_line.draw()
-
-    second_line = sd.get_vector(start_point=first_line.end_point, angle=angle + 60, length=125, width=3)
-    second_line.draw()
-
-    third_line = sd.get_vector(start_point=second_line.end_point, angle=angle + 120, length=125, width=3)
-    third_line.draw()
-
-    fourth_line = sd.get_vector(start_point=third_line.end_point, angle=angle + 180, length=125, width=3)
-    fourth_line.draw()
-
-    fifth_line = sd.get_vector(start_point=fourth_line.end_point, angle=angle + 240, length=125, width=3)
-    fifth_line.draw()
-
-    sd.line(start_point=fifth_line.end_point, end_point=hexagon_point, width=3)
-
-# TODO Обратите внимание как я перенес ваш код. Структура программы сейчас такая Импорты >> Определение функций >> код
-# TODO Таким же образом надо будет отформатировать 2 и 3 модули
 length = 200
 point = sd.get_point(400, 400)
 
-start_point_hexagon_x = point.x + 150
-start_point_hexagon_y = point.y - 150
-start_point_pentagon_x = point.x - 150
-start_point_pentagon_y = point.y - 150
-start_point_square_x = point.x - 150
-start_point_square_y = point.y + 150
+# start_point_hexagon_x = point.x + 150
+# start_point_hexagon_y = point.y - 150
+# start_point_pentagon_x = point.x - 150
+# start_point_pentagon_y = point.y - 150
+# start_point_square_x = point.x - 150
+# start_point_square_y = point.y + 150
 start_point_triangle_x = point.x + 150
 start_point_triangle_y = point.y + 150
 
 triangle_point = sd.get_point(start_point_triangle_x, start_point_triangle_y)
-hexagon_point = sd.get_point(start_point_hexagon_x, start_point_hexagon_y)
-pentagon_point = sd.get_point(start_point_pentagon_x, start_point_pentagon_y)
-square_point = sd.get_point(start_point_square_x, start_point_square_y)
+# hexagon_point = sd.get_point(start_point_hexagon_x, start_point_hexagon_y)
+# pentagon_point = sd.get_point(start_point_pentagon_x, start_point_pentagon_y)
+# square_point = sd.get_point(start_point_square_x, start_point_square_y)
 
-triangle(triangle_point)
-square(square_point)
-pentagon(pentagon_point)
-hexagon(hexagon_point)
+
+next_point = triangle_point
+for angle in range(0, 121, 120):
+    next_point = figures(start_point=next_point, angle=angle, length=200, width=3)
+else:
+    sd.line(start_point=next_point, end_point=triangle_point, width=3)
+
+# TODO тут я вызываю ее с разными угламаи, но не получается.
+# TODO при первом прохоже все нормально, при втором угол тот, но начальная ночка все равно не та, хотя в дебагере она меняется...
+
+# next_point = square_point
+# for angle in range(0, 181, 90):
+#     next_point = figures(start_point=square_point, angle=angle, length=200, width=3)
+#
+#
+# else:
+#     sd.line(start_point=next_point, end_point=square_point, width=3)
+
+
+# triangle(triangle_point)
+# square(square_point)
+# pentagon(pentagon_point)
+# hexagon(hexagon_point)
 
 sd.pause()
 # определить функци

@@ -43,6 +43,10 @@ def draw_branches(point, angle, length):
 # TODO тогда из этой точки будет нарисовано 2 ветви
 
 
+# TODO тут тоже вроде все на теории понятно, но как застваить функцию принимать последнии координаты линии не пойму,
+# TODO особенно потом, когда линий будет все больше...
+
+
 angle_0 = 90
 length_0 = 200
 next_point = draw_branches(point=root_point, angle=angle_0, length=length_0)

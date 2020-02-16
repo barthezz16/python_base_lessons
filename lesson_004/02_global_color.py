@@ -3,6 +3,7 @@ import simple_draw as sd
 
 sd.set_screen_size(900, 900)
 
+
 # Добавить цвет в функции рисования геом. фигур. из упр lesson_004/01_shapes.py
 # (код функций скопировать сюда и изменить)
 # Запросить у пользователя цвет фигуры посредством выбора из существующих:
@@ -15,29 +16,6 @@ sd.set_screen_size(900, 900)
 # sd.get_vector()
 # и константы COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_CYAN, COLOR_BLUE, COLOR_PURPLE
 # Результат решения см lesson_004/results/exercise_02_global_color.jpg
-# TODO Обратите внимание как я перенес ваш код в 01.
-# TODO Структура программы сейчас такая Импорты >> Определение функций >> код
-# TODO Таким же образом надо будет отформатировать 2 и 3 модули
-
-colors = (sd.COLOR_RED, sd.COLOR_ORANGE, sd.COLOR_YELLOW, sd.COLOR_GREEN, sd.COLOR_CYAN,
-          sd.COLOR_BLUE, sd.COLOR_PURPLE)
-
-print('Возможные цвета', '\n', '0 : red', '\n', '1 : orange', '\n', '2 : yellow', '\n', '3 : green', '\n',
-      '4 : cyan', '\n', '5 : blue', '\n', '6 : purple')
-
-while True:
-    user_input = input("Введите желаемый цвет ")
-    color_number = int(user_input)
-    if color_number <= len(colors) - 1:
-        break
-    else:
-        print('Введен некорректный номер')
-
-length = 200
-point = sd.get_point(400, 400)
-start_point_triangle_x = point.x + 150
-start_point_triangle_y = point.y + 150
-triangle_point = sd.get_point(start_point_triangle_x, start_point_triangle_y)
 
 
 def triangle(triangle_point, angle=0):
@@ -48,11 +26,6 @@ def triangle(triangle_point, angle=0):
     second_line.draw(color=colors[color_number])
 
     sd.line(start_point=second_line.end_point, end_point=triangle_point, width=3, color=colors[color_number])
-
-
-start_point_square_x = point.x - 150
-start_point_square_y = point.y + 150
-square_point = sd.get_point(start_point_square_x, start_point_square_y)
 
 
 def square(square_point, angle=0):
@@ -66,11 +39,6 @@ def square(square_point, angle=0):
     third_line.draw(color=colors[color_number])
 
     sd.line(start_point=third_line.end_point, end_point=square_point, width=3, color=colors[color_number])
-
-
-start_point_pentagon_x = point.x - 150
-start_point_pentagon_y = point.y - 150
-pentagon_point = sd.get_point(start_point_pentagon_x, start_point_pentagon_y)
 
 
 def pentagon(pentagon_point, angle=0):
@@ -88,11 +56,6 @@ def pentagon(pentagon_point, angle=0):
 
     sd.line(start_point=fourth_line.end_point, end_point=pentagon_point, width=3,
             color=colors[color_number])
-
-
-start_point_hexagon_x = point.x + 150
-start_point_hexagon_y = point.y - 150
-hexagon_point = sd.get_point(start_point_hexagon_x, start_point_hexagon_y)
 
 
 def hexagon(hexagon_point, angle=0):
@@ -113,6 +76,35 @@ def hexagon(hexagon_point, angle=0):
 
     sd.line(start_point=fifth_line.end_point, end_point=hexagon_point, width=3, color=colors[color_number])
 
+
+colors = (sd.COLOR_RED, sd.COLOR_ORANGE, sd.COLOR_YELLOW, sd.COLOR_GREEN, sd.COLOR_CYAN,
+          sd.COLOR_BLUE, sd.COLOR_PURPLE)
+
+print('Возможные цвета', '\n', '0 : red', '\n', '1 : orange', '\n', '2 : yellow', '\n', '3 : green', '\n',
+      '4 : cyan', '\n', '5 : blue', '\n', '6 : purple')
+
+while True:
+    user_input = input("Введите желаемый цвет ")
+    color_number = int(user_input)
+    if color_number <= len(colors) - 1:
+        break
+    else:
+        print('Введен некорректный номер')
+
+length = 200
+point = sd.get_point(400, 400)
+start_point_triangle_x = point.x + 150
+start_point_triangle_y = point.y + 150
+triangle_point = sd.get_point(start_point_triangle_x, start_point_triangle_y)
+start_point_square_x = point.x - 150
+start_point_square_y = point.y + 150
+square_point = sd.get_point(start_point_square_x, start_point_square_y)
+start_point_pentagon_x = point.x - 150
+start_point_pentagon_y = point.y - 150
+pentagon_point = sd.get_point(start_point_pentagon_x, start_point_pentagon_y)
+start_point_hexagon_x = point.x + 150
+start_point_hexagon_y = point.y - 150
+hexagon_point = sd.get_point(start_point_hexagon_x, start_point_hexagon_y)
 
 triangle(triangle_point)
 square(square_point)
