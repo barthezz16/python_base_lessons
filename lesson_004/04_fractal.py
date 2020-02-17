@@ -68,11 +68,12 @@ def branch(point, angle, length):
     v1.draw()
     angle_1 = angle + 30
     angle_2 = angle - 30
+    # TODO Вместо векторов тут нужны вызовы функции branch (самой себя)
     v2 = sd.get_vector(start_point=v1.end_point, angle=angle_1, length=length, width=3)
     v2.draw()
     v3 = sd.get_vector(start_point=v1.end_point, angle=angle_2, length=length, width=3)
     v3.draw()
-    return v1.end_point
+    return v1.end_point  # TODO И ретурн не нужен будет
 
 
 angle_0 = 90

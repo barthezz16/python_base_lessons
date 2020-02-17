@@ -82,7 +82,8 @@ print('Возможные фигуры', '\n', '0 : треугольник', '\n
 while True:
     user_input = input("Введите желаемую фигуру ")
     figure_number = int(user_input)
-    if figure_number <= len(figures) - 1:
+    if figure_number <= len(figures) - 1:  # TODO Тут можно использовать условие if input in словарь
+        # TODO Тогда и int выше не нужен будет
         break
     else:
         print('Введен некорректный номер')
@@ -96,8 +97,8 @@ while True:
 # elif figure_number == 3:
 #     hexagon(point)
 
-if user_input in figures:
-    x = figures[user_input]
+if user_input in figures:  # TODO И это условие тогда не нужно будет
+    x = figures[user_input]  # TODO И имя x хорошо бы заменить, хотя бы на func
     x(point)
-
+# А так да, использование верное
 sd.pause()

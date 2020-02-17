@@ -121,27 +121,39 @@ triangle_point = sd.get_point(start_point_triangle_x, start_point_triangle_y)
 hexagon_point = sd.get_point(start_point_hexagon_x, start_point_hexagon_y)
 pentagon_point = sd.get_point(start_point_pentagon_x, start_point_pentagon_y)
 square_point = sd.get_point(start_point_square_x, start_point_square_y)
-
+# TODO Обратите внимание, что каждый из этих циклов можно обобщить
+# TODO цикл по рэндж(0, 360 - шаг_угла, шаг_угла)
+# TODO А раз мы можем завязать работу цикла на переменной - то и количество итераций будет зависеть от переменной
+# TODO Это и есть ключ к созданию общей функции -- 1 алгоритм с циклом, который в зависимости от параметра
+# TODO будет рисовать нужную фигуру
+# TODO Создайте такую функцию, которая будет получать на вход параметры прошлых функций:
+# TODO (start_point=point, angle=0, length=200, width=3)
+# TODO И новый параметр - шаг_угла
+# TODO В функцию поместите ваш алгоритм, написанный ниже (только подставьте в нужные места шаг_угла)
 next_point = triangle_point
-for angle in range(0, 121, 120):
+for angle in range(0, 360 - 120, 120):  # Немного подправлю значения углов, чтобы проще было увидеть общие черты
+    print(angle, 'треугольник')
     next_point = figures(start_point=next_point, angle=angle, length=200, width=3)
 else:
     sd.line(start_point=next_point, end_point=triangle_point, width=3)
 
 next_point = square_point
-for angle in range(0, 181, 90):
+for angle in range(0, 360 - 90, 90):
+    print(angle, 'квадрат')
     next_point = figures(start_point=next_point, angle=angle, length=200, width=3)
 else:
     sd.line(start_point=next_point, end_point=square_point, width=3)
 
 next_point = pentagon_point
-for angle in range(0, 217, 72):
+for angle in range(0, 360 - 72, 72):
+    print(angle, 'пятиугольник')
     next_point = figures(start_point=next_point, angle=angle, length=150, width=3)
 else:
     sd.line(start_point=next_point, end_point=pentagon_point, width=3)
 
 next_point = hexagon_point
-for angle in range(0, 360, 60):
+for angle in range(0, 360 - 60, 60):
+    print(angle, 'шестиугольник')
     next_point = figures(start_point=next_point, angle=angle, length=125, width=3)
 else:
     sd.line(start_point=next_point, end_point=hexagon_point, width=3)
