@@ -32,21 +32,28 @@ root_point = sd.get_point(600, 0)
 
 
 def draw_branches(point, angle, length):
-    # TODO Примерный код, с объяснениями показан в лекции
-    # https://go.skillbox.ru/course/python-razrabotchik-s-nulya/5e939d5a-3ae1-4548-9a61-a6aae4d6c644
-    # TODO Начиная с 14-ой минуты идёт подробное объяснение этого алгоритма
     v1 = sd.get_vector(start_point=point, angle=angle, length=length, width=3)
     v1.draw()
     return v1.end_point
+
+
+# def draw_branches(point, angle, length):
+#     if length < 1:
+#         return
+#     v1 = sd.get_vector(start_point=point, angle=angle, length=length, width=3)
+#     v1.draw()
+#     angle_1 = angle + 30
+#     angle_2 = angle - 30
+#     v2 = sd.get_vector(start_point=point, angle=angle_1, length=length, width=3)
+#     v3 = sd.get_vector(start_point=point, angle=angle_2, length=length, width=3)
+#
+
+
 # Только там пример ограничивается одним вызовом функцией самой себя, а нам нужно будет 2 вызова
 # Чтобы мы передавали одну точку в два вызова функции с разными углами,
 # тогда из этой точки будет нарисовано 2 ветви
 # тут тоже вроде все на теории понятно, но как застваить функцию принимать последнии координаты линии не пойму,
 # особенно потом, когда линий будет все больше...
-# TODO нужно каждую функцию рассматривать отдельно.
-# TODO каждая функция принимает точку, угол, длину - рисует по ним один вектор
-# TODO конец вектора передает в 2 вызова себя же -- нарисовали вектор, взяли его окончание и с ним вызываем две функции
-# TODO Выглядеть это будет примерно так
 # деф бранч(точка, угол, длина)
 #     условие остановки рекурсии (в лекции есть)
 #     рисование_вектора(точка, угол, длина)
@@ -54,17 +61,32 @@ def draw_branches(point, angle, length):
 #     бранч(новая_точка, угол1, длина)
 #     бранч(новая_точка, угол2, длина)
 
+def branch(point, angle, length):
+    if length < 1:
+        return
+    v1 = sd.get_vector(start_point=point, angle=angle, length=length, width=3)
+    v1.draw()
+    angle_1 = angle + 30
+    angle_2 = angle - 30
+    v2 = sd.get_vector(start_point=v1.end_point, angle=angle_1, length=length, width=3)
+    v2.draw()
+    v3 = sd.get_vector(start_point=v1.end_point, angle=angle_2, length=length, width=3)
+    v3.draw()
+    return v1.end_point
+
 
 angle_0 = 90
 length_0 = 200
-next_point = draw_branches(point=root_point, angle=angle_0, length=length_0)
+next_point = branch(point=root_point, angle=angle_0, length=length_0)
 first_angle = angle_0 - 30
 next_length = length_0 * .75
-first_point = draw_branches(point=next_point, angle=first_angle, length=next_length)
+first_point = branch(point=next_point, angle=first_angle, length=next_length)
 second_angle = angle_0 + 30
-second_point = draw_branches(point=next_point, angle=second_angle, length=next_length)
+second_point = branch(point=next_point, angle=second_angle, length=next_length)
 
 point_0 = sd.get_point(600, 0)
+
+# TODO тут уперся в это
 
 # 4) Усложненное задание (делать по желанию)
 # - сделать рандомное отклонение угла ветвей в пределах 40% от 30-ти градусов
