@@ -31,7 +31,6 @@ import simple_draw as sd
 
 sd.set_screen_size(900, 900)
 
-
 # def triangle(triangle_point, angle=0, ):
 #     first_line = sd.get_vector(start_point=triangle_point, angle=angle, length=200, width=3)
 #     first_line.draw()
@@ -98,61 +97,54 @@ sd.set_screen_size(900, 900)
 #     second_line.draw()
 #
 #     sd.line(start_point=second_line.end_point, end_point=triangle_point, width=3)
+point = sd.get_point(400, 400)
 
-def figures(start_point, angle=0, length=200, width=3):
-    #  вот что и не понятно, поидее эта функция доджна рисовать одну линию и возвращать
-    line = sd.get_vector(start_point=point, angle=angle, length=200, width=3)
-    # TODO Думаю причина в том, что вы не используете параметры этой функции
-    # последнюю точку этой линии
+
+def figures(start_point=point, angle=0, length=200, width=3):
+    line = sd.get_vector(start_point, angle, length, width)
     line.draw()
     return line.end_point
 
 
-
 length = 200
-point = sd.get_point(400, 400)
 
-# start_point_hexagon_x = point.x + 150
-# start_point_hexagon_y = point.y - 150
-# start_point_pentagon_x = point.x - 150
-# start_point_pentagon_y = point.y - 150
-# start_point_square_x = point.x - 150
-# start_point_square_y = point.y + 150
+start_point_hexagon_x = point.x + 150
+start_point_hexagon_y = point.y - 150
+start_point_pentagon_x = point.x - 150
+start_point_pentagon_y = point.y - 150
+start_point_square_x = point.x - 150
+start_point_square_y = point.y + 150
 start_point_triangle_x = point.x + 150
 start_point_triangle_y = point.y + 150
 
 triangle_point = sd.get_point(start_point_triangle_x, start_point_triangle_y)
-# hexagon_point = sd.get_point(start_point_hexagon_x, start_point_hexagon_y)
-# pentagon_point = sd.get_point(start_point_pentagon_x, start_point_pentagon_y)
-# square_point = sd.get_point(start_point_square_x, start_point_square_y)
+hexagon_point = sd.get_point(start_point_hexagon_x, start_point_hexagon_y)
+pentagon_point = sd.get_point(start_point_pentagon_x, start_point_pentagon_y)
+square_point = sd.get_point(start_point_square_x, start_point_square_y)
 
-# TODO Да и надо собрать будет это всё в одну общую функцию, которая будет рисовать фигуру с указанным количеством
-# TODO Сторон.
-# TODO Главный алгоритм вы придумали верно - повтор вектор в цикле из конечной точки предыдущего
-# TODO Сейчас надо реализовать следующие шаги
-# TODO 1) Собрать цикл и рисование векторов в единую функцию
-# TODO 2) Придумать, как изменять количество итераций в цикле в зависимости от параметра
-# TODO Тут вы тоже в верном направлении начали двигаться - цикл по углам выполняет сразу два дела:
-# TODO Цикл можно использовать не только для нужного количества итераций
-# TODO Но так же и для расчёта нужных значений переменных.
-# TODO Так мы можем задать цикл по значениям угла с нужным нам шагом и не считать угол отдельной операцией
-# TODO Например для треугольнкиа это будет: for angle in range(0, 360 - 120, 120)
-# TODO angle будет на первой итерации равен 0, на второй 120 (от третьей мы избавились отняв от 360 120)
 next_point = triangle_point
 for angle in range(0, 121, 120):
     next_point = figures(start_point=next_point, angle=angle, length=200, width=3)
 else:
     sd.line(start_point=next_point, end_point=triangle_point, width=3)
 
+next_point = square_point
+for angle in range(0, 181, 90):
+    next_point = figures(start_point=next_point, angle=angle, length=200, width=3)
+else:
+    sd.line(start_point=next_point, end_point=square_point, width=3)
 
-# next_point = square_point
-# for angle in range(0, 181, 90):
-#     next_point = figures(start_point=square_point, angle=angle, length=200, width=3)
-#
-#
-# else:
-#     sd.line(start_point=next_point, end_point=square_point, width=3)
+next_point = pentagon_point
+for angle in range(0, 217, 72):
+    next_point = figures(start_point=next_point, angle=angle, length=150, width=3)
+else:
+    sd.line(start_point=next_point, end_point=pentagon_point, width=3)
 
+next_point = hexagon_point
+for angle in range(0, 360, 60):
+    next_point = figures(start_point=next_point, angle=angle, length=125, width=3)
+else:
+    sd.line(start_point=next_point, end_point=hexagon_point, width=3)
 
 # triangle(triangle_point)
 # square(square_point)
@@ -161,7 +153,6 @@ else:
 
 sd.pause()
 # определить функци
-# TODO Можете приступать ко второй части!
 # Часть 1-бис.
 # Попробуйте прикинуть обьем работы, если нужно будет внести изменения в этот код.
 # Скажем, связывать точки не линиями, а дугами. Или двойными линиями. Или рисовать круги в угловых точках. Или...
