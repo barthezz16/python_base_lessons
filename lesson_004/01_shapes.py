@@ -121,42 +121,38 @@ triangle_point = sd.get_point(start_point_triangle_x, start_point_triangle_y)
 hexagon_point = sd.get_point(start_point_hexagon_x, start_point_hexagon_y)
 pentagon_point = sd.get_point(start_point_pentagon_x, start_point_pentagon_y)
 square_point = sd.get_point(start_point_square_x, start_point_square_y)
-# TODO Обратите внимание, что каждый из этих циклов можно обобщить
-# TODO цикл по рэндж(0, 360 - шаг_угла, шаг_угла)
-# TODO А раз мы можем завязать работу цикла на переменной - то и количество итераций будет зависеть от переменной
-# TODO Это и есть ключ к созданию общей функции -- 1 алгоритм с циклом, который в зависимости от параметра
-# TODO будет рисовать нужную фигуру
-# TODO Создайте такую функцию, которая будет получать на вход параметры прошлых функций:
-# TODO (start_point=point, angle=0, length=200, width=3)
-# TODO И новый параметр - шаг_угла
-# TODO В функцию поместите ваш алгоритм, написанный ниже (только подставьте в нужные места шаг_угла)
 next_point = triangle_point
-for angle in range(0, 360 - 120, 120):  # Немного подправлю значения углов, чтобы проще было увидеть общие черты
+triangle_angle = 120
+square_angle = 90
+pentagon_angle = 72
+hexagon_angle = 60
+
+for angle in range(0, 360 - triangle_angle, triangle_angle):
     print(angle, 'треугольник')
     next_point = figures(start_point=next_point, angle=angle, length=200, width=3)
 else:
     sd.line(start_point=next_point, end_point=triangle_point, width=3)
-
 next_point = square_point
-for angle in range(0, 360 - 90, 90):
+for angle in range(0, 360 - square_angle, square_angle):
     print(angle, 'квадрат')
     next_point = figures(start_point=next_point, angle=angle, length=200, width=3)
 else:
     sd.line(start_point=next_point, end_point=square_point, width=3)
-
-next_point = pentagon_point
-for angle in range(0, 360 - 72, 72):
+    next_point = pentagon_point
+for angle in range(0, 360 - pentagon_angle, pentagon_angle):
     print(angle, 'пятиугольник')
     next_point = figures(start_point=next_point, angle=angle, length=150, width=3)
 else:
     sd.line(start_point=next_point, end_point=pentagon_point, width=3)
-
 next_point = hexagon_point
-for angle in range(0, 360 - 60, 60):
+for angle in range(0, 360 - hexagon_angle, hexagon_angle):
     print(angle, 'шестиугольник')
     next_point = figures(start_point=next_point, angle=angle, length=125, width=3)
 else:
     sd.line(start_point=next_point, end_point=hexagon_point, width=3)
+
+# TODO сделал так, потому что не совсем понял что именно надо, если сделать один цикл для всех фигур, то надо же еще
+# TODO менять стартовую точку для фигуры и последнюю точку для последней линии, чтобы не было разрыва.
 
 # triangle(triangle_point)
 # square(square_point)
