@@ -81,24 +81,11 @@ print('Возможные фигуры', '\n', '0 : треугольник', '\n
 
 while True:
     user_input = input("Введите желаемую фигуру ")
-    figure_number = int(user_input)
-    if figure_number <= len(figures) - 1:  # TODO Тут можно использовать условие if input in словарь
-        # TODO Тогда и int выше не нужен будет
+    if user_input in figures:
         break
     else:
         print('Введен некорректный номер')
 
-# if figure_number == 0:
-#     triangle(point)
-# elif figure_number == 1:
-#     square(point)
-# elif figure_number == 2:
-#     pentagon(point)
-# elif figure_number == 3:
-#     hexagon(point)
-
-if user_input in figures:  # TODO И это условие тогда не нужно будет
-    x = figures[user_input]  # TODO И имя x хорошо бы заменить, хотя бы на func
-    x(point)
-# А так да, использование верное
+func = figures[user_input]
+func(point)
 sd.pause()
