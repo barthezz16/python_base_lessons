@@ -24,26 +24,23 @@ snowflake_size = []
 snowflake = [[x_list], [y_list]]
 for i in range(21):
     x_list.append(sd.random_number(25, 1000))
-    y_list.append(sd.random_number(800, 821))  # TODO Стоит разброс побольше сделать, а то падать будут одной линией
+    y_list.append(sd.random_number(600, 621))
     snowflake_size.append(sd.random_number(15, 36))
 
 while True:
     sd.clear_screen()
-    point = sd.get_point(x_list[0], y_list[0])
     for i, y in enumerate(y_list):
-        # TODO точку point - надо создавать в цикле, для каждой снежинки (по индексу)
-        sd.snowflake(center=point, length=50)
-        y -= 10  # TODO тут надо изменять именно y_list[index]
-        # TODO Иначе изменяется не значение в списке, а переменная цикла
+        for i, x in enumerate(x_list):
+            point = sd.get_point(x, y)
+            sd.snowflake(center=point, length=50)
+            y_list[i] -= 5
     sd.sleep(0.1)
     if sd.user_want_exit():
         break
 
 sd.pause()
 
-
-# TODO теперь тут повис... не совсем понимаю дальнейшие шаги...
-
+# TODO теперь затыка тут....
 # подсказка! для ускорения отрисовки можно
 #  - убрать clear_screen()
 #  - в начале рисования всех снежинок вызвать sd.start_drawing()

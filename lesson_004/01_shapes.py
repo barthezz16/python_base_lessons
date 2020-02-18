@@ -100,10 +100,19 @@ sd.set_screen_size(900, 900)
 point = sd.get_point(400, 400)
 
 
+#
 def figures(start_point=point, angle=0, length=200, width=3):
     line = sd.get_vector(start_point, angle, length, width)
     line.draw()
     return line.end_point
+
+
+def shapes_draw(start_point, angle=0, length=200, width=3, angle_step=0): # TODO не пойму, почему angle не используется
+    for angle in range(0, 360 - angle_step, angle_step):
+        next_point = figures(start_point, angle, length, width) # TODO не пойму, почему начальная точка не меняется
+        end_point = start_point
+    else:
+        sd.line(start_point=next_point, end_point=end_point, width=3)
 
 
 length = 200
@@ -127,29 +136,35 @@ square_angle = 90
 pentagon_angle = 72
 hexagon_angle = 60
 
-for angle in range(0, 360 - triangle_angle, triangle_angle):
-    print(angle, 'треугольник')
-    next_point = figures(start_point=next_point, angle=angle, length=200, width=3)
-else:
-    sd.line(start_point=next_point, end_point=triangle_point, width=3)
-next_point = square_point
-for angle in range(0, 360 - square_angle, square_angle):
-    print(angle, 'квадрат')
-    next_point = figures(start_point=next_point, angle=angle, length=200, width=3)
-else:
-    sd.line(start_point=next_point, end_point=square_point, width=3)
-    next_point = pentagon_point
-for angle in range(0, 360 - pentagon_angle, pentagon_angle):
-    print(angle, 'пятиугольник')
-    next_point = figures(start_point=next_point, angle=angle, length=150, width=3)
-else:
-    sd.line(start_point=next_point, end_point=pentagon_point, width=3)
-next_point = hexagon_point
-for angle in range(0, 360 - hexagon_angle, hexagon_angle):
-    print(angle, 'шестиугольник')
-    next_point = figures(start_point=next_point, angle=angle, length=125, width=3)
-else:
-    sd.line(start_point=next_point, end_point=hexagon_point, width=3)
+shapes_draw(start_point=triangle_point, angle=triangle_angle, length=length, width=3, angle_step=triangle_angle)
+shapes_draw(start_point=square_point, angle=square_angle, length=length, width=3, angle_step=square_angle)
+shapes_draw(start_point=pentagon_point, angle=pentagon_angle, length=150, width=3, angle_step=pentagon_angle)
+shapes_draw(start_point=hexagon_point, angle=hexagon_angle, length=125, width=3, angle_step=hexagon_angle)
+
+# for angle in range(0, 360 - triangle_angle, triangle_angle):
+#     print(angle, 'треугольник')
+#     next_point = figures(start_point=next_point, angle=angle, length=200, width=3)
+# else:
+#     sd.line(start_point=next_point, end_point=triangle_point, width=3)
+# next_point = square_point
+# for angle in range(0, 360 - square_angle, square_angle):
+#     print(angle, 'квадрат')
+#     next_point = figures(start_point=next_point, angle=angle, length=200, width=3)
+# else:
+#     sd.line(start_point=next_point, end_point=square_point, width=3)
+#     next_point = pentagon_point
+# for angle in range(0, 360 - pentagon_angle, pentagon_angle):
+#     print(angle, 'пятиугольник')
+#     next_point = figures(start_point=next_point, angle=angle, length=150, width=3)
+# else:
+#     sd.line(start_point=next_point, end_point=pentagon_point, width=3)
+# next_point = hexagon_point
+# for angle in range(0, 360 - hexagon_angle, hexagon_angle):
+#     print(angle, 'шестиугольник')
+#     next_point = figures(start_point=next_point, angle=angle, length=125, width=3)
+# else:
+#     sd.line(start_point=next_point, end_point=hexagon_point, width=3)
+
 
 # сделал так, потому что не совсем понял что именно надо, если сделать один цикл для всех фигур, то надо же еще
 # менять стартовую точку для фигуры и последнюю точку для последней линии, чтобы не было разрыва.
