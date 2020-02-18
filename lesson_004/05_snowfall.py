@@ -24,15 +24,17 @@ snowflake_size = []
 snowflake = [[x_list], [y_list]]
 for i in range(21):
     x_list.append(sd.random_number(25, 1000))
-    y_list.append(sd.random_number(800, 821))
+    y_list.append(sd.random_number(800, 821))  # TODO Стоит разброс побольше сделать, а то падать будут одной линией
     snowflake_size.append(sd.random_number(15, 36))
 
 while True:
     sd.clear_screen()
     point = sd.get_point(x_list[0], y_list[0])
     for i, y in enumerate(y_list):
+        # TODO точку point - надо создавать в цикле, для каждой снежинки (по индексу)
         sd.snowflake(center=point, length=50)
-        y -= 10
+        y -= 10  # TODO тут надо изменять именно y_list[index]
+        # TODO Иначе изменяется не значение в списке, а переменная цикла
     sd.sleep(0.1)
     if sd.user_want_exit():
         break
