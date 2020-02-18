@@ -107,12 +107,19 @@ def figures(start_point=point, angle=0, length=200, width=3):
     return line.end_point
 
 
-def shapes_draw(start_point, angle=0, length=200, width=3, angle_step=0): # TODO не пойму, почему angle не используется
+def shapes_draw(start_point, angle=0, length=200, width=3, angle_step=0):  # не пойму, почему angle не используется
+    # TODO Просто в цикле используется такое же название, а цикл по сути тоже создает переменную
+    # TODO Вот и выходит что angle не используется, а сразу переопределяется, нужно просто названия заменить
     for angle in range(0, 360 - angle_step, angle_step):
-        next_point = figures(start_point, angle, length, width) # TODO не пойму, почему начальная точка не меняется
-        end_point = start_point
+        next_point = figures(start_point, angle, length, width)  # не пойму, почему начальная точка не меняется
+        # TODO Вы меняете end_point, а используете в функции start_point
+        # TODO Можно попробовать до цикла создать next_point, положить в неё start_point
+        # TODO А в цикле в figures использовать next_point
+        # TODO Туда попадёт start_point, функция отработает и изменит next_point на новую
+        end_point = start_point  # TODO Тогда эта строка вообще нужна не будет :)
     else:
         sd.line(start_point=next_point, end_point=end_point, width=3)
+        # TODO И тут надо будет определиться какие точки использовать
 
 
 length = 200

@@ -30,9 +30,12 @@ for i in range(21):
 while True:
     sd.clear_screen()
     for i, y in enumerate(y_list):
-        for i, x in enumerate(x_list):
-            point = sd.get_point(x, y)
-            sd.snowflake(center=point, length=50)
+        for i, x in enumerate(x_list):  # TODO вложенный цикл не нужен
+            # TODO нам достаточно пройти циклом по одному списку, тк мы в любом случае используем "i"
+            # TODO Для доступа к элементам сразу всех нужных списков
+            point = sd.get_point(x, y)  # TODO тут можно использовать x_list[i] и y_list[i]
+            sd.snowflake(center=point, length=50)  # TODO Кстати тут вместо длины можно использовать элементы из списка
+            # TODO snoWflake_size который
             y_list[i] -= 5
     sd.sleep(0.1)
     if sd.user_want_exit():
@@ -40,7 +43,6 @@ while True:
 
 sd.pause()
 
-# TODO теперь затыка тут....
 # подсказка! для ускорения отрисовки можно
 #  - убрать clear_screen()
 #  - в начале рисования всех снежинок вызвать sd.start_drawing()
