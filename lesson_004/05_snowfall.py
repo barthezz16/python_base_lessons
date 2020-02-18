@@ -23,20 +23,16 @@ y_list = []
 snowflake_size = []
 snowflake = [[x_list], [y_list]]
 for i in range(21):
-    x_list.append(sd.random_number(25, 1000))
-    y_list.append(sd.random_number(600, 621))
+    x_list.append(sd.random_number(25, 1300))
+    y_list.append(sd.random_number(750, 880))
     snowflake_size.append(sd.random_number(15, 36))
 
 while True:
     sd.clear_screen()
     for i, y in enumerate(y_list):
-        for i, x in enumerate(x_list):  # TODO вложенный цикл не нужен
-            # TODO нам достаточно пройти циклом по одному списку, тк мы в любом случае используем "i"
-            # TODO Для доступа к элементам сразу всех нужных списков
-            point = sd.get_point(x, y)  # TODO тут можно использовать x_list[i] и y_list[i]
-            sd.snowflake(center=point, length=50)  # TODO Кстати тут вместо длины можно использовать элементы из списка
-            # TODO snoWflake_size который
-            y_list[i] -= 5
+        point = sd.get_point(x_list[i], y_list[i])
+        sd.snowflake(center=point, length=snowflake_size[i])
+        y_list[i] -= 5
     sd.sleep(0.1)
     if sd.user_want_exit():
         break
