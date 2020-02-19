@@ -109,7 +109,7 @@ def figures(start_point=point, angle=0, length=200, width=3):
 
 def shapes_draw(start_point, end_point, next_angle=0, length=200, width=3, angle_step=0):
     for angle in range(0, 360 - angle_step, angle_step):
-        start_point = figures(start_point, angle, length, width)
+        start_point = figures(start_point, angle + next_angle, length, width)  # Чтобы можно было "крутить" фигуры
     else:
         sd.line(start_point=start_point, end_point=end_point, width=3)
 
@@ -143,41 +143,6 @@ shapes_draw(start_point=pentagon_point, end_point=pentagon_point, next_angle=pen
 shapes_draw(start_point=hexagon_point, end_point=hexagon_point, next_angle=hexagon_angle, length=125, width=3,
             angle_step=hexagon_angle)
 
-# for angle in range(0, 360 - triangle_angle, triangle_angle):
-#     print(angle, 'треугольник')
-#     next_point = figures(start_point=next_point, angle=angle, length=200, width=3)
-# else:
-#     sd.line(start_point=next_point, end_point=triangle_point, width=3)
-# next_point = square_point
-# for angle in range(0, 360 - square_angle, square_angle):
-#     print(angle, 'квадрат')
-#     next_point = figures(start_point=next_point, angle=angle, length=200, width=3)
-# else:
-#     sd.line(start_point=next_point, end_point=square_point, width=3)
-#     next_point = pentagon_point
-# for angle in range(0, 360 - pentagon_angle, pentagon_angle):
-#     print(angle, 'пятиугольник')
-#     next_point = figures(start_point=next_point, angle=angle, length=150, width=3)
-# else:
-#     sd.line(start_point=next_point, end_point=pentagon_point, width=3)
-# next_point = hexagon_point
-# for angle in range(0, 360 - hexagon_angle, hexagon_angle):
-#     print(angle, 'шестиугольник')
-#     next_point = figures(start_point=next_point, angle=angle, length=125, width=3)
-# else:
-#     sd.line(start_point=next_point, end_point=hexagon_point, width=3)
-
-
-# сделал так, потому что не совсем понял что именно надо, если сделать один цикл для всех фигур, то надо же еще
-# менять стартовую точку для фигуры и последнюю точку для последней линии, чтобы не было разрыва.
-# TODO нужен не цикл, нужна ФУНКЦИЯ
-# TODO деф общая_функция(start_point, angle, length, width, шаг_угла)
-# TODO     а тут уже цикл и прочее
-# triangle(triangle_point)
-# square(square_point)
-# pentagon(pentagon_point)
-# hexagon(hexagon_point)
-
 sd.pause()
 # определить функци
 # Часть 1-бис.
@@ -205,3 +170,4 @@ sd.pause()
 
 
 sd.pause()
+#зачет!

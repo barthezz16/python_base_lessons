@@ -21,7 +21,6 @@ N = 20
 x_list = []
 y_list = []
 snowflake_size = []
-snowflake = [[x_list], [y_list]]
 for i in range(21):
     x_list.append(sd.random_number(25, 1300))
     y_list.append(sd.random_number(750, 880))
@@ -53,3 +52,4 @@ sd.pause()
 # - сделать сугоб внизу экрана - если снежинка долетает до низа, оставлять её там,
 #   и добавлять новую снежинку
 # Результат решения см https://youtu.be/XBx0JtxHiLg
+#зачет!

@@ -89,3 +89,5 @@ while True:
 func = figures[user_input]
 func(point)
 sd.pause()
+
+#зачет!
