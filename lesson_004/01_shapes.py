@@ -107,19 +107,11 @@ def figures(start_point=point, angle=0, length=200, width=3):
     return line.end_point
 
 
-def shapes_draw(start_point, angle=0, length=200, width=3, angle_step=0):  # не пойму, почему angle не используется
-    # TODO Просто в цикле используется такое же название, а цикл по сути тоже создает переменную
-    # TODO Вот и выходит что angle не используется, а сразу переопределяется, нужно просто названия заменить
+def shapes_draw(start_point, end_point, next_angle=0, length=200, width=3, angle_step=0):
     for angle in range(0, 360 - angle_step, angle_step):
-        next_point = figures(start_point, angle, length, width)  # не пойму, почему начальная точка не меняется
-        # TODO Вы меняете end_point, а используете в функции start_point
-        # TODO Можно попробовать до цикла создать next_point, положить в неё start_point
-        # TODO А в цикле в figures использовать next_point
-        # TODO Туда попадёт start_point, функция отработает и изменит next_point на новую
-        end_point = start_point  # TODO Тогда эта строка вообще нужна не будет :)
+        start_point = figures(start_point, angle, length, width)
     else:
-        sd.line(start_point=next_point, end_point=end_point, width=3)
-        # TODO И тут надо будет определиться какие точки использовать
+        sd.line(start_point=start_point, end_point=end_point, width=3)
 
 
 length = 200
@@ -137,16 +129,19 @@ triangle_point = sd.get_point(start_point_triangle_x, start_point_triangle_y)
 hexagon_point = sd.get_point(start_point_hexagon_x, start_point_hexagon_y)
 pentagon_point = sd.get_point(start_point_pentagon_x, start_point_pentagon_y)
 square_point = sd.get_point(start_point_square_x, start_point_square_y)
-next_point = triangle_point
 triangle_angle = 120
 square_angle = 90
 pentagon_angle = 72
 hexagon_angle = 60
 
-shapes_draw(start_point=triangle_point, angle=triangle_angle, length=length, width=3, angle_step=triangle_angle)
-shapes_draw(start_point=square_point, angle=square_angle, length=length, width=3, angle_step=square_angle)
-shapes_draw(start_point=pentagon_point, angle=pentagon_angle, length=150, width=3, angle_step=pentagon_angle)
-shapes_draw(start_point=hexagon_point, angle=hexagon_angle, length=125, width=3, angle_step=hexagon_angle)
+shapes_draw(start_point=triangle_point, end_point=triangle_point, next_angle=triangle_angle, length=length, width=3,
+            angle_step=triangle_angle)
+shapes_draw(start_point=square_point, end_point=square_point, next_angle=square_angle, length=length, width=3,
+            angle_step=square_angle)
+shapes_draw(start_point=pentagon_point, end_point=pentagon_point, next_angle=pentagon_angle, length=150, width=3,
+            angle_step=pentagon_angle)
+shapes_draw(start_point=hexagon_point, end_point=hexagon_point, next_angle=hexagon_angle, length=125, width=3,
+            angle_step=hexagon_angle)
 
 # for angle in range(0, 360 - triangle_angle, triangle_angle):
 #     print(angle, 'треугольник')
