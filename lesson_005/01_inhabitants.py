@@ -5,7 +5,8 @@
 
 import room_1
 import room_2
-print('В комнате room_1 живут:', room_1.folks[0], 'и', room_1.folks[1])
+s = ' и '
+print('В комнате room_1 живут:', s.join(room_1.folks))
 print('В комнате room_1 живeт:', room_2.folks[0])
 
 
