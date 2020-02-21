@@ -34,6 +34,6 @@ def smile(point):
 point = sd.get_point(500, 100)
 smile(point=point)
 
-sd.pause()
+
 
 #зачет!
