@@ -18,7 +18,12 @@
 # пример см. lesson_005/results/04_painting.jpg
 # Приправить своей фантазией по вкусу (коты? коровы? люди? трактор? что придумается)
 
-# TODO здесь ваш код
+import wall
+import tree
+import rainbow
+import smile
+import snowfall
+
 
 # Усложненное задание (делать по желанию)
 # Анимировать картину.
