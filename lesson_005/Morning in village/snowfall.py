@@ -30,13 +30,18 @@ while True:
     for i, y in enumerate(y_list):
         sd.start_drawing()
         point = sd.get_point(x_list[i], y_list[i])
-        sd.snowflake(center=point, length=snowflake_size[i], color=sd.COLOR_WHITE)
+        sd.snowflake(center=point, length=snowflake_size[i], color=sd.COLOR_WHITE)  # TODO здесь эта строка лишняя
         sd.snowflake(center=point, length=snowflake_size[i], color=sd.background_color)
         y_list[i] -= 5
+        # TODO А тут надо обновить точку point, чтобы в ней была измененная координата
         sd.snowflake(center=point, length=snowflake_size[i], color=sd.COLOR_WHITE)
+        # TODO + если хотите, чтобы анимация продолжалась, надо придумать что делать с упавшими снежинками
+        # TODO по координате y смотреть - упала ли снежинка и дальше можно например запустить её в полет
+        # TODO Или не менять для таких снежинок координаты, чтобы они замерли в сугробе.
     sd.finish_drawing()
     sd.sleep(.05)
-    if sd.user_want_exit() or i == 100:
+    if sd.user_want_exit() or i == 100:  # TODO "i" в данном случае больше 100 не станет никогда
+        # TODO тк "i" по сути считает итерации цикла for, каждый раз начиная с 0 и заканчивая на 10
         break
 
 sd.pause()

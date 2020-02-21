@@ -8,7 +8,4 @@ import room_2
 s = ' и '
 print('В комнате room_1 живут:', s.join(room_1.folks))
 print('В комнате room_1 живeт:', room_2.folks[0])
-
-
-
-
+#зачет!

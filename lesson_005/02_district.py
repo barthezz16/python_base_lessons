@@ -16,6 +16,8 @@ from district.soviet_street.house2.room1 import folks as folks_ss_2_1
 from district.soviet_street.house2.room2 import folks as folks_ss_2_2
 
 s = ', '
+# TODO В данном случае, для избавления от дублирования можно просуммировать все списки
+# TODO А затем уже одним джойном их соединить и распечатать
 print('На районе живут ...')
 print(s.join(folks_cs_1_1))
 print(s.join(folks_cs_1_2))
