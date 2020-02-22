@@ -15,12 +15,23 @@
 # Создать рецепт своего бургера, по вашему вкусу.
 # Если не хватает инградиентов - создать соответствующие функции в модуле my_burger
 
-from my_burger import my_burger_recipe
-# TODO Идея хороша для сокращения кода, однако тут важно было попрактиковаться в импорте множества функций
-# TODO Поэтому нужно сделать по простенькой функции на каждый ингридиент и имортировать их при помощи
-# TODO from ... import func1, func2, func3 и тд
+# from my_burger import my_burger_recipe
 
-# TODO + длинные строки оставлять нельзя
-ingredients = [' - карамелизованные булочки', ' - два рубленых бифштекса', ' - огурчика', ' - помидорчика', ' - майонеза', ' - кетчупа', ' - сыра']
-my_burger_recipe(ingredients)
+from my_burger import first_item, second_item, third_item, fourth_item, fifth_item
 
+
+# ingredients = [' - карамелизованные булочки', ' - два рубленых бифштекса', ' - огурчика', ' - помидорчика',
+#                ' - майонеза', ' - кетчупа', ' - сыра']
+# my_burger_recipe(ingredients)
+
+ingredient_1 = '- карамелизованные булочки'
+ingredient_2 = '- два рубленых бифштекса'
+ingredient_3 = '- кетчупа'
+ingredient_4 = '- майонеза'
+ingredient_5 = '- сыра'
+
+first_item(ingredient_1)
+second_item(ingredient_2)
+third_item(ingredient_3)
+fourth_item(ingredient_4)
+fifth_item(ingredient_5)
