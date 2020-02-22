@@ -17,17 +17,9 @@ from district.soviet_street.house2.room2 import folks as folks_ss_2_2
 
 s = ', '
 
-# print('На районе живут ...')
-# print(s.join(folks_cs_1_1))
-# print(s.join(folks_cs_1_2))
-# print('В первой комнате, во втором доме, на центральной улице никто не живет')
-# print(s.join(folks_cs_2_2))
-# print(s.join(folks_ss_1_1))
-# print(s.join(folks_ss_1_2))
-# print(s.join(folks_ss_2_1))
-# print(s.join(folks_ss_2_2))
-
-citizens_list = folks_ss_1_1 + folks_cs_1_2 + folks_cs_1_2 + folks_cs_2_2 + folks_ss_1_1 + folks_ss_1_2 \
-                + folks_ss_2_1 + folks_ss_2_2
+citizens_list = (folks_ss_1_1 + folks_cs_1_1 + folks_cs_1_2 + folks_cs_2_2 + folks_ss_1_1 + folks_ss_1_2
+                 + folks_ss_2_1 + folks_ss_2_2)
 
 print(s.join(citizens_list))
+
+#зачет!

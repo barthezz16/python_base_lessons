@@ -27,9 +27,12 @@ for i in range(20):
     snowflake_size.append(sd.random_number(15, 36))
 
 while True:
+    sd.start_drawing()
     for i, y in enumerate(y_list):
-        sd.start_drawing()
         point = sd.get_point(x_list[i], y_list[i])
+        print(sd.background_color, sd.COLOR_WHITE)  # TODO Повозиться пришлось с этой причиной :)
+        # TODO А была она в том, что фоновый цвет при запуске из другого модуля имеет белый цвет по какой-то причине
+        # TODO И поэтому снежинки просто два раза рисовались вместо закрашивания
         sd.snowflake(center=point, length=snowflake_size[i], color=sd.background_color)
         y_list[i] -= 5
         point = sd.get_point(x_list[i], y_list[i])
