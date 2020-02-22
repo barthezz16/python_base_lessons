@@ -1,5 +1,6 @@
 import wall
 import tree
-import rainbow
+import tree_2
+import rainbow_round
 import smile
 import snowfall
