@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from random import random
 
 import simple_draw as sd
 
@@ -21,27 +22,23 @@ N = 20
 x_list = []
 y_list = []
 snowflake_size = []
-for i in range(10):
-    x_list.append(sd.random_number(25, 400))
-    y_list.append(sd.random_number(750, 880))
+for i in range(20):
+    x_list.append(sd.random_number(25, 350))
+    y_list.append(sd.random_number(800, 880))
     snowflake_size.append(sd.random_number(15, 36))
 
 while True:
     for i, y in enumerate(y_list):
         sd.start_drawing()
         point = sd.get_point(x_list[i], y_list[i])
-        sd.snowflake(center=point, length=snowflake_size[i], color=sd.COLOR_WHITE)  # TODO здесь эта строка лишняя
         sd.snowflake(center=point, length=snowflake_size[i], color=sd.background_color)
+        x_list[i] -= sd.random_number(-5, 5)
         y_list[i] -= 5
-        # TODO А тут надо обновить точку point, чтобы в ней была измененная координата
+        point = sd.get_point(x_list[i], y_list[i])
         sd.snowflake(center=point, length=snowflake_size[i], color=sd.COLOR_WHITE)
-        # TODO + если хотите, чтобы анимация продолжалась, надо придумать что делать с упавшими снежинками
-        # TODO по координате y смотреть - упала ли снежинка и дальше можно например запустить её в полет
-        # TODO Или не менять для таких снежинок координаты, чтобы они замерли в сугробе.
     sd.finish_drawing()
-    sd.sleep(.05)
-    if sd.user_want_exit() or i == 100:  # TODO "i" в данном случае больше 100 не станет никогда
-        # TODO тк "i" по сути считает итерации цикла for, каждый раз начиная с 0 и заканчивая на 10
+    sd.sleep(.1)
+    if sd.user_want_exit() or y_list[i] <= 100:
         break
 
 sd.pause()
