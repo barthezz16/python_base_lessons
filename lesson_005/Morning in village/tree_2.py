@@ -3,7 +3,7 @@
 import simple_draw as sd
 
 sd.resolution = (1200, 800)
-sd.background_color = (255, 255, 255)
+
 
 
 def branch(point, angle, length):
@@ -26,4 +26,5 @@ point_0 = sd.get_point(900, 0)
 angle_0 = 90
 length = 50
 
-branch(point=point_0, angle=angle_0, length=length)
+if __name__ == '__main__':
+    branch(point=point_0, angle=angle_0, length=length)

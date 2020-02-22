@@ -27,24 +27,27 @@ for i in range(20):
     y_list.append(sd.random_number(800, 880))
     snowflake_size.append(sd.random_number(15, 36))
 
-while True:
-    sd.start_drawing()
-    for i, y in enumerate(y_list):
-        point = sd.get_point(x_list[i], y_list[i])
-        print(sd.background_color, sd.COLOR_WHITE)  # TODO Повозиться пришлось с этой причиной :)
-        # TODO А была она в том, что фоновый цвет при запуске из другого модуля имеет белый цвет по какой-то причине
-        # TODO И поэтому снежинки просто два раза рисовались вместо закрашивания
-        sd.snowflake(center=point, length=snowflake_size[i], color=sd.background_color)
-        x_list[i] -= sd.random_number(-5, 5)
-        y_list[i] -= 5
-        point = sd.get_point(x_list[i], y_list[i])
-        sd.snowflake(center=point, length=snowflake_size[i], color=sd.COLOR_WHITE)
-    sd.finish_drawing()
-    sd.sleep(.1)
-    if sd.user_want_exit() or y_list[i] <= 100:
-        break
 
-sd.pause()
+def snowfall_draw():
+    while True:
+        sd.start_drawing()
+        for i, y in enumerate(y_list):
+            point = sd.get_point(x_list[i], y_list[i])
+            sd.snowflake(center=point, length=snowflake_size[i], color=sd.background_color)
+            x_list[i] -= sd.random_number(-5, 5)
+            y_list[i] -= 5
+            point = sd.get_point(x_list[i], y_list[i])
+            sd.snowflake(center=point, length=snowflake_size[i], color=sd.COLOR_WHITE)
+        sd.finish_drawing()
+        sd.sleep(.1)
+        if sd.user_want_exit() or y_list[i] <= 100:
+            break
+
+
+if __name__ == '__main__':
+    snowfall_draw()
+
+
 
 # подсказка! для ускорения отрисовки можно
 #  - убрать clear_screen()
@@ -60,4 +63,4 @@ sd.pause()
 # - сделать сугоб внизу экрана - если снежинка долетает до низа, оставлять её там,
 #   и добавлять новую снежинку
 # Результат решения см https://youtu.be/XBx0JtxHiLg
-#зачет!
+# зачет!

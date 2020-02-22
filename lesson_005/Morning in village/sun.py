@@ -11,7 +11,7 @@ sd.resolution = (1200, 800)
 # Параметры функции: кордината X, координата Y, цвет.
 # Вывести 10 смайликов в произвольных точках экрана.
 
-def sun(point):
+def sun_draw(point):
     radius = 50
     sun_center = point
     sd.circle(center_position=sun_center, radius=radius, width=0)
@@ -20,4 +20,5 @@ def sun(point):
 
 
 point = sd.get_point(100, 650)
-sun(point=point)
+if __name__ == '__main__':
+    sun_draw(point=point)
