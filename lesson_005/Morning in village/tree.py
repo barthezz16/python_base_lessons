@@ -30,8 +30,11 @@ sd.resolution = (1200, 800)
 
 # можно поиграть -шрифтами- цветами и углами отклонения
 
+point_0 = sd.get_point(800, 0)
+angle_0 = 90
+length = 100
 
-def branch(point, angle, length):
+def branch(point=point_0, angle=angle_0, length=length):
     if length < 1:
         return
     if 1 < length < 10:
@@ -47,12 +50,10 @@ def branch(point, angle, length):
         branch(point=v1.end_point, angle=angle_2, length=next_length)
 
 
-point_0 = sd.get_point(800, 0)
-angle_0 = 90
-length = 100
+
 
 if __name__ == '__main__':
-    branch(point=point_0, angle=angle_0, length=length)
+    branch()
 
 
 # 4) Усложненное задание (делать по желанию)

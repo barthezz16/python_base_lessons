@@ -9,7 +9,10 @@ sd.resolution = (1200, 800)
 # Параметры функции: кордината X, координата Y, цвет.
 # Вывести 10 смайликов в произвольных точках экрана.
 
-def smile_draw(point):
+point = sd.get_point(500, 100)
+
+
+def smile_draw(point=point):
     radius = 50
     circle_center = point  # Теперь точку можно задавать извне :)
     mouth_x_start = circle_center.x - 20
@@ -30,11 +33,7 @@ def smile_draw(point):
     sd.circle(center_position=right_eye, radius=10)
 
 
-
-point = sd.get_point(500, 100)
 if __name__ == '__main__':
-    smile_draw(point=point)
+    smile_draw()
 
-
-
-#зачет!
+# зачет!

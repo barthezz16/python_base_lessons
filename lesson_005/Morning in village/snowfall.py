@@ -39,8 +39,8 @@ def snowfall_draw():
             point = sd.get_point(x_list[i], y_list[i])
             sd.snowflake(center=point, length=snowflake_size[i], color=sd.COLOR_WHITE)
         sd.finish_drawing()
-        sd.sleep(.1)
-        if sd.user_want_exit() or y_list[i] <= 100:
+        sd.sleep(.01)
+        if sd.user_want_exit() or y_list[i] <= 25:
             break
 
 
