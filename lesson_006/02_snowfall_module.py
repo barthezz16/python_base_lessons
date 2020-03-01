@@ -14,10 +14,14 @@ import simple_draw as sd
 # обращаясь ТОЛЬКО к функциям модуля snowfall
 
 # создать_снежинки(N)
+from snowfall_engine import snowflake_creating, snowflake_color, move_snowflake, snowflake_deleting
+
+snowflake_numbers = 30
+
 while True:
-    #  нарисовать_снежинки_цветом(color=sd.background_color)
-    #  сдвинуть_снежинки()
-    #  нарисовать_снежинки_цветом(color)
+    snowflake_color(snowflake_count=snowflake_numbers, color=sd.background_color)
+    move_snowflake(3, 3)
+    snowflake_color(color=sd.COLOR_WHITE)
     #  если есть номера_достигших_низа_экрана() то
     #       удалить_снежинки(номера)
     #       создать_снежинки(count)
