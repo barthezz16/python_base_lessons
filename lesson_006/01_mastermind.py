@@ -47,14 +47,20 @@ from mastermind_engine import make_number, compare_numbers, _numbers
 from termcolor import cprint, colored
 
 count = 0
-make_number()
+make_number()  # TODO Здесь загадывается число
 while True:
     count += 1
     print("Попытка", count)
-    print(make_number())
+    print(make_number())  # TODO Тут это число загадывается ещё раз
     print("Угадайте число из 4 знаков")
-    player_try = input(int)
-    if player_try == make_number():
+    player_try = input(int)  # TODO Вероятно вы имели ввиду int(input(сообщение))
+    # TODO То, что попадает внутрь инпута - печатается в консоль, как при print-е
+    # TODO Кстати, ввод пользователя хорошо бы проверить.
+    # TODO делать это лучше отдельной функцией (функцию оставить здесь, не переносить в движок)
+    # TODO Она должна запускаться без параметров и возвращать правильное число
+    if player_try == make_number():  # TODO Тут число загадывается вновь - и каждый раз оно изменяется
+        # TODO Что конечно не правильно.
+        # TODO Вообще лучше сразу использовать функцию compare и выводить победу, если вернется 4 быка
         print("Вы выиграли")
         print("У вас это заняло", count, " попыток. Хотите еще партию?")
         break
