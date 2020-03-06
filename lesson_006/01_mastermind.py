@@ -47,13 +47,12 @@ from mastermind_engine import make_number, compare_numbers, _numbers
 from termcolor import cprint, colored
 
 count = 0
-print(make_number())  # сейчас тут загадывается число
+print(make_number())
 while True:
-    count += 1  # тут изменяется счетчик ходов
-    print("Попытка", count)  # тут он выводится на экран
-    player_try = int(input("Угадайте число из 4 знаков"))  # тут поидее принемается ввод пользователя
-    compare_numbers()  # и тут он уже должен сравниваться
-    # почему тогда после моего ввода выводится 0, откуда он вообще берется?
+    count += 1
+    print("Попытка", count)
+    player_try = int(input("Угадайте число из 4 знаков"))
+    player_number = compare_numbers(player_try)
     # TODO проблема в том, что вы в функции compare_numbers ещё один инпут используете
     # TODO а надо передавать число, полученное в этом инпуте функции compare_numbers()
     # TODO а ещё желательно писать "переменная = compare_numbers(число_пользователя)"
@@ -63,3 +62,4 @@ while True:
     # TODO Кстати, ввод пользователя хорошо бы проверить.
     # TODO делать это лучше отдельной функцией (функцию оставить здесь, не переносить в движок)
     # TODO Она должна запускаться без параметров и возвращать правильное число
+

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import simple_draw as sd
+sd.resolution = (1200, 800)
 
 # На основе кода из lesson_004/05_snowfall.py
 # сделать модуль snowfall.py в котором реализовать следующие функции
@@ -16,10 +17,10 @@ import simple_draw as sd
 # создать_снежинки(N)
 from snowfall_engine import snowflake_creating, snowflake_color, move_snowflake, snowflake_deleting
 
-snowflake_numbers = 30
+snowflake_numbers = 25
 
 while True:
-    snowflake_color(snowflake_count=snowflake_numbers, color=sd.background_color)
+    snowflake_color(snowflake_numbers)  #  как тут вызвать, вообще не пойму
     move_snowflake(3, 3)
     snowflake_color(color=sd.COLOR_WHITE)
     #  если есть номера_достигших_низа_экрана() то

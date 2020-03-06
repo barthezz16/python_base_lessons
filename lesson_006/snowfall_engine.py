@@ -37,36 +37,42 @@ def snowflake_creating(snowflake_count):
     y_list = []
     snowflake_size = []
     for i in range(snowflake_count):
-        x_list.append(sd.random_number(25, 600))
-        y_list.append(sd.random_number(700, 780))
-        snowflake_size.append(sd.random_number(15, 36))
+        x_list.append(sd.random_number(25, 1000))
+        y_list.append(sd.random_number(100, 780))
+        snowflake_size.append(sd.random_number(15, 35))
 
 
-def snowflake_color(snowflake_count, color):
-    snowflake_creating(snowflake_count=snowflake_count)  # TODO Тут эту функцию вызывать не нужно
-    # TODO Она будет вызвана отдельно, в главном модуле
-    # TODO Иначе каждый раз при рисовании списки будут обновляться и снежинки не будут падать
-    for i, y in enumerate(y_list):
+def snowflake_color(snowflake_count, color=sd.COLOR_WHITE):
+    snowflake_creating(snowflake_count)
+    for n in enumerate(y_list):
+        move_snowflake(3, 5)
+
+
+def snowflake_deleting(): # что то примерное, но создается всего одна
+    if y_list[i] < 10:
+        y_list[i] = 800
+    return y_list[i]
+
+
+def move_snowflake(x_position=3, y_position=5): # тут самому не нравится, что нагромоздил, но пока не вижу другого варианта
+    for i, y in enumerate(y_list):              # и почему если запустить этот модуль, снединки начинают двигаться
+        point = sd.get_point(x_list[i], y_list[i]) # но останавливаются внизу, хотя такого параметра тут нет нигде
+        sd.snowflake(center=point, length=snowflake_size[i], color=sd.background_color)
+        x_list[i] -= sd.random_number(-x_position, x_position)
+        y_list[i] -= y_position
         point = sd.get_point(x_list[i], y_list[i])
-        sd.snowflake(center=point)  # TODO кстати сюда ещё стоит передавать параметр color
+        sd.snowflake(center=point, length=snowflake_size[i], color=sd.COLOR_WHITE)
+        snowflake_deleting()
 
 
-def move_snowflake(x=3, y=5):  # TODO тк у параметра имя 'y'
-    for i, y in enumerate(y_list):  # TODO и у переменной цикла такое же имя, то используется переменная, а не параметр
-        # TODO используйте разные имена
-        x_list[i] -= sd.random_number(-x, x)
-        y_list[i] -= y
-
+snowflake_color(20) # опять вопросы, так получается вызвать функцию, а когда я так же хочу ее вызвать из 02_snowfall_module
+# она не вызывается...
 
 # TODO Тут нужны будут ещё две функции
 #  номера_достигших_низа_экрана() - выдает список номеров снежинок, которые вышли за границу экрана
 #  удалить_снежинки(номера) - удаляет снежинки с номерами из списка
 # TODO Первая с циклом по спискам, она должна вернуть список индексов
 # TODO А вторая с циклом по этому списку индексов.
-def snowflake_deleting():
-    pass
 
-
-# snowflake_color(snowflake_count, color=sd.COLOR_WHITE)
 
 sd.pause()
