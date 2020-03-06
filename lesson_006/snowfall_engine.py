@@ -21,7 +21,8 @@ def snowflake_color(snowflake_count, color=sd.COLOR_WHITE):
     # TODO Тут должен быть цикл и рисование snowflake. Создание списка тут не нужно.
     # TODO Эта функция будет вызываться для отрисовки снежинок, поэтому snowflake_creating(snowflake_count)
     # TODO будет каждый раз обнулять список.
-    snowflake_creating(snowflake_count)
+    move_snowflake(3, 5)
+    sd.snowflake(center=point, length=snowflake_size[i], color=sd.COLOR_WHITE)
     for n in enumerate(y_list):
         move_snowflake(3, 5)
 
@@ -36,14 +37,14 @@ def snowflake_deleting():  # что то примерное, но создает
 def move_snowflake(x_position=3, y_position=5):
     # TODO Здесь нужно оставить только изменение координат
     # TODO Рисование и прочее тут не нужно, только пройти по спискам и изменить координаты
-    # тут самому не нравится, что нагромоздил, но пока не вижу другого варианта
-    for i, y in enumerate(y_list):  # и почему если запустить этот модуль, снединки начинают двигаться
-        point = sd.get_point(x_list[i], y_list[i])  # но останавливаются внизу, хотя такого параметра тут нет нигде
+    global point
+    for i, y in enumerate(y_list):
+        point = sd.get_point(x_list[i], y_list[i])
         sd.snowflake(center=point, length=snowflake_size[i], color=sd.background_color)
         x_list[i] -= sd.random_number(-x_position, x_position)
         y_list[i] -= y_position
         point = sd.get_point(x_list[i], y_list[i])
-        sd.snowflake(center=point, length=snowflake_size[i], color=sd.COLOR_WHITE)
+
         snowflake_deleting()
 
 
