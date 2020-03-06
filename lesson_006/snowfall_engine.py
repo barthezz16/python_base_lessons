@@ -43,17 +43,19 @@ def snowflake_creating(snowflake_count):
 
 
 def snowflake_color(snowflake_count, color):
-    snowflake_creating(snowflake_count=snowflake_count)
+    snowflake_creating(snowflake_count=snowflake_count)  # TODO Тут эту функцию вызывать не нужно
+    # TODO Она будет вызвана отдельно, в главном модуле
+    # TODO Иначе каждый раз при рисовании списки будут обновляться и снежинки не будут падать
     for i, y in enumerate(y_list):
         point = sd.get_point(x_list[i], y_list[i])
-        sd.snowflake(center=point)
+        sd.snowflake(center=point)  # TODO кстати сюда ещё стоит передавать параметр color
 
 
-def move_snowflake(x=3, y=5):
-    for i, y in enumerate(y_list):
+def move_snowflake(x=3, y=5):  # TODO тк у параметра имя 'y'
+    for i, y in enumerate(y_list):  # TODO и у переменной цикла такое же имя, то используется переменная, а не параметр
+        # TODO используйте разные имена
         x_list[i] -= sd.random_number(-x, x)
         y_list[i] -= y
-
 
 
 # TODO Тут нужны будут ещё две функции
