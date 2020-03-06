@@ -43,23 +43,17 @@
 # Это пример применения SOLID принципа (см https://goo.gl/GFMoaI) в архитектуре программ.
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
-from mastermind_engine import make_number, compare_numbers, _numbers
+from mastermind_engine import make_number, compare_numbers, _numbers, count
 from termcolor import cprint, colored
 
-count = 0
-print(make_number())
+
+make_number(4)
 while True:
     count += 1
     print("Попытка", count)
-    player_try = int(input("Угадайте число из 4 знаков"))
-    player_number = compare_numbers(player_try)
-    # TODO проблема в том, что вы в функции compare_numbers ещё один инпут используете
-    # TODO а надо передавать число, полученное в этом инпуте функции compare_numbers()
-    # TODO а ещё желательно писать "переменная = compare_numbers(число_пользователя)"
-    # TODO чтобы результат выполнения оказался в этой переменной
-    # TODO НО! перед передачей числа - нужно проверить его. Об этом я писал в прошлый раз:
+    player_try = [int(i) for i in str(input("Угадайте число из 4 знаков "))]
+    compare_numbers(player_try)
+    print(type(player_try), type(_numbers))
 
-    # TODO Кстати, ввод пользователя хорошо бы проверить.
-    # TODO делать это лучше отдельной функцией (функцию оставить здесь, не переносить в движок)
-    # TODO Она должна запускаться без параметров и возвращать правильное число
+
 
