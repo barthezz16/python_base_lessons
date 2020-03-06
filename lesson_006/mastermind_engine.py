@@ -12,8 +12,8 @@ digits_amount = 4
 
 def make_number(digits_amount=4):
     global _numbers
-    _numbers = [randint(0, 9) for n in range(digits_amount)]  #  я понимаю что надо сделать проверку ввода
-    return _numbers                                  # но сейчас хочу, чтобы просто заработало, а потом уже проверки вводить.
+    _numbers = [randint(0, 9) for n in range(digits_amount)]  # я понимаю что надо сделать проверку ввода
+    return _numbers  # но сейчас хочу, чтобы просто заработало, а потом уже проверки вводить.
 
 
 def compare_numbers(player_try):
