@@ -52,8 +52,12 @@ while True:
     count += 1
     print("Попытка", count)
     player_try = [int(i) for i in str(input("Угадайте число из 4 знаков "))]
-    compare_numbers(player_try)
-    print(type(player_try), type(_numbers))
+    if player_try == _numbers:
+        print('Вы выиграли')
+    else:
+        compare_numbers(player_try)
+
+
 
 
 

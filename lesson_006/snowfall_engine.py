@@ -19,10 +19,12 @@ def snowflake_creating(snowflake_count):
 def snowflake_color(snowflake_count, color=sd.COLOR_WHITE):
     # TODO В этой функции должен быть только цикл по снежинкам и функция рисования snowflake
     # TODO move_snowflake - удалить
-    move_snowflake(3, 5)
-    sd.snowflake(center=point, length=snowflake_size[i], color=sd.COLOR_WHITE)
-    for n in enumerate(y_list):
-        move_snowflake(3, 5)
+    snowflake_creating()
+    global point
+    for i, y in enumerate(y_list):
+        point = sd.get_point(x_list[i], y_list[i])
+        sd.snowflake(center=point, length=snowflake_size[i], color=sd.background_color)
+
 
 
 def snowflake_deleting():
@@ -36,18 +38,11 @@ def snowflake_deleting():
 def move_snowflake(x_position=3, y_position=5):
     # TODO Здесь цикл по снежинкам, с изменением координат (42, 43 строка)
     # TODO создание точек, snowflake_deleting и sd.snowflake - удалить
-    global point
-    for i, y in enumerate(y_list):
-        point = sd.get_point(x_list[i], y_list[i])
-        sd.snowflake(center=point, length=snowflake_size[i], color=sd.background_color)
-        x_list[i] -= sd.random_number(-x_position, x_position)
-        y_list[i] -= y_position
-        point = sd.get_point(x_list[i], y_list[i])
-
-        snowflake_deleting()
+    x_list[i] -= sd.random_number(-x_position, x_position)
+    y_list[i] -= y_position
+    point = sd.get_point(x_list[i], y_list[i])
 
 
-snowflake_color(20)
 # опять вопросы, так получается вызвать функцию, а когда я так же хочу ее вызвать из 02_snowfall_module
 # она не вызывается...
 
