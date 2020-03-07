@@ -20,7 +20,7 @@ from snowfall_engine import snowflake_creating, snowflake_color, move_snowflake,
 snowflake_numbers = 25
 
 while True:
-    snowflake_color(snowflake_numbers)  #  как тут вызвать, вообще не пойму
+    snowflake_color(snowflake_numbers)
     move_snowflake(3, 3)
     snowflake_color(color=sd.COLOR_WHITE)
     #  если есть номера_достигших_низа_экрана() то
