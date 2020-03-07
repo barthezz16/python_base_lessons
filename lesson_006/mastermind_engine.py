@@ -27,7 +27,7 @@ def compare_numbers(player_try):
         elif player_try[x] in _numbers:
             cows += 1
     print('Быков -', bulls, 'Коров -', cows)
-    return cows, bulls
+    return bulls
 
 
 _numbers = ()

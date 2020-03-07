@@ -43,24 +43,24 @@
 # Это пример применения SOLID принципа (см https://goo.gl/GFMoaI) в архитектуре программ.
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
-from mastermind_engine import make_number, compare_numbers, _numbers, count
-# TODO Отсюда нам не нужно импортировать ничего, кроме 2 функций
-from termcolor import cprint, colored
+from mastermind_engine import make_number, compare_numbers
 
+from termcolor import cprint
+
+count = 0
 
 make_number(4)
 while True:
     count += 1
     print("Попытка", count)
     player_try = [int(i) for i in str(input("Угадайте число из 4 знаков "))]
-    if player_try == _numbers:  # TODO Проверять надо не числа напрямую, а количество быков
-        # TODO Которое вернет функция compare numbers
-        # TODO Алгоритм выглядит так: Загадывается число --> Получается число от пользователя -->
-        # TODO --> Числа сравниваются при помощи compare_numbers --> Результат сравнения это переменные cows, bulls
-        # TODO Если bulls == 4, то игра выиграна, если нет --> получаем новое число от пользователя
-        print('Вы выиграли')
+    if compare_numbers(player_try) == 4:
+        cprint('Вы выиграли, на это у вас ушло ' + str(count) + ' попыток!', color='red')
+        break
     else:
         compare_numbers(player_try)
+
+
 
 
 
