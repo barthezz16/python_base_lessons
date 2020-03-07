@@ -6,7 +6,17 @@ import simple_draw as sd
 sd.resolution = (1200, 800)
 
 def snowflake_creating(snowflake_count):
-    global x_list, y_list, snowflake_size, i, point
+    global x_list, y_list, snowflake_size, i, point  # TODO тут 'point' и 'i' не нужны
+    # TODO а списки x_list, y_list, snowflake_size надо будет ещё вне функций создать
+    # TODO global говорит о том, что искать эти названия надо вне функции
+    # TODO сейчас вне функции их нет, просто продублируйте снаружи:
+    # x_list = []
+    # y_list = []
+    # snowflake_size = []
+
+    # TODO Эти же строки пусть остаются и здесь. Логика следующая:
+    # TODO Пайтону указываем, что искать списки надо снаружи в "глобальном" пространстве
+    # TODO Дальше эти списки обновляются здесь на всякий случай, а потом заполняются.
     x_list = []
     y_list = []
     snowflake_size = []
@@ -17,10 +27,9 @@ def snowflake_creating(snowflake_count):
 
 
 def snowflake_color(snowflake_count, color=sd.COLOR_WHITE):
-    # TODO В этой функции должен быть только цикл по снежинкам и функция рисования snowflake
-    # TODO move_snowflake - удалить
-    snowflake_creating()
-    global point
+    snowflake_creating()  # TODO Это тоже удаляем
+    global point  # TODO И это.
+    # TODO Глобальными вместо point надо объявить списки y_list, x_list
     for i, y in enumerate(y_list):
         point = sd.get_point(x_list[i], y_list[i])
         sd.snowflake(center=point, length=snowflake_size[i], color=sd.background_color)
