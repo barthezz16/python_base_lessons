@@ -55,6 +55,16 @@ from termcolor import cprint
 #             print('Введено неправильное тип!')
 #             break
 
+def check_input():
+    global user_input
+    user_input = input("Угадайте число из 4 знаков ")
+    while True:
+        if user_input.isdigit():
+            return user_input
+        else:
+            cprint('Введен неправильный тип!', color='red')
+            break   # TODO ну вроде все уже проверятся, выполняется else, но после break, все равно продолжается работа
+
 
 count = 0
 result = 0
@@ -63,25 +73,8 @@ player_try = []
 while True:
     count += 1
     cprint("Попытка " + str(count), color='yellow')
-    try:
-        player_try = [int(i) for i in str(input("Угадайте число из 4 знаков "))]  # а если попробовать так?
-        # TODO Это конечно вариант, но try/except будут разбираться в 10 модуле только)
-        # TODO Поэтому пока надо обходиться без него.
-        # TODO Возьмите просто функцию check_input и сделайте так, чтобы она возвращала правильное число
-        # TODO создайте там цикл while, который будет выполнять следующие шаги
-        # TODO 1) получать строку через инпут (без генератора цикла и приведения к int, просто input()
-        # TODO 2) проверьте эту строку условиями, если все условия выполнены -- завершайте цикл
-        # TODO 3) После цикла можно использовать эту конструкцию
-        # [int(i) for i in str(input("Угадайте число из 4 знаков "))]
-        # TODO Только вместо input... используйте строку, которая прошла все проверки
-
-        # TODO Тогда здесь можно будет просто написать player_try = check_input()
-        # TODO функция отработает, вернет список чисел и его можно будет проверять далее
-    except ValueError:
-        cprint('Вы ввели неправильное значение!', color='red')
-    finally:
-        pass
-        # print('Попробуйте еще раз!')
+    check_input()
+    player_try = [int(i) for i in str(user_input)]
     if len(player_try) != 4:
         cprint('Вы ввели неправильное значение!', color='red')
         continue
