@@ -62,8 +62,8 @@ def check_input():
         if user_input.isdigit():
             return user_input
         else:
-            cprint('Введен неправильный тип!', color='red')
-            break   # TODO ну вроде все уже проверятся, выполняется else, но после break, все равно продолжается работа
+            cprint('Введен неправильный тип! Попробуйте еще раз!', color='red')
+            check_input()
 
 
 count = 0
