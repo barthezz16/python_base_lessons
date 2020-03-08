@@ -30,11 +30,13 @@ def snowflake_color(color=sd.COLOR_WHITE):
 
 
 def snowflake_deleting():
+    # TODO Если используется index_list снаружи - то надо указать на это при помощи global
+    # TODO + тут надо его будет обновлять, иначе при повторном вызове в список попадут дубли
+    # TODO а если прописать здесь index_list = [] -- то каждый раз список будет с 0 формироваться, без копий
     for i, y in enumerate(y_list):
         if y < 20:
             index_list.append(i)
     return index_list
-
 
 
 def move_snowflake(x_position=3, y_position=5):
@@ -42,3 +44,13 @@ def move_snowflake(x_position=3, y_position=5):
         x_list[i] -= sd.random_number(-x_position, x_position)
         y_list[i] -= y_position
 
+
+# TODO Сейчас снегопад уже работает но надо наладить удаление/добавление новых снежинок
+# TODO Для этого надо:
+# TODO 1) Доделать функция snowflake_deleting
+# TODO 2) Сделать функцию, которая будет проходить по глобальному index_list и удалять снежинки, которые там записаны
+# TODO 3) Сделать функцию, которая будет добавлять снежинки. Это будет копия snowflake_creating, только без
+# TODO обнуления списков. просто убрать эти строки из копии
+# x_list = []
+#     y_list = []
+#     snowflake_size = []

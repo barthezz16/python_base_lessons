@@ -18,9 +18,10 @@ sd.resolution = (1200, 800)
 from snowfall_engine import snowflake_creating, snowflake_color, move_snowflake, snowflake_deleting
 
 snowflake_numbers = 25
+snowflake_creating(snowflake_numbers)
 
 while True:
-    snowflake_color(snowflake_numbers)
+    snowflake_color(color=sd.background_color)
     move_snowflake(3, 3)
     snowflake_color(color=sd.COLOR_WHITE)
     #  если есть номера_достигших_низа_экрана() то
