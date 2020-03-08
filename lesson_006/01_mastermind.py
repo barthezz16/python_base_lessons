@@ -48,27 +48,24 @@ from mastermind_engine import make_number, compare_numbers
 from termcolor import cprint
 
 count = 0
-
+result = 0
 make_number(4)
 while True:
     count += 1
     print("Попытка", count)
     player_try = [int(i) for i in str(input("Угадайте число из 4 знаков "))]
-    if compare_numbers(player_try) == 4:
-        # TODO Уже лучше, похоже на правду.
-        # TODO Теперь нужно:
-        # TODO 1) Проверить player_try, чтобы можно было вводить только правильные числа
-        # TODO 2) Перенести сюда print('Быков -', bulls, 'Коров -', cows) из функции compare numbers
-        # TODO Лучше всего будет создать переменную result, ей присвоить результат выполнения compare_numbers
-        # TODO А потом уже её проверять в улосвии и для печати
+    for x in player_try:
+        if isinstance(x, int):  # TODO поидее тут элементов списка, являются ли они числом
+            pass                # TODO но не могу проверить это, потому что выходит ошибка в строке 56...
+        else:
+            print('Вы ввели неправильное значение!')
+    if len(player_try) != 4:
+        print('Вы ввели неправильное значение!')
+        continue
+    result = compare_numbers(player_try)
+    if result[0] == 4:
         cprint('Вы выиграли, на это у вас ушло ' + str(count) + ' попыток!', color='red')
         break
     else:
-        compare_numbers(player_try)
-
-
-
-
-
-
-
+        result = compare_numbers(player_try)
+        print('Быков -', result[0], 'Коров -', result[1])

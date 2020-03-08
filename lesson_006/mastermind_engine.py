@@ -7,16 +7,16 @@
 from random import randint
 
 
-# def make_number(digits_amount=4):
-#     global _numbers
-#     _numbers = [randint(0, 9) for n in range(digits_amount)]
-#     print(_numbers)
-
 def make_number(digits_amount=4):
-    global _numbers
-    _numbers = [randint(0, 9) for n in range(digits_amount)]
-    # TODO Теперь нужно и с этой функцией разобраться, чтобы числа загадывались согласно условиям
+    global _numbers  # TODO поидее вот так генерируются неповторяющиеся числа, но почему то
+    for i in range(digits_amount + 1):  # TODO в некоторых случаях создается список то из 3 то их 5 чисел...
+        digit = randint(0, 9)
+        if digit not in _numbers:
+            _numbers.append(digit)
+        if _numbers[0] == 0:
+            _numbers[0] == 1
     print(_numbers)
+    return _numbers
 
 
 def compare_numbers(player_try):
@@ -27,16 +27,9 @@ def compare_numbers(player_try):
             bulls += 1
         elif player_try[x] in _numbers:
             cows += 1
-    print('Быков -', bulls, 'Коров -', cows)
-    # TODO ПО условию задания
-    # Все общение с пользователем делать в текущем модуле.
-    # TODO это делается для приближения структуры программы к реальности.
-    # TODO Так здесь у нас "движок" с общими функциями, своеобразный бэкэнд, а в том модуле, куда импорт происходит
-    # TODO Что-то наподобие фронт-енда, где мы взаимодействуем с пользователем напрямую
-    # TODO Создаем удобный интерфейс, красивые разноцветные надписи и выведение результата.
-    return bulls
+    return bulls, cows
 
 
-_numbers = ()
+_numbers = []
 digits_amount = 4
 count = 0
