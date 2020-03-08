@@ -55,7 +55,7 @@ while True:
     print("Попытка", count)
     player_try = [int(i) for i in str(input("Угадайте число из 4 знаков "))]
     for x in player_try:
-        if isinstance(x, int):  # TODO поидее тут элементов списка, являются ли они числом
+        if isinstance(x, int):  # TODO поидее тут проверка элементов списка, являются ли они числом
             pass                # TODO но не могу проверить это, потому что выходит ошибка в строке 56...
         else:
             print('Вы ввели неправильное значение!')
