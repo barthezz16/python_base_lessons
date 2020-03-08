@@ -8,19 +8,14 @@ from random import randint
 
 
 def make_number(digits_amount=4):
-    global _numbers  # поидее вот так генерируются неповторяющиеся числа, но почему то
-    for i in range(digits_amount + 1):  # в некоторых случаях создается список то из 3 то их 5 чисел...
-        # TODO Это происходит потому, что цикл всегда выполняет 5 итераций
-        # TODO Но, если попадаются числа, которые уже есть, они не добавляются в список
-        # TODO А итерация при этом проходит впустую.
-        # TODO Тут скорее подойдет цикл while, с условием "пока чисел не будет 4"
+    global _numbers
+    _numbers.append(randint(1, 9))
+    while len(_numbers) < digits_amount:
         digit = randint(0, 9)
         if digit not in _numbers:
             _numbers.append(digit)
         if _numbers[0] == 0:
-            _numbers[0] == 1  # TODO Это операция сравнения, а не изменения
-            # TODO Лучше поступить немного иначе, до цикла добавьте в пустой numbers случайное число от 1 до 9
-            # TODO А потом в цикле уже добавляйте числа с проверкой на повторы
+            _numbers[0] = 1  #  Это операция сравнения, а не изменения TODO согласен, это совсем глупая опечатка...
     print(_numbers)
     return _numbers
 

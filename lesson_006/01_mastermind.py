@@ -44,32 +44,38 @@
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
 from mastermind_engine import make_number, compare_numbers
-
 from termcolor import cprint
+
+
+# def check_input(player_try):
+#     player_try_check = ''.join(map(str, player_try))
+#     while player_try_check.isdigit():
+#         pass
+#         if player_try_check.isdigit() == False:
+#             print('Введено неправильное тип!')
+#             break
+
 
 count = 0
 result = 0
 make_number(4)
+player_try = []
 while True:
     count += 1
-    print("Попытка", count)
-    player_try = [int(i) for i in str(input("Угадайте число из 4 знаков "))]
-    # TODO Тут надо использовать другой подход. Изменять существующий список будет сложнее
-    # TODO Лучше получать строку из цифр, проверять её на все условия, а затем превращать её в список.
-    # TODO Чтобы не усложнять этот цикл - вынесите это действие в отдельную функцию
-    # TODO (саму функцию оставьте в этом модуле)
-    # TODO Для проверки пригодится цикл while, метод isdigit (проверяет, состоит ли строка из чисел)
-    for x in player_try:
-        if isinstance(x, int):
-            pass
-        else:
-            print('Вы ввели неправильное значение!')
+    cprint("Попытка " + str(count), color='yellow')
+    try:
+        player_try = [int(i) for i in str(input("Угадайте число из 4 знаков "))] # TODO а если попробовать так?
+    except ValueError:
+        cprint('Вы ввели неправильное значение!', color='red')
+    finally:
+        pass
+        # print('Попробуйте еще раз!')
     if len(player_try) != 4:
-        print('Вы ввели неправильное значение!')
+        cprint('Вы ввели неправильное значение!', color='red')
         continue
     result = compare_numbers(player_try)
     if result[0] == 4:
-        cprint('Вы выиграли, на это у вас ушло ' + str(count) + ' попыток!', color='red')
+        cprint('Вы выиграли, на это у вас ушло ' + str(count) + ' попыток!', color='magenta')
         break
     else:
         result = compare_numbers(player_try)
