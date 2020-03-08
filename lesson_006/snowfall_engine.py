@@ -7,7 +7,6 @@ sd.resolution = (1200, 800)
 
 x_list = []
 y_list = []
-index_list = []
 snowflake_size = []
 
 
@@ -30,9 +29,7 @@ def snowflake_color(color=sd.COLOR_WHITE):
 
 
 def snowflake_deleting():
-    # TODO Если используется index_list снаружи - то надо указать на это при помощи global
-    # TODO + тут надо его будет обновлять, иначе при повторном вызове в список попадут дубли
-    # TODO а если прописать здесь index_list = [] -- то каждый раз список будет с 0 формироваться, без копий
+    index_list = []
     for i, y in enumerate(y_list):
         if y < 20:
             index_list.append(i)
@@ -45,12 +42,16 @@ def move_snowflake(x_position=3, y_position=5):
         y_list[i] -= y_position
 
 
-# TODO Сейчас снегопад уже работает но надо наладить удаление/добавление новых снежинок
-# TODO Для этого надо:
-# TODO 1) Доделать функция snowflake_deleting
-# TODO 2) Сделать функцию, которая будет проходить по глобальному index_list и удалять снежинки, которые там записаны
-# TODO 3) Сделать функцию, которая будет добавлять снежинки. Это будет копия snowflake_creating, только без
-# TODO обнуления списков. просто убрать эти строки из копии
-# x_list = []
-#     y_list = []
-#     snowflake_size = []
+def remove_snowflake(index_list):
+    for i in range(index_list):
+        if i in index_list:
+            del index_list[i]
+
+def new_snowflake_creating(snowflake_count):
+    for i in range(snowflake_count):
+        x_list.append(sd.random_number(25, 1000))
+        y_list.append(sd.random_number(100, 780))
+        snowflake_size.append(sd.random_number(15, 35))
+
+
+# TODO 1) Доделать функция snowflake_deleting вот тут не совсем понял, что надо доделать?

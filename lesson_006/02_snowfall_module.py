@@ -21,12 +21,14 @@ snowflake_numbers = 25
 snowflake_creating(snowflake_numbers)
 
 while True:
+    sd.start_drawing()
     snowflake_color(color=sd.background_color)
-    move_snowflake(3, 3)
+    move_snowflake(3, 6)
     snowflake_color(color=sd.COLOR_WHITE)
     #  если есть номера_достигших_низа_экрана() то
     #       удалить_снежинки(номера)
     #       создать_снежинки(count)
+    sd.finish_drawing()
     sd.sleep(0.1)
     if sd.user_want_exit():
         break
