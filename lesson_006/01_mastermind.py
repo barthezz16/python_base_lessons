@@ -55,6 +55,12 @@ while True:
     print("Попытка", count)
     player_try = [int(i) for i in str(input("Угадайте число из 4 знаков "))]
     if compare_numbers(player_try) == 4:
+        # TODO Уже лучше, похоже на правду.
+        # TODO Теперь нужно:
+        # TODO 1) Проверить player_try, чтобы можно было вводить только правильные числа
+        # TODO 2) Перенести сюда print('Быков -', bulls, 'Коров -', cows) из функции compare numbers
+        # TODO Лучше всего будет создать переменную result, ей присвоить результат выполнения compare_numbers
+        # TODO А потом уже её проверять в улосвии и для печати
         cprint('Вы выиграли, на это у вас ушло ' + str(count) + ' попыток!', color='red')
         break
     else:
