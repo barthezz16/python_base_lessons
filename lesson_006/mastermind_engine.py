@@ -14,7 +14,9 @@ def make_number(digits_amount=4):
         digit = randint(0, 9)
         if digit not in _numbers:
             _numbers.append(digit)
+        print(_numbers)
     return _numbers
+
 
 
 def compare_numbers(player_try):

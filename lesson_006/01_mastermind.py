@@ -57,18 +57,14 @@ from termcolor import cprint
 
 def check_input():
     global user_input
-    user_input = input("Угадайте число из 4 знаков ")
-    while True:
-        # TODO Инпут надо сюда добавить, чтобы после непрошедшей проверки, повторялся вводе
-        if user_input.isdigit():  # TODO Сюда надо будет добавить остальные проверки
-            # "если ввод.isdigit() and длина равна 4 и повторов нет и на первом месте не 0"
-            return user_input
-        else:
-            cprint('Введен неправильный тип!', color='red')
-            break   # ну вроде все уже проверятся, выполняется else, но после break, все равно продолжается работа
-            # TODO Тут break не нужен будет, наоборот, надо чтобы цикл продолжился
-            # TODO тк в начале цикла будет стоять input()
-            # TODO ввели число --> проверили --> если прошло проверку - ретурн, если не прошло - начинаем заново
+    user_input = input("Угадайте число из 4 знаков ")  # TODO Максим извините что просто удалил тудушки но у меня вопрос
+    # TODO : а зачем сюда переносить все проверки?
+    while True:  # TODO они же все проходят внизу, тут же мы только проверяем на ввод цифр? И user_input
+        if user_input.isdigit():  # TODO может не стоит в while переносить? это же идет одна попытка на отгадывание,
+            return user_input  # TODO если введен неправиьный тип, не надо же это как за попытку считать?
+        else:  # TODO надо же просто в этой попытку дать пользователю право ввести еще раз значение?
+            cprint('Введен неправильный тип! Попробуйте еще раз!', color='red')
+            check_input()
 
 
 count = 0
@@ -78,17 +74,14 @@ player_try = []
 while True:
     count += 1
     cprint("Попытка " + str(count), color='yellow')
-    check_input()  # TODO вызов функции срабатывает и что-то возвращает, но это что-то надо поместить в переменную
-    # TODO например x = функция()
-    # TODO иначе функция сработает, вернет что-то, но это нигде не сохранится
-    player_try = [int(i) for i in str(user_input)]  # TODO а это надо будет добавить в функцию
-    # TODO строка проверилась и перед return нужно превратить строку в список
+    user_input = check_input()
+    player_try = [int(i) for i in str(user_input)]
     if len(player_try) != 4:
         cprint('Вы ввели неправильное значение!', color='red')
         continue
     result = compare_numbers(player_try)
     if result[0] == 4:
-        cprint('Вы выиграли, на это у вас ушло ' + str(count) + ' попыток!', color='magenta')
+        cprint('Вы выиграли, на это у вас ушло ' + str(count) + ' попыток! Хотите еще партию?', color='magenta')
         break
     else:
         result = compare_numbers(player_try)
