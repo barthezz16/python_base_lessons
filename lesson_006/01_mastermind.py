@@ -59,11 +59,16 @@ def check_input():
     global user_input
     user_input = input("Угадайте число из 4 знаков ")
     while True:
-        if user_input.isdigit():
+        # TODO Инпут надо сюда добавить, чтобы после непрошедшей проверки, повторялся вводе
+        if user_input.isdigit():  # TODO Сюда надо будет добавить остальные проверки
+            # "если ввод.isdigit() and длина равна 4 и повторов нет и на первом месте не 0"
             return user_input
         else:
-            cprint('Введен неправильный тип! Попробуйте еще раз!', color='red')
-            check_input()
+            cprint('Введен неправильный тип!', color='red')
+            break   # ну вроде все уже проверятся, выполняется else, но после break, все равно продолжается работа
+            # TODO Тут break не нужен будет, наоборот, надо чтобы цикл продолжился
+            # TODO тк в начале цикла будет стоять input()
+            # TODO ввели число --> проверили --> если прошло проверку - ретурн, если не прошло - начинаем заново
 
 
 count = 0
@@ -73,8 +78,11 @@ player_try = []
 while True:
     count += 1
     cprint("Попытка " + str(count), color='yellow')
-    check_input()
-    player_try = [int(i) for i in str(user_input)]
+    check_input()  # TODO вызов функции срабатывает и что-то возвращает, но это что-то надо поместить в переменную
+    # TODO например x = функция()
+    # TODO иначе функция сработает, вернет что-то, но это нигде не сохранится
+    player_try = [int(i) for i in str(user_input)]  # TODO а это надо будет добавить в функцию
+    # TODO строка проверилась и перед return нужно превратить строку в список
     if len(player_try) != 4:
         cprint('Вы ввели неправильное значение!', color='red')
         continue
