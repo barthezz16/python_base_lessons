@@ -19,7 +19,7 @@ sd.resolution = (1200, 800)
 
 # создать_снежинки(N)
 
-snowflake_numbers = 50
+snowflake_numbers = 100
 snowflake_creating(snowflake_numbers)
 while True:
     sd.start_drawing()
@@ -31,7 +31,7 @@ while True:
         remove_snowflake(index_list)
         new_snowflake_creating(len(index_list))
     sd.finish_drawing()
-    sd.sleep(0.1)
+    sd.sleep(0.05)
     if sd.user_want_exit():
         break
 

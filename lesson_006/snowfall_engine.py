@@ -46,12 +46,10 @@ def move_snowflake(x_position=3, y_position=5):
 def remove_snowflake(index_list):
     index_list = index_list[::-1]
     for i in index_list:
-        del x_list[-i], y_list[-i], snowflake_size[-i]  # TODO Возникает путанница из-за минусов перед 'i'
-        # TODO уберите их и всё будет работать правильно
-
+        del x_list[i], y_list[i], snowflake_size[i]
 
 def new_snowflake_creating(snowflake_count):
     for i in range(snowflake_count):
-        x_list.append(sd.random_number(25, 1000))
-        y_list.append(sd.random_number(0, 1200))
+        x_list.append(sd.random_number(25, 1170))
+        y_list.append(sd.random_number(800, 1800))
         snowflake_size.append(sd.random_number(15, 35))
