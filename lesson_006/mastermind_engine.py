@@ -14,9 +14,8 @@ def make_number(digits_amount=4):
         digit = randint(0, 9)
         if digit not in _numbers:
             _numbers.append(digit)
-        print(_numbers)
+        print(_numbers)  # TODO вот этот принт теперь можно удалить, чтобы подсказки игрокам не вылезали
     return _numbers
-
 
 
 def compare_numbers(player_try):
