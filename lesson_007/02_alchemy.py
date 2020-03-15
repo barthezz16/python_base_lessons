@@ -19,7 +19,102 @@
 #   print(Water(), '+', Air(), '=', Water() + Air())
 #   print(Fire(), '+', Air(), '=', Fire() + Air())
 
-# TODO здесь ваш код
+
+class Water:
+
+    def __str__(self):
+        return 'Вода'
+
+    def __add__(self, other):
+        return Storm(part1=self, part2=other)
+
+
+class Air:
+    def __str__(self):
+        return 'Воздух'
+
+    def __add__(self, other):
+        return Lightning(part1=self, part2=other)
+
+
+class Storm:
+    def __init__(self, part1, part2):
+        self.part1 = part1
+        self.part2 = part2
+
+    def __str__(self):
+        return 'Шторм'
+
+
+class Fire:
+
+    def __str__(self):
+        return 'Огонь'
+
+    def __add__(self, other):
+        return Steam(part1=self, part2=other)
+
+
+class Steam:
+    def __init__(self, part1, part2):
+        self.part1 = part1
+        self.part2 = part2
+
+    def __str__(self):
+        return 'Пар'
+
+
+class Earth:
+
+    def __str__(self):
+        return 'Земля'
+
+    def __add__(self, other):
+        return Dirt(part1=self, part2=other)
+
+
+class Dirt:
+    def __init__(self, part1, part2):
+        self.part1 = part1
+        self.part2 = part2
+
+    def __str__(self):
+        return 'Грязь'
+
+
+class Lightning:
+    def __init__(self, part1, part2):
+        self.part1 = part1
+        self.part2 = part2
+
+    def __str__(self):
+        return 'Молния'
+
+
+class Dust:
+    def __init__(self, part1, part2):
+        self.part1 = part1
+        self.part2 = part2
+
+    def __str__(self):
+        return 'Пыль'
+
+
+class Lava:
+    def __init__(self, part1, part2):
+        self.part1 = part1
+        self.part2 = part2
+
+    def __str__(self):
+        return 'Лава'
+
+
+print(Water(), '+', Air(), '=', Water() + Air())
+print(Fire(), '+', Water(), '=', Fire() + Water())
+print(Earth(), '+', Water(), '=', Earth() + Water())
+print(Air(), '+', Fire(), '=', Air() + Fire())
+print(Air(), '+', Earth(), '=', Air() + Earth())
+print(Fire(), '+', Earth(), '=', Fire() + Earth())
 
 # Усложненное задание (делать по желанию)
 # Добавить еще элемент в игру.
