@@ -74,6 +74,10 @@ class Man:
         cprint('{} въехал в дом'.format(self.name), color='cyan')
 
     def take_cat(self):
+        # TODO Здесь параметром надо получать объект класса Cat
+        # TODO И сделать с ним 2 операции
+        # TODO 1) Добавить его в атрибут-список "питомцы"
+        # TODO 2) Изменить его атрибут "дом" на self.house
         cprint('{} подобрал котов'.format(self.name), color='cyan')
 
     def make_clean(self):
