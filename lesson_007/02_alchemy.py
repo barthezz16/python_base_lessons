@@ -26,11 +26,12 @@ class Water:
         return 'Вода'
 
     def __add__(self, other):
-        # TODO ретурн по своей сути верный, надо вернуть объект определенного класса
-        # TODO Только перед ретурном надо проверить какому классу принадлежит other
-        # TODO сделать это можно при помощи функции isinstance(other, Class)
-        # TODO Тогда, в зависимости от условий, можно будет вернуть нужный объект (не только шторм)
-        return Storm(part1=self, part2=other)
+        if isinstance(other, Air):
+            return Storm(part1=self, part2=other)
+        elif isinstance(other, Fire):
+            return Steam(part1=self, part2=other)
+        elif isinstance(other, Earth):
+            return Dirt(part1=self, part2=other)
 
 
 class Air:
@@ -38,7 +39,12 @@ class Air:
         return 'Воздух'
 
     def __add__(self, other):
-        return Lightning(part1=self, part2=other)
+        if isinstance(other, Fire):
+            return Lightning(part1=self, part2=other)
+        elif isinstance(other, Water):
+            return Storm(part1=self, part2=other)
+        elif isinstance(other, Earth):
+            return Dust(part1=self, part2=other)
 
 
 class Storm:
@@ -56,7 +62,12 @@ class Fire:
         return 'Огонь'
 
     def __add__(self, other):
-        return Steam(part1=self, part2=other)
+        if isinstance(other, Water):
+            return Steam(part1=self, part2=other)
+        elif isinstance(other, Air):
+            return Lightning(part1=self, part2=other)
+        elif isinstance(other, Earth):
+            return Lava(part1=self, part2=other)
 
 
 class Steam:
@@ -74,7 +85,12 @@ class Earth:
         return 'Земля'
 
     def __add__(self, other):
-        return Dirt(part1=self, part2=other)
+        if isinstance(other, Water):
+            return Dust(part1=self, part2=other)
+        elif isinstance(other, Air):
+            return Dust(part1=self, part2=other)
+        elif isinstance(other, Fire):
+            return Lava(part1=self, part2=other)
 
 
 class Dirt:
@@ -114,8 +130,8 @@ class Lava:
 
 
 print(Water(), '+', Air(), '=', Water() + Air())
-print(Fire(), '+', Water(), '=', Fire() + Water())
-print(Earth(), '+', Water(), '=', Earth() + Water())
+print(Water(), '+', Fire(), '=', Water() + Fire())
+print(Water(), '+', Earth(), '=', Water() + Earth())
 print(Air(), '+', Fire(), '=', Air() + Fire())
 print(Air(), '+', Earth(), '=', Air() + Earth())
 print(Fire(), '+', Earth(), '=', Fire() + Earth())
