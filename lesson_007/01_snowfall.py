@@ -55,7 +55,7 @@ def get_fallen_flakes():
 def append_flakes(count):
     for i in range(count):
         flake_list.append(Snowflake())
-    return fallen_flakes
+    return fallen_flakes  # TODO Зачем тут возврат fallen_flakes?
 
 
 flake_list = []
@@ -68,7 +68,8 @@ while True:
         flake.draw()
     fallen_flakes = get_fallen_flakes()
     if fallen_flakes:
-        append_flakes(count=fallen_flakes)
+        append_flakes(count=fallen_flakes)  # TODO Ошибка тут
+        # TODO Функция принимает на вход список, а должна количество удаленных снежинок получать
     sd.sleep(0.1)
     if sd.user_want_exit():
         break
