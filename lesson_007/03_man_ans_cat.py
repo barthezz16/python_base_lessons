@@ -37,6 +37,7 @@ class Man:
         self.name = name
         self.fullness = 50
         self.house = None
+        self.pets = []
 
     def __str__(self):
         return 'Я - {}, сытость {}'.format(
@@ -55,8 +56,8 @@ class Man:
         self.house.money += 150
         self.fullness -= 10
 
-    def watch_MTV(self):
-        cprint('{} смотрел MTV целый день'.format(self.name), color='green')
+    def learn_python(self):
+        cprint('{} учил Python целый день'.format(self.name), color='green')
         self.fullness -= 10
 
     def shopping(self):
@@ -74,10 +75,8 @@ class Man:
         cprint('{} въехал в дом'.format(self.name), color='cyan')
 
     def take_cat(self, cat):
-        self.cat = cat  # TODO Если есть список pets, то отдельная переменная для кошки не нужна
-        self.pets = []  # TODO этот список надо создавать в __init__
-        # TODO Иначе каждый раз при подборе новой кошки он будет обнуляться и кошки все пропадут
-        self.pets.append(cat)  # TODO А вот эти три строчки как раз то, что нужно оставить
+        self.cat = cat
+        self.pets.append(cat)
         cat.house = self.house
         cprint('{} подобрал кота {}'.format(self.name, self.cat.name), color='cyan')
 
@@ -106,7 +105,7 @@ class Man:
         elif dice == 2:
             self.eat()
         else:
-            self.watch_MTV()
+            self.learn_python()
 
 
 class House:
