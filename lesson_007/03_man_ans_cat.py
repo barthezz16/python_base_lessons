@@ -73,12 +73,12 @@ class Man:
         self.fullness -= 10
         cprint('{} въехал в дом'.format(self.name), color='cyan')
 
-    def take_cat(self):
-        # TODO Здесь параметром надо получать объект класса Cat
-        # TODO И сделать с ним 2 операции
-        # TODO 1) Добавить его в атрибут-список "питомцы"
-        # TODO 2) Изменить его атрибут "дом" на self.house
-        cprint('{} подобрал котов'.format(self.name), color='cyan')
+    def take_cat(self, cat):
+        self.cat = cat
+        self.pets = []
+        self.pets.append(cat)
+        cat.house = self.house
+        cprint('{} подобрал кота {}'.format(self.name, self.cat.name), color='cyan')
 
     def make_clean(self):
         cprint('{} убрался дома'.format(self.name), color='blue')
@@ -174,7 +174,9 @@ tom = Cat(name='Том')
 murzik = Cat(name='Мурзик')
 murka = Cat(name='Мурка')
 vasya.go_to_the_house(house=my_sweet_home)
-vasya.take_cat()
+vasya.take_cat(tom)
+vasya.take_cat(murzik)
+vasya.take_cat(murka)
 tom.go_to_the_house(house=my_sweet_home)
 murzik.go_to_the_house(house=my_sweet_home)
 murka.go_to_the_house(house=my_sweet_home)
