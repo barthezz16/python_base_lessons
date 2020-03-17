@@ -28,7 +28,7 @@ class Snowflake:
         self.y -= y_position
 
     def can_fall(self):
-        while self.y > 20:
+        while self.y > 20:  # TODO цикл тут точно не нужен, лучше просто напишите return игрик > 20
             return True
         else:
             return False
@@ -49,7 +49,9 @@ while True:
     sd.sleep(0.1)
     if sd.user_want_exit():
         break
-
+# TODO Можете приступать к шагу №2
+# TODO Тут нужно будет реализовать несколько отдельных функций
+# TODO Которые будут запускать множество таких снежинок
 # шаг 2: создать снегопад - список объектов Снежинка в отдельном списке, обработку примерно так:
 # flakes = get_flakes(count=N)  # создать список снежинок
 # while True:

@@ -75,7 +75,7 @@ class Man:
         cprint('{} въехал в дом'.format(self.name), color='cyan')
 
     def take_cat(self, cat):
-        self.cat = cat
+        self.cat = cat  # TODO Эта строка не нужна
         self.pets.append(cat)
         cat.house = self.house
         cprint('{} подобрал кота {}'.format(self.name, self.cat.name), color='cyan')
