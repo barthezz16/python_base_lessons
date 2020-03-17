@@ -85,8 +85,8 @@ class Earth:
         return 'Земля'
 
     def __add__(self, other):
-        if isinstance(other, Water):  # TODO Земля с водой вроде как должны грязь возвращать, а у вас повтор Dust
-            return Dust(part1=self, part2=other)
+        if isinstance(other, Water):
+            return Dirt(part1=self, part2=other)
         elif isinstance(other, Air):
             return Dust(part1=self, part2=other)
         elif isinstance(other, Fire):
