@@ -74,9 +74,10 @@ class Man:
         cprint('{} въехал в дом'.format(self.name), color='cyan')
 
     def take_cat(self, cat):
-        self.cat = cat
-        self.pets = []
-        self.pets.append(cat)
+        self.cat = cat  # TODO Если есть список pets, то отдельная переменная для кошки не нужна
+        self.pets = []  # TODO этот список надо создавать в __init__
+        # TODO Иначе каждый раз при подборе новой кошки он будет обнуляться и кошки все пропадут
+        self.pets.append(cat)  # TODO А вот эти три строчки как раз то, что нужно оставить
         cat.house = self.house
         cprint('{} подобрал кота {}'.format(self.name, self.cat.name), color='cyan')
 

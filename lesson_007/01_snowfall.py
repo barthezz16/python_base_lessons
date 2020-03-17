@@ -14,6 +14,8 @@ sd.resolution = (1200, 800)
 class Snowflake:
 
     def __init__(self):
+        # TODO Списки тут не нужны
+        # TODO у одной снежинки - пара координат (x, y)
         self.x_list = []
         self.y_list = []
         self.snowflake_size = []
@@ -23,7 +25,7 @@ class Snowflake:
         self.snowflake_size.append(sd.random_number(15, 35))
 
     def draw(self, color=sd.COLOR_WHITE):
-        for i, y in enumerate(self.y_list):
+        for i, y in enumerate(self.y_list):  # TODO Здесь и дальше все циклы убираем
             point = sd.get_point(self.x_list[i], self.y_list[i])
             sd.snowflake(center=point, length=self.snowflake_size[i], color=color)
 
@@ -34,12 +36,13 @@ class Snowflake:
 
     def can_fall(self):
         for i, y in enumerate(self.y_list):
-            if y < 20:
+            if y < 20:  # TODO В этом методе нужно будет возвращать True/False в зависимости от того может ли
+                # TODO эта снежинка упасть. Можно в одну строчку это реализовать, возвращая это условие
                 self.index_list.append(i)
         return self.index_list
 
     def clear_previous_picture(self):
-        sd.clear_screen()
+        sd.clear_screen()  # TODO Тут очистку лучше производить рисованием снежинки в текущей точке цветом фона
 
 
 flake = Snowflake()
