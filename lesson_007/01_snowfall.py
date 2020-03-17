@@ -43,22 +43,18 @@ def get_flakes(count):
 
 def get_fallen_flakes():
     fallen_flakes = []
-    for i in enumerate(flake_list):  # TODO Проверьте, что именно содержится в переменной 'i' (Не только индекс)
-        print(i)
+    for i, y in enumerate(flake_list):
         if not flake.can_fall():
             fallen_flakes.append(i)
-    # TODO Тут ещё бы стоило удалять упавшие снежинки
-    # TODO Как в 6-ом модуле - перевернуть список с индексами, пройти по нему, удаляя элементы
-    # TODO но теперь уже из одного списка вместо трёх
+    fallen_flakes = fallen_flakes[::-1]
+    for count_1 in fallen_flakes:
+        del fallen_flakes[count_1]
     return fallen_flakes
 
 
-def append_flakes(count):  # TODO Нужно использовать параметр count
-    for i in range(fallen_flakes):  # TODO Вот тут
-        flake.x = (sd.random_number(25, 1170))
-        flake.y = sd.random_number(500, 800)
-        flake.snowflake_size = sd.random_number(15, 35)
-        # TODO А тут вместо обновления координат - стоило бы добавлять новые снежинки flake_list.append(Snowflake())
+def append_flakes(count):
+    for i in range(count):
+        flake_list.append(Snowflake())
     return fallen_flakes
 
 
