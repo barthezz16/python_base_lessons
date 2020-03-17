@@ -23,35 +23,67 @@ class Snowflake:
         point = sd.get_point(self.x, self.y)
         sd.snowflake(center=point, length=self.snowflake_size, color=color)
 
-    def move(self, x_position=3, y_position=5):
+    def move(self, x_position=2, y_position=7):
         self.x -= sd.random_number(-x_position, x_position)
         self.y -= y_position
 
     def can_fall(self):
-        while self.y > 20:  # TODO цикл тут точно не нужен, лучше просто напишите return игрик > 20
-            return True
-        else:
-            return False
+        return self.y > 20
 
     def clear_previous_picture(self):
         point = sd.get_point(self.x, self.y)
         sd.snowflake(center=point, length=self.snowflake_size, color=sd.background_color)
 
 
-flake = Snowflake()
+def get_flakes(count):
+    flake = Snowflake()
+    for i in range(count):
+        flake_list.append(flake)
+        return flake_list # TODO не пойму, почему не добавляются снижинки в список...
 
+
+def get_fallen_flakes():
+    fallen_flakes = []
+    if flake.y < -36:
+        fallen_flakes.append(flake)
+    return fallen_flakes
+
+
+def append_flakes(count):
+    flake.x = (sd.random_number(25, 1170))
+    flake.y = sd.random_number(500, 800)
+    flake.snowflake_size = sd.random_number(15, 35)
+
+
+flake_list = []
+flake = Snowflake()
+N = 30
+flakes = get_flakes(count=N)
+print(len(flakes))
 while True:
-    flake.clear_previous_picture()
-    flake.move()
-    flake.draw()
-    if not flake.can_fall():
-        break
+    for flake in flakes:
+        flake.clear_previous_picture()
+        flake.move()
+        flake.draw()
+    fallen_flakes = get_fallen_flakes()
+    if fallen_flakes:
+        append_flakes(count=fallen_flakes)
     sd.sleep(0.1)
     if sd.user_want_exit():
         break
-# TODO Можете приступать к шагу №2
-# TODO Тут нужно будет реализовать несколько отдельных функций
-# TODO Которые будут запускать множество таких снежинок
+
+# while True:
+#     flake.clear_previous_picture()
+#     flake.move()
+#     flake.draw()
+#     if not flake.can_fall():
+#         break
+#     sd.sleep(0.1)
+#     if sd.user_want_exit():
+#         break
+#  Можете приступать к шагу №2
+#  Тут нужно будет реализовать несколько отдельных функций
+#  Которые будут запускать множество таких снежинок
 # шаг 2: создать снегопад - список объектов Снежинка в отдельном списке, обработку примерно так:
 # flakes = get_flakes(count=N)  # создать список снежинок
 # while True:
