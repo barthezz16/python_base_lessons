@@ -14,35 +14,28 @@ sd.resolution = (1200, 800)
 class Snowflake:
 
     def __init__(self):
-        # TODO Списки тут не нужны
-        # TODO у одной снежинки - пара координат (x, y)
-        self.x_list = []
-        self.y_list = []
-        self.snowflake_size = []
+        self.x = (sd.random_number(25, 1170))
+        self.y = sd.random_number(500, 800)
+        self.snowflake_size = sd.random_number(15, 35)
         self.index_list = []
-        self.x_list.append(sd.random_number(25, 1170))
-        self.y_list.append(sd.random_number(0, 800))
-        self.snowflake_size.append(sd.random_number(15, 35))
 
     def draw(self, color=sd.COLOR_WHITE):
-        for i, y in enumerate(self.y_list):  # TODO Здесь и дальше все циклы убираем
-            point = sd.get_point(self.x_list[i], self.y_list[i])
-            sd.snowflake(center=point, length=self.snowflake_size[i], color=color)
+        point = sd.get_point(self.x, self.y)
+        sd.snowflake(center=point, length=self.snowflake_size, color=color)
 
     def move(self, x_position=3, y_position=5):
-        for i, y in enumerate(self.y_list):
-            self.x_list[i] -= sd.random_number(-x_position, x_position)
-            self.y_list[i] -= y_position
+        self.x -= sd.random_number(-x_position, x_position)
+        self.y -= y_position
 
     def can_fall(self):
-        for i, y in enumerate(self.y_list):
-            if y < 20:  # TODO В этом методе нужно будет возвращать True/False в зависимости от того может ли
-                # TODO эта снежинка упасть. Можно в одну строчку это реализовать, возвращая это условие
-                self.index_list.append(i)
-        return self.index_list
+        while self.y > 20:
+            return True
+        else:
+            return False
 
     def clear_previous_picture(self):
-        sd.clear_screen()  # TODO Тут очистку лучше производить рисованием снежинки в текущей точке цветом фона
+        point = sd.get_point(self.x, self.y)
+        sd.snowflake(center=point, length=self.snowflake_size, color=sd.background_color)
 
 
 flake = Snowflake()
