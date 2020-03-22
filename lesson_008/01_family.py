@@ -67,17 +67,15 @@ class Human:
         self.total_furs = 0
 
     def __str__(self):
-        return 'Я - {}, сытость - {}, счастья - {}'.format(self.name, self.fullness, self.happiness)
+        return 'Я - {}, сытость {}, счастья {}'.format(self.name, self.fullness, self.happiness)
 
     def eat(self):
         portion_size = randint(15, 30)
         if portion_size > self.house.food:
-            return self.house.food  # TODO Если нужно прервать функцию, лучше использовать return None
-        # TODO Чтобы по результату функции было понятно, что она не сработала
+            portion_size = self.house.food
         else:
             portion_size = portion_size
-        if self.house.food >= 10:  # TODO Тут вместо 10 стоит проверять на portion_size
-            # TODO Ведь в итоге эта переменная и будет отниматься
+        if self.house.food >= portion_size:
             cprint('{} поел(а)'.format(self.name), color='yellow')
             self.fullness += portion_size
             self.total_food += portion_size
@@ -87,10 +85,6 @@ class Human:
 
 
 class Husband(Human):
-
-    def __init__(self, name):
-        super().__init__(name=name)  # TODO переопределять метод без внесения изменений не нужно
-    # TODO Он и так вызовет родительский метод
 
     def __str__(self):
         return 'Я - {}, сытость - {}, счастья - {}'.format(self.name, self.fullness, self.happiness)
@@ -104,7 +98,7 @@ class Husband(Human):
             return
         if self.fullness <= 20:
             self.eat()
-        elif self.house.money > 500 and self.happiness < 40:
+        elif self.house.money > 300 and self.happiness < 40:
             self.gaming()
         else:
             self.work()
@@ -127,15 +121,11 @@ class Husband(Human):
 
 class Wife(Human):
 
-    def __init__(self, name):
-        super().__init__(name=name)  # TODO Можно убрать
-
-
-    # TODO Code/Reformat Code
     def __str__(self):
         return 'Я - {}, сытость {}, счастья {}'.format(self.name, self.fullness, self.happiness)
 
     def act(self):
+        dice = randint(1, 5)
         self.house.clean += 5
         if self.fullness <= 0:
             cprint('{} умер...'.format(self.name), color='red')
@@ -145,22 +135,23 @@ class Wife(Human):
             return
         if self.house.clean >= 90:
             self.happiness -= 10
-        if self.fullness <= 20:
-            self.eat()
-        elif self.house.food < 20:
+        if self.house.food < 20:
             self.shopping()
+        elif self.fullness <= 20:
+            self.eat()
         elif self.house.clean > 80:
             self.clean_house()
-        elif self.house.money > 400 and self.happiness < 60:
+        elif self.house.money > 400 and self.happiness <= 40:
+            self.buy_fur_coat()
+        elif dice == 1:
             self.buy_fur_coat()
         else:
             cprint('{} скучает'.format(self.name), color='magenta')
 
     def shopping(self):
-        food_amount = randint(25, 100)
+        food_amount = randint(50, 100)
         self.fullness -= 10
-        if self.house.money >= 50:  # TODO Тут то же, что и с едой, нужно проверять не 50, а то,
-            # TODO Что будет вычтено из бюджета
+        if self.house.money >= food_amount:
             cprint('{} сходила в магазин за едой'.format(self.name), color='magenta')
             self.house.money -= food_amount
             self.house.food += food_amount
@@ -170,7 +161,7 @@ class Wife(Human):
 
     def buy_fur_coat(self):
         if self.house.money >= 350:
-            cprint('{} купила очередную щубу'.format(self.name), color='magenta')
+            cprint('{} купила очередную шубу'.format(self.name), color='magenta')
             self.house.money -= 350
             self.happiness += 60
             self.fullness -= 10
@@ -179,7 +170,7 @@ class Wife(Human):
     def clean_house(self):
         cprint('{} убралась дома'.format(self.name), color='blue')
         self.house.clean -= 80
-        self.fullness -= 20
+        self.fullness -= 10
         self.happiness -= 10
 
     def go_to_the_house(self, house):
@@ -204,8 +195,6 @@ cprint('{} съел еды - {}'.format(serge.name, serge.total_food), color='ye
 cprint('{} заработал денег - {}'.format(serge.name, serge.total_money), color='yellow')
 cprint('{} съела еды - {}'.format(masha.name, masha.total_food), color='yellow')
 cprint('{} купила шуб - {}'.format(masha.name, masha.total_furs), color='yellow')
-
-
 
 
 # TODO после реализации первой части - отдать на проверку учителю
