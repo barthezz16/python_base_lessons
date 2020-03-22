@@ -54,8 +54,7 @@ def get_fallen_flakes():
 
 def append_flakes(count):
     for i in range(count):
-        flake_list.append(Snowflake()) # TODO а тут согласен... мы же просто создаем новые объекты,
-        # TODO ничего не надо возвращать
+        flake_list.append(Snowflake())
 
 
 flake_list = []
@@ -68,9 +67,7 @@ while True:
         flake.draw()
     fallen_flakes = get_fallen_flakes()
     if fallen_flakes:
-        append_flakes(count=len(fallen_flakes))  # TODO вот тут как раз я и не могу понять,
-        # TODO просто тут так было изначально написано что принимает список,
-        # TODO вот я и думал что надо под этот код подстроить и не понял как...
+        append_flakes(count=len(fallen_flakes))
     sd.sleep(0.05)
     if sd.user_want_exit():
         break
@@ -102,3 +99,4 @@ while True:
 #         break
 
 sd.pause()
+#зачет!
