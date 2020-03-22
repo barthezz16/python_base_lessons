@@ -55,7 +55,7 @@ class House:
             self.food, self.money, self.clean)
 
 
-class Husband:
+class Human:
 
     def __init__(self, name):
         self.name = name
@@ -64,6 +64,30 @@ class Husband:
         self.house = None
         self.total_food = 0
         self.total_money = 0
+        self.total_furs = 0
+
+    def __str__(self):
+        return 'Я - {}, сытость - {}, счастья - {}'.format(self.name, self.fullness, self.happiness)
+
+    def eat(self):
+        portion_size = randint(15, 30)
+        if portion_size > self.house.food:
+            return self.house.food
+        else:
+            portion_size = portion_size
+        if self.house.food >= 10:
+            cprint('{} поел(а)'.format(self.name), color='yellow')
+            self.fullness += portion_size
+            self.total_food += portion_size
+            self.house.food -= portion_size
+        else:
+            cprint('{} нет еды'.format(self.name), color='red')
+
+
+class Husband(Human):
+
+    def __init__(self, name):
+        super().__init__(name=name)
 
     def __str__(self):
         return 'Я - {}, сытость - {}, счастья - {}'.format(self.name, self.fullness, self.happiness)
@@ -82,20 +106,6 @@ class Husband:
         else:
             self.work()
 
-    def eat(self):
-        portion_size = randint(15, 30)
-        if portion_size > self.house.food:
-            return self.house.food
-        else:
-            portion_size = portion_size
-        if self.house.food >= 10:
-            cprint('{} поел'.format(self.name), color='yellow')
-            self.fullness += portion_size
-            self.total_food += portion_size
-            self.house.food -= portion_size
-        else:
-            cprint('{} нет еды'.format(self.name), color='red')
-
     def work(self):
         cprint('{} сходил на работу'.format(self.name), color='blue')
         self.house.money += 150
@@ -112,18 +122,15 @@ class Husband:
         self.house = house
 
 
-class Wife:
+class Wife(Human):
 
     def __init__(self, name):
-        self.name = name
-        self.happiness = 100
-        self.fullness = 30
-        self.house = None
-        self.total_food = 0
-        self.total_furs = 0
+        super().__init__(name=name)
+
+
 
     def __str__(self):
-        return 'Я - {}, сытость - {}, счастья - {}'.format(self.name, self.fullness, self.happiness)
+        return 'Я - {}, сытость {}, счастья {}'.format(self.name, self.fullness, self.happiness)
 
     def act(self):
         self.house.clean += 5
@@ -134,7 +141,7 @@ class Wife:
             cprint('{} умер от депрессии'.format(self.name), color='red')
             return
         if self.house.clean >= 90:
-            self.clean_house()
+            self.happiness -= 10
         if self.fullness <= 20:
             self.eat()
         elif self.house.food < 20:
@@ -144,21 +151,7 @@ class Wife:
         elif self.house.money > 400 and self.happiness < 60:
             self.buy_fur_coat()
         else:
-            self.eat()
-
-    def eat(self):
-        portion_size = randint(15, 30)
-        if portion_size > self.house.food:
-            return self.house.food
-        else:
-            portion_size = portion_size
-        if self.house.food >= 0:
-            cprint('{} поела'.format(self.name), color='yellow')
-            self.fullness += portion_size
-            self.total_food += portion_size
-            self.house.food -= portion_size
-        else:
-            cprint('{} нет еды'.format(self.name), color='red')
+            cprint('{} скучает'.format(self.name), color='magenta')
 
     def shopping(self):
         food_amount = randint(25, 100)
@@ -207,6 +200,7 @@ cprint('{} съел еды - {}'.format(serge.name, serge.total_food), color='ye
 cprint('{} заработал денег - {}'.format(serge.name, serge.total_money), color='yellow')
 cprint('{} съела еды - {}'.format(masha.name, masha.total_food), color='yellow')
 cprint('{} купила шуб - {}'.format(masha.name, masha.total_furs), color='yellow')
+
 
 
 
