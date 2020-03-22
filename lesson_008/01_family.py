@@ -72,10 +72,12 @@ class Human:
     def eat(self):
         portion_size = randint(15, 30)
         if portion_size > self.house.food:
-            return self.house.food
+            return self.house.food  # TODO Если нужно прервать функцию, лучше использовать return None
+        # TODO Чтобы по результату функции было понятно, что она не сработала
         else:
             portion_size = portion_size
-        if self.house.food >= 10:
+        if self.house.food >= 10:  # TODO Тут вместо 10 стоит проверять на portion_size
+            # TODO Ведь в итоге эта переменная и будет отниматься
             cprint('{} поел(а)'.format(self.name), color='yellow')
             self.fullness += portion_size
             self.total_food += portion_size
@@ -87,7 +89,8 @@ class Human:
 class Husband(Human):
 
     def __init__(self, name):
-        super().__init__(name=name)
+        super().__init__(name=name)  # TODO переопределять метод без внесения изменений не нужно
+    # TODO Он и так вызовет родительский метод
 
     def __str__(self):
         return 'Я - {}, сытость - {}, счастья - {}'.format(self.name, self.fullness, self.happiness)
@@ -125,10 +128,10 @@ class Husband(Human):
 class Wife(Human):
 
     def __init__(self, name):
-        super().__init__(name=name)
+        super().__init__(name=name)  # TODO Можно убрать
 
 
-
+    # TODO Code/Reformat Code
     def __str__(self):
         return 'Я - {}, сытость {}, счастья {}'.format(self.name, self.fullness, self.happiness)
 
@@ -156,7 +159,8 @@ class Wife(Human):
     def shopping(self):
         food_amount = randint(25, 100)
         self.fullness -= 10
-        if self.house.money >= 50:
+        if self.house.money >= 50:  # TODO Тут то же, что и с едой, нужно проверять не 50, а то,
+            # TODO Что будет вычтено из бюджета
             cprint('{} сходила в магазин за едой'.format(self.name), color='magenta')
             self.house.money -= food_amount
             self.house.food += food_amount
@@ -205,7 +209,6 @@ cprint('{} купила шуб - {}'.format(masha.name, masha.total_furs), color
 
 
 # TODO после реализации первой части - отдать на проверку учителю
-
 ######################################################## Часть вторая
 #
 # После подтверждения учителем первой части надо
