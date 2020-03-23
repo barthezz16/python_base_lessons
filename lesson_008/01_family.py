@@ -177,24 +177,24 @@ class Wife(Human):
         self.house = house
 
 
-home = House()
-serge = Husband(name='Сережа')
-masha = Wife(name='Маша')
-serge.go_to_the_house(house=home)
-masha.go_to_the_house(house=home)
-
-for day in range(365):
-    cprint('================== День {} =================='.format(day), color='red')
-    serge.act()
-    masha.act()
-    cprint(serge, color='cyan')
-    cprint(masha, color='cyan')
-    cprint(home, color='cyan')
-
-cprint('{} съел еды - {}'.format(serge.name, serge.total_food), color='yellow')
-cprint('{} заработал денег - {}'.format(serge.name, serge.total_money), color='yellow')
-cprint('{} съела еды - {}'.format(masha.name, masha.total_food), color='yellow')
-cprint('{} купила шуб - {}'.format(masha.name, masha.total_furs), color='yellow')
+# home = House()
+# serge = Husband(name='Сережа')
+# masha = Wife(name='Маша')
+# serge.go_to_the_house(house=home)
+# masha.go_to_the_house(house=home)
+#
+# for day in range(365):
+#     cprint('================== День {} =================='.format(day), color='red')
+#     serge.act()
+#     masha.act()
+#     cprint(serge, color='cyan')
+#     cprint(masha, color='cyan')
+#     cprint(home, color='cyan')
+#
+# cprint('{} съел еды - {}'.format(serge.name, serge.total_food), color='yellow')
+# cprint('{} заработал денег - {}'.format(serge.name, serge.total_money), color='yellow')
+# cprint('{} съела еды - {}'.format(masha.name, masha.total_food), color='yellow')
+# cprint('{} купила шуб - {}'.format(masha.name, masha.total_furs), color='yellow')
 
 
 # TODO Можете приступать к частям 2 и 2бис
@@ -252,22 +252,37 @@ class Cat:
 # отличия от взрослых - кушает максимум 10 единиц еды,
 # степень счастья  - не меняется, всегда ==100 ;)
 
-class Child:
-
-    def __init__(self):
-        pass
+class Child(Human):
 
     def __str__(self):
-        return super().__str__()
+        return 'Я - {}, сытость {}, счастья {}'.format(self.name, self.fullness, self.happiness)
 
     def act(self):
-        pass
+        if self.fullness <= 10:
+            self.eat()
+        else:
+            self.sleep()
 
     def eat(self):
-        pass
+        portion_size = 10
+        if portion_size > self.house.food:
+            portion_size = self.house.food
+        else:
+            portion_size = portion_size
+        if self.house.food >= portion_size:
+            cprint('{} поел(а)'.format(self.name), color='yellow')
+            self.fullness += portion_size
+            self.total_food += portion_size
+            self.house.food -= portion_size
+        else:
+            cprint('{} нет еды'.format(self.name), color='red')
 
     def sleep(self):
-        pass
+        cprint('{} спал весь день'.format(self.name), color='yellow')
+
+    def go_to_the_house(self, house):
+        self.house = house
+
 
 # TODO после реализации второй части - отдать на проверку учителем две ветки
 
@@ -279,22 +294,29 @@ class Child:
 # отправить на проверку учителем.
 
 
-# home = House()
-# serge = Husband(name='Сережа')
-# masha = Wife(name='Маша')
-# kolya = Child(name='Коля')
-# murzik = Cat(name='Мурзик')
-#
-# for day in range(365):
-#     cprint('================== День {} =================='.format(day), color='red')
-#     serge.act()
-#     masha.act()
-#     kolya.act()
-#     murzik.act()
-#     cprint(serge, color='cyan')
-#     cprint(masha, color='cyan')
-#     cprint(kolya, color='cyan')
-#     cprint(murzik, color='cyan')
+home = House()
+serge = Husband(name='Сережа')
+masha = Wife(name='Маша')
+kolya = Child(name='Коля')
+serge.go_to_the_house(house=home)
+masha.go_to_the_house(house=home)
+kolya.go_to_the_house(house=home)
+
+for day in range(365):
+    cprint('================== День {} =================='.format(day), color='red')
+    serge.act()
+    masha.act()
+    kolya.act()
+    cprint(serge, color='cyan')
+    cprint(masha, color='cyan')
+    cprint(kolya, color='cyan')
+    cprint(home, color='cyan')
+
+cprint('{} съел еды - {}'.format(serge.name, serge.total_food), color='yellow')
+cprint('{} съел еды - {}'.format(kolya.name, serge.total_food), color='yellow')
+cprint('{} заработал денег - {}'.format(serge.name, serge.total_money), color='yellow')
+cprint('{} съела еды - {}'.format(masha.name, masha.total_food), color='yellow')
+cprint('{} купила шуб - {}'.format(masha.name, masha.total_furs), color='yellow')
 
 # Усложненное задание (делать по желанию)
 #
