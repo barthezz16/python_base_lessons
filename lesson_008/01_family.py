@@ -346,15 +346,18 @@ class Child(Human):
 home = House()
 serge = Husband(name='Сережа')
 masha = Wife(name='Маша')
+murzik = Cat(name='Мурзик')
 kolya = Child(name='Коля')
 serge.go_to_the_house(house=home)
 masha.go_to_the_house(house=home)
+murzik.go_to_the_house(house=home)
 kolya.go_to_the_house(house=home)
 
 for day in range(365):
     cprint('================== День {} =================='.format(day), color='red')
     serge.act()
     masha.act()
+    murzik.act()
     kolya.act()
     cprint(serge, color='cyan')
     cprint(masha, color='cyan')
@@ -362,10 +365,24 @@ for day in range(365):
     cprint(home, color='cyan')
 
 cprint('{} съел еды - {}'.format(serge.name, serge.total_food), color='yellow')
+cprint('{} съел еды - {}'.format(murzik.name, murzik.cat_total_food), color='yellow')
 cprint('{} съел еды - {}'.format(kolya.name, serge.total_food), color='yellow')
-cprint('{} заработал денег - {}'.format(serge.name, serge.total_money), color='yellow')
 cprint('{} съела еды - {}'.format(masha.name, masha.total_food), color='yellow')
+cprint('{} заработал денег - {}'.format(serge.name, serge.total_money), color='yellow')
 cprint('{} купила шуб - {}'.format(masha.name, masha.total_furs), color='yellow')
+
+
+home = House()
+serge = Husband(name='Сережа')
+masha = Wife(name='Маша')
+# kolya = Child(name='Коля')
+murzik = Cat(name='Мурзик')
+serge.go_to_the_house(house=home)
+masha.go_to_the_house(house=home)
+murzik.go_to_the_house(house=home)
+
+
+
 
 # Усложненное задание (делать по желанию)
 #
