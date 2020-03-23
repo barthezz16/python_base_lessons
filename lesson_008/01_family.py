@@ -151,7 +151,7 @@ class Wife(Human):
             self.clean_house()
         elif self.happiness <= 40:
             self.stroke_cat()
-        elif self.house.money > 400 and self.happiness <= 40:
+        elif self.house.money > 500 and self.happiness <= 40:
             self.buy_fur_coat()
         elif dice == 1:
             self.buy_fur_coat()
@@ -209,8 +209,6 @@ class Wife(Human):
 # cprint('{} купила шуб - {}'.format(masha.name, masha.total_furs), color='yellow')
 
 
-
-# TODO Можете приступать к частям 2 и 2бис
 ######################################################## Часть вторая
 #
 # После подтверждения учителем первой части надо
@@ -271,7 +269,7 @@ class Cat:
             cats_portion_size = cats_portion_size
         if self.house.cats_food >= cats_portion_size:
             cprint('{} поел(а)'.format(self.name), color='yellow')
-            self.fullness += cats_portion_size*2
+            self.fullness += cats_portion_size * 2
             self.cat_total_food += cats_portion_size
             self.house.cats_food -= cats_portion_size
         else:
@@ -333,9 +331,6 @@ class Child(Human):
         self.house = house
 
 
-# TODO Ветка готова к слиянию
-
-
 ######################################################## Часть третья
 #
 # после подтверждения учителем второй части (обоих веток)
@@ -370,19 +365,6 @@ cprint('{} съел еды - {}'.format(kolya.name, serge.total_food), color='ye
 cprint('{} съела еды - {}'.format(masha.name, masha.total_food), color='yellow')
 cprint('{} заработал денег - {}'.format(serge.name, serge.total_money), color='yellow')
 cprint('{} купила шуб - {}'.format(masha.name, masha.total_furs), color='yellow')
-
-
-home = House()
-serge = Husband(name='Сережа')
-masha = Wife(name='Маша')
-# kolya = Child(name='Коля')
-murzik = Cat(name='Мурзик')
-serge.go_to_the_house(house=home)
-masha.go_to_the_house(house=home)
-murzik.go_to_the_house(house=home)
-
-
-
 
 # Усложненное задание (делать по желанию)
 #
