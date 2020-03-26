@@ -45,17 +45,40 @@ class Counter:
                         self.stat[char] += 1
                     else:
                         self.stat[char] = 1
-            print('+{txt:-^21}+'.format(txt='+'))
-            print('|{txt:^10}|'.format(txt='Буква') + '{txt:^10}|'.format(txt='Частота'))
-            print('+{txt:-^21}+'.format(txt='+'))
-            # TODO Сортировку надо вынести в отдельный метод
-            for key in sorted(self.stat):
-                if key.isalpha():
-                    print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
-        # TODO Как и принты, их тоже хорошо бы в отдельные методы вынести
+            self.print_header()
+            self.sorting_a_to_z()
+            self.print_total()
+            self.print_header()
+            self.sorting_z_to_a()
+            self.print_total()
+
+
+    def print_header(self):
+        print('+{txt:-^21}+'.format(txt='+'))
+        print('|{txt:^10}|'.format(txt='Буква') + '{txt:^10}|'.format(txt='Частота'))
+        print('+{txt:-^21}+'.format(txt='+'))
+
+    def print_total(self):
         print('+{txt:-^21}+'.format(txt='+'))
         print('|{txt:^10}|'.format(txt='Итого') + '{txt:^10}|'.format(txt=sum(self.stat.values())))
         print('+{txt:-^21}+'.format(txt='+'))
+
+    def sorting_a_to_z(self):
+        for key in sorted(self.stat):
+            if key.isalpha():
+                print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
+
+    def sorting_z_to_a(self):
+        for key in sorted(self.stat, reverse=True):
+            if key.isalpha():
+                print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
+
+    def sorting_0_to_9(self):
+        for key in sorted(self.stat, reverse=True):   #TODO что тут я не совсем понял как отсортировать по значаниям так
+            if key.isalpha():   # TODO чтобы тут прошла проверка isalpha
+                print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
+
+
 
 
 counter = Counter(file_name='voyna-i-mir.txt.zip')
