@@ -20,20 +20,26 @@
 # Требования к коду: он должен быть готовым к расширению функциональности. Делать сразу на классах.
 from pprint import pprint
 
-file = 'events.txt'
-count = 0
-item_to_find = 'NOK'
-stat = {}
-with open(file, mode='r') as file:
-    for line in file:
-        if item_to_find in line:
-            if item_to_find in stat:
-                stat[item_to_find] += 1
-            else:
-                stat[item_to_find] = 1
-pprint(stat)
+
+class LogParser:
+    def __init__(self, file_name):
+        self.file_name = file_name
+        self.stat = {}
+        self.item_to_find = 'NOK'
+
+    def stat_collector(self):
+        with open(self.file_name, mode='r') as file:
+            for line in file:
+                if self.item_to_find in line:
+                    if str(line[1:-16]) in self.stat:
+                        self.stat[str(line[1:-16])] += 1
+                        print(f'[{str(line[1:-16]):^16}]' + f'{self.stat.get(str(line[1:-16])):^5}')
+                    else:
+                        self.stat[str(line[1:-16])] = 1
 
 
+parser = LogParser(file_name='events.txt')
+parser.stat_collector()
 
 # После выполнения первого этапа нужно сделать группировку событий
 #  - по часам
