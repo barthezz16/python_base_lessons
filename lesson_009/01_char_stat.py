@@ -59,6 +59,7 @@ class Counter:
 counter = Counter(file_name='voyna-i-mir.txt.zip')
 counter.collect_stat()
 
+
 # После выполнения первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
 #  - по алфавиту по возрастанию
