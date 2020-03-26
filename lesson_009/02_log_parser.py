@@ -18,8 +18,22 @@
 #
 # Входные параметры: файл для анализа, файл результата
 # Требования к коду: он должен быть готовым к расширению функциональности. Делать сразу на классах.
+from pprint import pprint
 
-# TODO здесь ваш код
+file = 'events.txt'
+count = 0
+item_to_find = 'NOK'
+stat = {}
+with open(file, mode='r') as file:
+    for line in file:
+        if item_to_find in line:
+            if item_to_find in stat:
+                stat[item_to_find] += 1
+            else:
+                stat[item_to_find] = 1
+pprint(stat)
+
+
 
 # После выполнения первого этапа нужно сделать группировку событий
 #  - по часам
