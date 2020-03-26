@@ -33,6 +33,8 @@ class LogParser:
                 if self.item_to_find in line:
                     if str(line[1:-16]) in self.stat:
                         self.stat[str(line[1:-16])] += 1
+                        # TODO Принт нужен не здесь, наверное лучше и тут принты в отдельный метод
+                        # TODO Чтобы распечатать потом все данные
                         print(f'[{str(line[1:-16]):^16}]' + f'{self.stat.get(str(line[1:-16])):^5}')
                     else:
                         self.stat[str(line[1:-16])] = 1

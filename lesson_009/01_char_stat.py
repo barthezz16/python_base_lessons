@@ -48,9 +48,11 @@ class Counter:
             print('+{txt:-^21}+'.format(txt='+'))
             print('|{txt:^10}|'.format(txt='Буква') + '{txt:^10}|'.format(txt='Частота'))
             print('+{txt:-^21}+'.format(txt='+'))
+            # TODO Сортировку надо вынести в отдельный метод
             for key in sorted(self.stat):
                 if key.isalpha():
                     print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
+        # TODO Как и принты, их тоже хорошо бы в отдельные методы вынести
         print('+{txt:-^21}+'.format(txt='+'))
         print('|{txt:^10}|'.format(txt='Итого') + '{txt:^10}|'.format(txt=sum(self.stat.values())))
         print('+{txt:-^21}+'.format(txt='+'))
@@ -59,7 +61,7 @@ class Counter:
 counter = Counter(file_name='voyna-i-mir.txt.zip')
 counter.collect_stat()
 
-
+# TODO + надо добавить остальные сортировки
 # После выполнения первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
 #  - по алфавиту по возрастанию
