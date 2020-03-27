@@ -45,6 +45,8 @@ class Counter:
                         self.stat[char] += 1
                     else:
                         self.stat[char] = 1
+            # TODO тут оставьте только создание данных
+            # TODO Вызов всех принтов и сортировки - в отдельном методе, каком-нибудь run()
             self.print_header()
             self.sorting_a_to_z()
             self.print_total()
@@ -74,8 +76,16 @@ class Counter:
                 print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
 
     def sorting_0_to_9(self):
-        for key in sorted(self.stat, reverse=True):   #TODO что тут я не совсем понял как отсортировать по значаниям так
-            if key.isalpha():   # TODO чтобы тут прошла проверка isalpha
+        for key in sorted(self.stat, reverse=True):
+            # что тут я не совсем понял как отсортировать по значаниям так
+            # TODO вообще эту проверку стоит производить при формировании данных
+            # TODO А так у вас проверка вполне себе проходит
+            # TODO Правда сортировка эта идентична sorting_z_to_a
+            # TODO Для сортировки по значениям можно использовать параметр Key
+            # TODO sorted(self.stat, key=lambda x: x[1], reverse=True)
+            # TODO Кажется так. Так, когда функция будет получать пару значений (а, 2) она будет брать второе(индекс 1)
+            # TODO И по нему уже сортировать
+            if key.isalpha():   # чтобы тут прошла проверка isalpha
                 print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
 
 
@@ -83,6 +93,7 @@ class Counter:
 
 counter = Counter(file_name='voyna-i-mir.txt.zip')
 counter.collect_stat()
+counter.sorting_0_to_9()
 
 # TODO + надо добавить остальные сортировки
 # После выполнения первого этапа нужно сделать упорядочивание статистики
