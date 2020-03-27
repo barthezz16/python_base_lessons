@@ -75,7 +75,8 @@ class Counter:
                 print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
 
     def sorting_0_to_9(self):
-        for key in sorted(self.stat.items(), key=lambda x: x[1], reverse=True):
+        for key in sorted(self.stat.items(), key=lambda x: x[1], reverse=True): #TODO ну поидее то все верно....
+            # TODO но почему не проходит проверка пока не понимаю...
             if self.stat[0].isalpha():  # чтобы тут прошла проверка isalpha
                 print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
 
