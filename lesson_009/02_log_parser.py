@@ -51,13 +51,13 @@ class LogParser:
         print(f'[{str(line[1:-16]):^16}]' + f'{self.stat.get(str(line[1:-16])):^5}')
 
     def print_by_hours(self, line):
-        print(f'[{str(line[1:-16]):^12}]' + f'{self.stat.get(str(line[1:-16])):^5}')
+        print(f'[{str(line[1:-19]):^12}]' + f'{self.stat.get(str(line[1:-19])):^5}')
 
 
 parser = LogParser(file_name='events.txt')
 minutes_line = parser.stat_collector_by_minutes()
 parser.print_by_minutes(line=minutes_line)
-hours_line = parser.stat_collector_by_minutes()
+hours_line = parser.stat_collector_by_hours()
 parser.print_by_hours(line=hours_line)
 
 
