@@ -41,12 +41,14 @@ class Counter:
         with open(self.file_name, 'r', encoding='cp1251') as file:
             for line in file:
                 for char in line[:-1]:
+                    # TODO Вот сюда - если char - буква, то считать её, если нет - то не считать
                     if char in self.stat:
                         self.stat[char] += 1
                     else:
                         self.stat[char] = 1
             # TODO тут оставьте только создание данных
             # TODO Вызов всех принтов и сортировки - в отдельном методе, каком-нибудь run()
+            # TODO Это тоже надо выполнить
             # self.print_header()
             # self.sorting_a_to_z()
             # self.print_total()
@@ -75,20 +77,25 @@ class Counter:
                 print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
 
     def sorting_0_to_9(self):
-        for key in sorted(self.stat.items(), key=lambda x: x[1], reverse=True): #TODO ну поидее то все верно....
-            # TODO но почему не проходит проверка пока не понимаю...
+        for key in sorted(self.stat.items(), key=lambda x: x[1], reverse=True):
+            # TODO Так вы бы глянули, что пытаетесь проверить :)
+            print(key)  # TODO А в key 2 элемента - нужно выбрать один
+            print(self.stat)  # TODO Тут вот нет ключа 0
+            # ну поидее то все верно....
+            # но почему не проходит проверка пока не понимаю...
             if self.stat[0].isalpha():  # чтобы тут прошла проверка isalpha
+                # TODO Но как я и сказал, лучше эту проверку перенести вверх
                 print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
 
 
 counter = Counter(file_name='voyna-i-mir.txt.zip')
 counter.collect_stat()
-counter.print_header()
-counter.sorting_a_to_z()
-counter.print_total()
-counter.print_header()
-counter.sorting_z_to_a()
-counter.print_total()
+# counter.print_header()
+# counter.sorting_a_to_z()
+# counter.print_total()
+# counter.print_header()
+# counter.sorting_z_to_a()
+# counter.print_total()
 counter.print_header()
 counter.sorting_0_to_9()
 counter.print_total()

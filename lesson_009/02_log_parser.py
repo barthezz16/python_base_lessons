@@ -41,7 +41,8 @@ class LogParser:
         for i in self.stat:
             print(i, self.stat[i])
 
-
+# TODO Верно, только теперь нужно это поместить в класс
+# TODO Так, чтобы было 4 метода, каждый чтобы выводил информацию с нужной группировкой
 param_for_minutes = 16
 param_for_hours = 19
 param_for_mounth = 25
