@@ -80,12 +80,18 @@ class Counter:
             print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
 
     def sorting_0_to_9(self):
-        for key in sorted(self.stat.items(), key=lambda x: x[1]): # TODO Почему тут не поддерживается форматирование строк?
-            print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|') # TODO Выше то тоже самое и там все ok?
+        for key in sorted(self.stat.items(), key=lambda x: x[1]):
+            # Почему тут не поддерживается форматирование строк?
+            print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
+            # TODO Поддерживается, посмотрите просто что тут возвращается, сделайте print(key)
+            # TODO Тут нужно будет по индексам обращаться вместо self.stat.get(key)
+            # Выше то тоже самое и там все ok?
 
     def sorting_9_to_0(self):
         for key in sorted(self.stat.items(), key=lambda x: x[1], reverse=True):
-            print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
+            print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')  # TODO И тут
+            # TODO Выше всё ок, потому что без items() сортируются только ключи словаря
+            # TODO А с items возвращаются не только ключи, но и значения
 
 
 counter = Counter(file_name='voyna-i-mir.txt.zip')

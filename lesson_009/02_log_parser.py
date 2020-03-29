@@ -41,6 +41,9 @@ class LogParser:
     def print_stat(self):
         for i in self.stat:
             print(i, self.stat[i])
+    # TODO Нужны вот такие методы на каждый тип группировки
+    # деф minute_collector(сэлф)
+    #     стат_коллектор(парам=16)
 
 
 parser = LogParser(file_name='events.txt')
