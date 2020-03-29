@@ -43,21 +43,11 @@ class LogParser:
             print(i, self.stat[i])
 
 
-param_for_minutes = 16
-param_for_hours = 19
-param_for_mounth = 25
-param_for_year = 28
-
 parser = LogParser(file_name='events.txt')
-# TODO Нет, вы не совсем верно меня поняли
-# TODO Нужны отдельные методы, которые будут запускать этот коллектор с нужными параметрами
-# TODO Представьте, что у вас будет пользователь, который импортирует ваш класс в свой модуль
-# TODO И будет пытаться запускать методы. Но без переменных, которые вы указали вне класса - у него ничего не получится
-# TODO Для решения этой задачки можно создать 4 метода, которые будут запускать работу с нужными параметрами
-parser.stat_collector(param_for_minutes)
-parser.stat_collector(param_for_hours)
-parser.stat_collector(param_for_mounth)
-parser.stat_collector(param_for_year)
+parser.stat_collector(param=16)
+parser.stat_collector(param=19)
+parser.stat_collector(param=25)
+parser.stat_collector(param=28)
 
 # После выполнения первого этапа нужно сделать группировку событий
 #  - по часам
