@@ -80,12 +80,13 @@ class Counter:
             print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
 
     def sorting_0_to_9(self):
-        for key in sorted(self.stat, key=lambda x: x[
-            1]):  # TODO Маским, хоть убейте, не могу понять что именно в этой строчке не так...
+        for key in sorted(self.stat, key=lambda x: x[1]):
+            # Маским, хоть убейте, не могу понять что именно в этой строчке не так...
+            # TODO нужно к self.stat добавить .items(), чтобы сортировался массив пар ключ+значение
             print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
 
     def sorting_9_to_0(self):
-        for key in sorted(self.stat, key=lambda x: x[1], reverse=True):
+        for key in sorted(self.stat, key=lambda x: x[1], reverse=True):  # TODO И тут
             print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
 
 
