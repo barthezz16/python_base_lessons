@@ -41,20 +41,25 @@ class Counter:
         with open(self.file_name, 'r', encoding='cp1251') as file:
             for line in file:
                 for char in line[:-1]:
-                    # TODO Вот сюда - если char - буква, то считать её, если нет - то не считать
-                    if char in self.stat:
-                        self.stat[char] += 1
-                    else:
-                        self.stat[char] = 1
-            # TODO тут оставьте только создание данных
-            # TODO Вызов всех принтов и сортировки - в отдельном методе, каком-нибудь run()
-            # TODO Это тоже надо выполнить
-            # self.print_header()
-            # self.sorting_a_to_z()
-            # self.print_total()
-            # self.print_header()
-            # self.sorting_z_to_a()
-            # self.print_total()
+                    if char.isalpha():
+                        if char in self.stat:
+                            self.stat[char] += 1
+                        else:
+                            self.stat[char] = 1
+
+    def run(self):
+        self.print_header()
+        self.sorting_a_to_z()
+        self.print_total()
+        self.print_header()
+        self.sorting_z_to_a()
+        self.print_total()
+        self.print_header()
+        self.sorting_0_to_9()
+        self.print_total()
+        self.print_header()
+        self.sorting_9_to_0()
+        self.print_total()
 
     def print_header(self):
         print('+{txt:-^21}+'.format(txt='+'))
@@ -68,39 +73,26 @@ class Counter:
 
     def sorting_a_to_z(self):
         for key in sorted(self.stat):
-            if key.isalpha():
-                print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
+            print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
 
     def sorting_z_to_a(self):
         for key in sorted(self.stat, reverse=True):
-            if key.isalpha():
-                print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
+            print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
 
     def sorting_0_to_9(self):
-        for key in sorted(self.stat.items(), key=lambda x: x[1], reverse=True):
-            # TODO Так вы бы глянули, что пытаетесь проверить :)
-            print(key)  # TODO А в key 2 элемента - нужно выбрать один
-            print(self.stat)  # TODO Тут вот нет ключа 0
-            # ну поидее то все верно....
-            # но почему не проходит проверка пока не понимаю...
-            if self.stat[0].isalpha():  # чтобы тут прошла проверка isalpha
-                # TODO Но как я и сказал, лучше эту проверку перенести вверх
-                print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
+        for key in sorted(self.stat, key=lambda x: x[
+            1]):  # TODO Маским, хоть убейте, не могу понять что именно в этой строчке не так...
+            print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
+
+    def sorting_9_to_0(self):
+        for key in sorted(self.stat, key=lambda x: x[1], reverse=True):
+            print(f'|{key:^10}|' + f'{self.stat.get(key):^10}|')
 
 
 counter = Counter(file_name='voyna-i-mir.txt.zip')
 counter.collect_stat()
-# counter.print_header()
-# counter.sorting_a_to_z()
-# counter.print_total()
-# counter.print_header()
-# counter.sorting_z_to_a()
-# counter.print_total()
-counter.print_header()
-counter.sorting_0_to_9()
-counter.print_total()
+counter.run()
 
-# TODO + надо добавить остальные сортировки
 # После выполнения первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
 #  - по алфавиту по возрастанию
