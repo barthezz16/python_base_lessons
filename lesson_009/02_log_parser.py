@@ -36,13 +36,13 @@ class LogParser:
                         self.stat[str(line[1:-param])] += 1
                     else:
                         self.stat[str(line[1:-param])] = 1
+            self.print_stat()
 
     def print_stat(self):
         for i in self.stat:
             print(i, self.stat[i])
 
-# TODO Верно, только теперь нужно это поместить в класс
-# TODO Так, чтобы было 4 метода, каждый чтобы выводил информацию с нужной группировкой
+
 param_for_minutes = 16
 param_for_hours = 19
 param_for_mounth = 25
@@ -50,13 +50,9 @@ param_for_year = 28
 
 parser = LogParser(file_name='events.txt')
 parser.stat_collector(param_for_minutes)
-parser.print_stat()
 parser.stat_collector(param_for_hours)
-parser.print_stat()
 parser.stat_collector(param_for_mounth)
-parser.print_stat()
 parser.stat_collector(param_for_year)
-parser.print_stat()
 
 # После выполнения первого этапа нужно сделать группировку событий
 #  - по часам
