@@ -38,6 +38,8 @@ import os, time, shutil
 
 class SortingFiles:
     def __init__(self):
+        # TODO Старайтесь работать с относительными путями
+        # TODO Кроме того их стоит передавать параметром
         self.reed_folder = 'C:\My folder\python_base\lesson_009\icons'
         self.reed_folder_normalized = os.path.normpath(self.reed_folder)
         self.destination_folder = 'C:\My folder\python_base\lesson_009\icons_by_year'
@@ -53,12 +55,16 @@ class SortingFiles:
                 self.full_file_path = os.path.join(dirpath, file)
                 self.secs = os.path.getmtime(self.full_file_path)
                 self.file_time = time.gmtime(self.secs)
+                # TODO Мне кажется можно новую директорию прям тут создавать
+                # TODO Конструируете из полученных данных о дате путь - создаете путь
+                # TODO и сразу перемещаете файл в него.
                 print(self.full_file_path, self.file_time[0], self.file_time[1])
 
     def create_new_dir(self):
         if not os.path.exists(os.path.dirname(self.destination_folder_normalized)):
             self.dir_name = self.file_time[0]
-            os.makedirs(self.dir_name)
+            os.makedirs(self.dir_name)  # TODO Можно обойтись без проверки, если использовать
+            # TODO параметр exist_ok=True
 
     def move_files(self):
         pass
