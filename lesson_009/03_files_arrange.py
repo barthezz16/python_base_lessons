@@ -2,6 +2,7 @@
 
 import os, time, shutil
 
+
 # Нужно написать скрипт для упорядочивания фотографий (вообще любых файлов)
 # Скрипт должен разложить файлы из одной папки по годам и месяцам в другую.
 # Например, так:
@@ -34,7 +35,41 @@ import os, time, shutil
 # Чтение документации/гугла по функциям - приветствуется. Как и поиск альтернативных вариантов :)
 # Требования к коду: он должен быть готовым к расширению функциональности. Делать сразу на классах.
 
-# TODO здесь ваш код
+
+class SortingFiles:
+    def __init__(self):
+        self.reed_folder = 'C:\My folder\python_base\lesson_009\icons'
+        self.reed_folder_normalized = os.path.normpath(self.reed_folder)
+        self.destination_folder = 'C:\My folder\python_base\lesson_009\icons_by_year'
+        self.destination_folder_normalized = os.path.normpath(self.destination_folder)
+        self.full_file_path = None
+        self.secs = None
+        self.file_time = None
+        self.dir_name = None
+
+    def scan_for_files(self):
+        for dirpath, dirnames, filenames in os.walk(self.reed_folder_normalized):
+            for file in filenames:
+                self.full_file_path = os.path.join(dirpath, file)
+                self.secs = os.path.getmtime(self.full_file_path)
+                self.file_time = time.gmtime(self.secs)
+                print(self.full_file_path, self.file_time[0], self.file_time[1])
+
+    def create_new_dir(self):
+        if not os.path.exists(os.path.dirname(self.destination_folder_normalized)):
+            self.dir_name = self.file_time[0]
+            os.makedirs(self.dir_name)
+
+    def move_files(self):
+        pass
+
+    def run(self):
+        self.scan_for_files()
+        self.create_new_dir()
+
+
+sorter = SortingFiles()
+sorter.run()
 
 # Усложненное задание (делать по желанию)
 # Нужно обрабатывать zip-файл, содержащий фотографии, без предварительного извлечения файлов в папку.
