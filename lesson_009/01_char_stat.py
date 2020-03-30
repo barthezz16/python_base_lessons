@@ -81,7 +81,6 @@ class Counter:
 
     def sorting_0_to_9(self):
         for key in sorted(self.stat.items(), key=lambda x: x[1]):
-            # Почему тут не поддерживается форматирование строк?
             print(f'|{key[0]:^10}|' + f'{key[1]:^10}|')
 
     def sorting_9_to_0(self):
@@ -98,3 +97,4 @@ counter.run()
 #  - по алфавиту по возрастанию
 #  - по алфавиту по убыванию
 # Для этого пригодится шаблон проектирование "Шаблонный метод" см https://goo.gl/Vz4828
+#зачет!
