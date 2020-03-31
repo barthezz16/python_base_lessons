@@ -37,17 +37,15 @@ import os, time, shutil
 
 
 class SortingFiles:
-    def __init__(self):
-        #  Старайтесь работать с относительными путями
-        #  Кроме того их стоит передавать параметром
-        self.reed_folder = 'C:\My folder\python_base\lesson_009\icons'
-        self.reed_folder_normalized = os.path.normpath(self.reed_folder)
-        self.destination_folder = 'C:\My folder\python_base\lesson_009\icons_by_year'
-        self.destination_folder_normalized = os.path.normpath(self.destination_folder)
+    def __init__(self, folder, new_folder):
+        self.reed_folder_normalized = os.path.normpath(folder)
+        self.destination_folder_normalized = os.path.normpath(new_folder)
         self.full_file_path = None
         self.secs = None
         self.file_time = None
         self.dir_name = None
+        self.dir_name_year = None
+        self.dir_name_month = None
 
     def scan_for_files(self):
         for dirpath, dirnames, filenames in os.walk(self.reed_folder_normalized):
@@ -57,23 +55,19 @@ class SortingFiles:
                 self.file_time = time.gmtime(self.secs)
                 self.dir_name_year = str(self.file_time[0])
                 self.dir_name_month = str(self.file_time[1])
-                os.makedirs(self.dir_name_year, exist_ok=True)
-                os.makedirs(os.path.join(dirpath, self.dir_name_month), exist_ok=True)
-                # TODO makedirs надо вызвать один раз, с путём аля
-                # TODO 'C:\My folder\python_base\lesson_009\icons_by_year' + год + месяц
-                shutil.copy2(self.reed_folder, self.destination_folder)
-                # TODO в copy2 в качестве первого параметра нужно брать self.full_file_path,
-                # TODO а вторым параметром надо указать путь, который был создан ранее
-                # TODO 'C:\My folder\python_base\lesson_009\icons_by_year' + год + месяц + имя файла
-
-    def move_files(self):
-        pass
+                os.makedirs(
+                    self.destination_folder_normalized + '\\' + str(self.file_time[0]) + '\\' + str(
+                        f'{self.file_time[1]:0>2}'),
+                    exist_ok=True)
+                shutil.copy2(self.full_file_path,
+                             self.destination_folder_normalized + '\\' + str(self.file_time[0]) + '\\' + str(
+                                 f'{self.file_time[1]:0>2}') + '\\' + file)
 
     def run(self):
         self.scan_for_files()
 
 
-sorter = SortingFiles()
+sorter = SortingFiles(folder='icons', new_folder='icons_by_year')
 sorter.run()
 
 # Усложненное задание (делать по желанию)
