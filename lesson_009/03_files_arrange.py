@@ -59,7 +59,12 @@ class SortingFiles:
                 self.dir_name_month = str(self.file_time[1])
                 os.makedirs(self.dir_name_year, exist_ok=True)
                 os.makedirs(os.path.join(dirpath, self.dir_name_month), exist_ok=True)
+                # TODO makedirs надо вызвать один раз, с путём аля
+                # TODO 'C:\My folder\python_base\lesson_009\icons_by_year' + год + месяц
                 shutil.copy2(self.reed_folder, self.destination_folder)
+                # TODO в copy2 в качестве первого параметра нужно брать self.full_file_path,
+                # TODO а вторым параметром надо указать путь, который был создан ранее
+                # TODO 'C:\My folder\python_base\lesson_009\icons_by_year' + год + месяц + имя файла
 
     def move_files(self):
         pass
