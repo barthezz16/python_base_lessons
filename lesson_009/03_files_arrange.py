@@ -59,9 +59,13 @@ class SortingFiles:
                     self.destination_folder_normalized + '\\' + str(self.file_time[0]) + '\\' + str(
                         f'{self.file_time[1]:0>2}'),
                     exist_ok=True)
+                # TODO Отлично, только self.destination_folder_normalized + '\\' + str(self.file_time[0]) + '\\' + str(
+                #                         f'{self.file_time[1]:0>2}')
+                # TODO Вот этот путь отдельно сформируйте при помощи join(чтобы на других ОС можно было с ним работать)
                 shutil.copy2(self.full_file_path,
                              self.destination_folder_normalized + '\\' + str(self.file_time[0]) + '\\' + str(
                                  f'{self.file_time[1]:0>2}') + '\\' + file)
+                # TODO + тут можно будет заменить этот путь на переменную, дублирования будет меньше
 
     def run(self):
         self.scan_for_files()
