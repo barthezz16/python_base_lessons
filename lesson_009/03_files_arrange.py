@@ -46,8 +46,9 @@ class SortingFiles:
         self.dir_name = None
         self.dir_name_year = None
         self.dir_name_month = None
+        self.final_destination = None
 
-    def scan_for_files(self):
+    def create_folder_and_move(self):
         for dirpath, dirnames, filenames in os.walk(self.reed_folder_normalized):
             for file in filenames:
                 self.full_file_path = os.path.join(dirpath, file)
@@ -55,20 +56,13 @@ class SortingFiles:
                 self.file_time = time.gmtime(self.secs)
                 self.dir_name_year = str(self.file_time[0])
                 self.dir_name_month = str(self.file_time[1])
-                os.makedirs(
-                    self.destination_folder_normalized + '\\' + str(self.file_time[0]) + '\\' + str(
-                        f'{self.file_time[1]:0>2}'),
-                    exist_ok=True)
-                # TODO Отлично, только self.destination_folder_normalized + '\\' + str(self.file_time[0]) + '\\' + str(
-                #                         f'{self.file_time[1]:0>2}')
-                # TODO Вот этот путь отдельно сформируйте при помощи join(чтобы на других ОС можно было с ним работать)
-                shutil.copy2(self.full_file_path,
-                             self.destination_folder_normalized + '\\' + str(self.file_time[0]) + '\\' + str(
-                                 f'{self.file_time[1]:0>2}') + '\\' + file)
-                # TODO + тут можно будет заменить этот путь на переменную, дублирования будет меньше
+                self.final_destination = os.path.join(self.destination_folder_normalized, str(self.file_time[0]), str(
+                    f'{self.file_time[1]:0>2}'))
+                os.makedirs(self.final_destination, exist_ok=True)
+                shutil.copy2(self.full_file_path, os.path.join(self.final_destination, file))
 
     def run(self):
-        self.scan_for_files()
+        self.create_folder_and_move()
 
 
 sorter = SortingFiles(folder='icons', new_folder='icons_by_year')
