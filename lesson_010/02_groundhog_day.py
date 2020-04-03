@@ -56,7 +56,9 @@ class SuicideError(Exception):
 
 def one_day():
     global day, ENLIGHTENMENT_CARMA_LEVEL, carma
-    day += 1
+    day += 1   # TODO Дни пожалуй лучше считать в цикле, вне функции
+    # TODO глобальные переменные тут не нужны (да и они мало где могут пригодится дальше, лучше стараться работать
+    # TODO через параметры - нужное для работы передавать в функцию - результат возвращать из функции
     dice = randint(0, 13)
     if dice == 13:
         raise exception_list[randint(0, 5)]
@@ -76,5 +78,6 @@ while carma <= ENLIGHTENMENT_CARMA_LEVEL:
         one_day()
     except Exception as exc:
         print(f'{exc}')
+        # TODO Исключения обработать и записать в лог  :)
 else:
     print(f'на {day} день, Достиг просветления!!!')
