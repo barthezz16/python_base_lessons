@@ -81,3 +81,8 @@ while carma <= ENLIGHTENMENT_CARMA_LEVEL:
         file.close()
 else:
     print(f'на {day} день, Достиг просветления!!!')
+    log_file = 'out.txt'
+    file = open(log_file, mode='a', encoding='utf8')
+    log_content = f'на {day} день, Достиг просветления!!!'
+    file.write(str(log_content))
+    file.close()
