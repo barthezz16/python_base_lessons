@@ -18,88 +18,63 @@
 # базовых встроенных исключений.
 from random import randint
 
+
+class IamGodError(Exception):
+
+    def __str__(self):
+        return f'на {day} день, почувствовал себя богом'
+
+
+class DrunkError(Exception):
+
+    def __str__(self):
+        return f'на {day} день, напился'
+
+
+class CarCrashError(Exception):
+
+    def __str__(self):
+        return f'на {day} день, попал в аварию'
+
+
+class GluttonyError(Exception):
+
+    def __str__(self):
+        return f'на {day} день, нехватка сахара'
+
+
+class DepressionError(Exception):
+
+    def __str__(self):
+        return f'на {day} день, впал в депрессию'
+
+
+class SuicideError(Exception):
+    def __str__(self):
+        return f'на {day} день, покончил жизнь самоубийством'
+
+
+def one_day():
+    global day, ENLIGHTENMENT_CARMA_LEVEL, carma
+    day += 1
+    dice = randint(0, 13)
+    if dice == 13:
+        raise exception_list[randint(0, 5)]
+    else:
+        carma += randint(1, 7)
+        return carma
+
+
 ENLIGHTENMENT_CARMA_LEVEL = 777
 
 day = 0
 carma = 0
+exception_list = [IamGodError, DrunkError, CarCrashError, GluttonyError, DepressionError, SuicideError]
 
-
-def one_day():  # TODO Вы немного перепутали структуру. Функция должна возвращать карму (от 1 до 7)
-    # TODO А уже саму функцию надо обернуть в цикл
-    global day, ENLIGHTENMENT_CARMA_LEVEL, carma
-    while carma <= ENLIGHTENMENT_CARMA_LEVEL:
-        day += 1
-        carma += randint(1, 7)  # TODO И нужно либо добавлять карму, либо вызывать ошибку
-        # TODO Например выкинуть случайное число, если оно равно 13 - то кидать случайное исключение
-        # TODO Иначе добавлять карму.
-        # TODO Про случайное исключение - тут тоже стоит взять случайное число
-        # TODO и использовать его как индекс для списка в котором можно хранить исключения
-        print(day)
-        dice = randint(1, 78)
-        # print(dice)
-        if dice == 13:
-            raise IamGodError(message=f'на {day} день, почувствовал себя богом')
-        elif dice == 26:
-            raise DrunkError(message=f'на {day} день, напился')
-        elif dice == 39:
-            raise CarCrashError(message=f'на {day} день, попал в аварию')
-        elif dice == 52:
-            raise GluttonyError(message=f'на {day} день, нехватка сахара')
-        elif dice == 65:
-            raise DepressionError(message=f'на {day} день, впал в депрессию')
-        elif dice == 78:
-            raise SuicideError(message=f'на {day} день, покончил жизнь самоубийством')
-    else:
-        print('Достиг просветления!!!')
-
-
-class IamGodError(Exception):
-
-    def __init__(self, message):
-        self.message = message
-
-    def __str__(self):
-        return self.message
-
-
-class DrunkError(Exception):
-    def __init__(self, message):
-        self.message = message
-
-    def __str__(self):
-        return self.message
-
-
-class CarCrashError(Exception):
-    def __init__(self, message):
-        self.message = message
-
-    def __str__(self):
-        return self.message
-
-
-class GluttonyError(Exception):
-    def __init__(self, message):
-        self.message = message
-
-    def __str__(self):
-        return self.message
-
-
-class DepressionError(Exception):
-    def __init__(self, message):
-        self.message = message
-
-    def __str__(self):
-        return self.message
-
-
-class SuicideError(Exception):
-    def __init__(self, message):
-        self.message = message
-
-    def __str__(self):
-        return self.message
-
-
-one_day()
+while carma <= ENLIGHTENMENT_CARMA_LEVEL:
+    try:
+        one_day()
+    except Exception as exc:
+        print(f'{exc}')
+else:
+    print(f'на {day} день, Достиг просветления!!!')
