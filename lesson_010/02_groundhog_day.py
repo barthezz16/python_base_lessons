@@ -54,11 +54,7 @@ class SuicideError(Exception):
         return f'на {day} день, покончил жизнь самоубийством'
 
 
-def one_day():
-    global day, ENLIGHTENMENT_CARMA_LEVEL, carma
-    day += 1   # TODO Дни пожалуй лучше считать в цикле, вне функции
-    # TODO глобальные переменные тут не нужны (да и они мало где могут пригодится дальше, лучше стараться работать
-    # TODO через параметры - нужное для работы передавать в функцию - результат возвращать из функции
+def one_day(carma):
     dice = randint(0, 13)
     if dice == 13:
         raise exception_list[randint(0, 5)]
@@ -74,10 +70,14 @@ carma = 0
 exception_list = [IamGodError, DrunkError, CarCrashError, GluttonyError, DepressionError, SuicideError]
 
 while carma <= ENLIGHTENMENT_CARMA_LEVEL:
+    day += 1
     try:
-        one_day()
+        carma = one_day(carma)
     except Exception as exc:
-        print(f'{exc}')
-        # TODO Исключения обработать и записать в лог  :)
+        log_file = 'out.txt'
+        file = open(log_file, mode='a', encoding='utf8')
+        log_content = str(exc) + '\n'
+        file.write(str(log_content))
+        file.close()
 else:
     print(f'на {day} день, Достиг просветления!!!')
