@@ -22,6 +22,7 @@
 # - поле возраст НЕ является числом от 10 до 99: ValueError
 # Вызов метода обернуть в try-except.
 
+
 class NotNameError(Exception):
 
     def __str__(self):
@@ -35,17 +36,15 @@ class NotEmailError(Exception):
 
 
 def registration_check(line):
-    # TODO перед распределением на три переменные стоит проверить размер получившегося списка
-    # TODO И вызвать исключение, если элементов не хватает
+    if len(line.split(' ')) < 3:
+        raise ValueError(' НЕ хватает элементов!')
     name, email, age = line.split(' ')
     age = int(age)
-    if not name.isalpha:  # TODO Тут вы просто забыли "()" добавить к isalpha
-        # все остальные проверки вроде работают, но тут иногда проскакиваю имена с цифрами
-        # не совсем понимаю почему...
+    if not name.isalpha():
         raise NotNameError
     elif '.' not in email and '@' not in email:
         raise NotEmailError
-    elif not 10 < age < 99:
+    elif not 10 <= age <= 99:
         raise ValueError(' поле возраст НЕ является числом от 10 до 99')
     return name, email, age
 
@@ -56,15 +55,11 @@ with open('registrations.txt', 'r', encoding='utf8') as ff:
         try:
             name, email, age = registration_check(line)
             good_log_file = 'registrations_good.log'
-            file = open(good_log_file, mode='a', encoding='utf8')
-            # TODO Почему бы открытие и закрытие файла
-            # TODO не вынести за пределы цикла?
-            log_content = f'{name} {email} {age} \n'
-            file.write(str(log_content))
-            file.close()
+            with open(good_log_file, mode='a', encoding='utf8') as good_file:
+                log_content = f'{name:<10} {email:<20} {age:<3} \n'
+                good_file.write(str(log_content))
         except Exception as exc:
             bad_log_file = 'registrations_bad.log'
-            file = open(bad_log_file, mode='a', encoding='utf8')
-            log_content = line + str(exc) + '\n'
-            file.write(str(log_content))
-            file.close()
+            with open(bad_log_file, mode='a', encoding='utf8') as bad_file:
+                log_content = line + str(exc) + '\n'
+                bad_file.write(str(log_content))
