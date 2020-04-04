@@ -86,3 +86,4 @@ else:
     log_content = f'на {day} день, Достиг просветления!!!'
     file.write(str(log_content))
     file.close()
+#зачет!
