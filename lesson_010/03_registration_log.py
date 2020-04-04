@@ -35,10 +35,13 @@ class NotEmailError(Exception):
 
 
 def registration_check(line):
+    # TODO перед распределением на три переменные стоит проверить размер получившегося списка
+    # TODO И вызвать исключение, если элементов не хватает
     name, email, age = line.split(' ')
     age = int(age)
-    if not name.isalpha:  # TODO все остальные проверки вроде работают, но тут иногда проскакиваю имена с цифрами
-        # TODO не совсем понимаю почему...
+    if not name.isalpha:  # TODO Тут вы просто забыли "()" добавить к isalpha
+        # все остальные проверки вроде работают, но тут иногда проскакиваю имена с цифрами
+        # не совсем понимаю почему...
         raise NotNameError
     elif '.' not in email and '@' not in email:
         raise NotEmailError
@@ -54,6 +57,8 @@ with open('registrations.txt', 'r', encoding='utf8') as ff:
             name, email, age = registration_check(line)
             good_log_file = 'registrations_good.log'
             file = open(good_log_file, mode='a', encoding='utf8')
+            # TODO Почему бы открытие и закрытие файла
+            # TODO не вынести за пределы цикла?
             log_content = f'{name} {email} {age} \n'
             file.write(str(log_content))
             file.close()
@@ -63,4 +68,3 @@ with open('registrations.txt', 'r', encoding='utf8') as ff:
             log_content = line + str(exc) + '\n'
             file.write(str(log_content))
             file.close()
-
