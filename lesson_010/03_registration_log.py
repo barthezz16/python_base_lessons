@@ -48,8 +48,7 @@ def registration_check(line):
         raise ValueError(' поле возраст НЕ является числом от 10 до 99')
     return name, email, age
 
-# TODO Попробуйте тут открыть файлы good и bad
-# TODO И сравнивте скорость выполнения
+
 with open('registrations.txt', 'r', encoding='utf8') as ff:
     for line in ff:
         line = line[:-1]
@@ -64,6 +63,4 @@ with open('registrations.txt', 'r', encoding='utf8') as ff:
             with open(bad_log_file, mode='a', encoding='utf8') as bad_file:
                 log_content = line + str(exc) + '\n'
                 # log_content = f'{name:<10} {email:<20} {age:<3}' + str(exc) + '\n'
-                # TODO Скорее всего это происходит потому, что name, email, age не успеют инициализироваться
-                # TODO Ведь выполнение функции прерывается исключением
                 bad_file.write(str(log_content))
