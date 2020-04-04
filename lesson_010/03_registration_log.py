@@ -50,17 +50,16 @@ def registration_check(line):
 
 
 with open('registrations.txt', 'r', encoding='utf8') as ff:
-    for line in ff:
-        line = line[:-1]
-        try:
-            name, email, age = registration_check(line)
-            good_log_file = 'registrations_good.log'
-            with open(good_log_file, mode='a', encoding='utf8') as good_file:
-                log_content = f'{name:<10} {email:<20} {age:<3} \n'
-                good_file.write(str(log_content))
-        except Exception as exc:
-            bad_log_file = 'registrations_bad.log'
-            with open(bad_log_file, mode='a', encoding='utf8') as bad_file:
-                log_content = line + str(exc) + '\n'
-                # log_content = f'{name:<10} {email:<20} {age:<3}' + str(exc) + '\n'
-                bad_file.write(str(log_content))
+    good_log_file = 'registrations_good.log'
+    with open(good_log_file, mode='a', encoding='utf8') as good_file:
+        bad_log_file = 'registrations_bad.log'
+        with open(bad_log_file, mode='a', encoding='utf8') as bad_file:
+            for line in ff:
+                line = line[:-1]
+                try:
+                    name, email, age = registration_check(line)
+                    log_content = f'{name:<10} {email:<20} {age:<3} \n'
+                    good_file.write(str(log_content))
+                except Exception as exc:
+                    log_content = line + str(exc) + '\n'
+                    bad_file.write(str(log_content))
