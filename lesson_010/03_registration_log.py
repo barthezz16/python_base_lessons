@@ -22,4 +22,45 @@
 # - поле возраст НЕ является числом от 10 до 99: ValueError
 # Вызов метода обернуть в try-except.
 
-# TODO здесь ваш код
+class NotNameError(Exception):
+
+    def __str__(self):
+        return ' поле имени содержит НЕ только буквы'
+
+
+class NotEmailError(Exception):
+
+    def __str__(self):
+        return ' поле емейл НЕ содержит @ и .(точку)'
+
+
+def registration_check(line):
+    name, email, age = line.split(' ')
+    age = int(age)
+    if not name.isalpha:  # TODO все остальные проверки вроде работают, но тут иногда проскакиваю имена с цифрами
+        # TODO не совсем понимаю почему...
+        raise NotNameError
+    elif '.' not in email and '@' not in email:
+        raise NotEmailError
+    elif not 10 < age < 99:
+        raise ValueError(' поле возраст НЕ является числом от 10 до 99')
+    return name, email, age
+
+
+with open('registrations.txt', 'r', encoding='utf8') as ff:
+    for line in ff:
+        line = line[:-1]
+        try:
+            name, email, age = registration_check(line)
+            good_log_file = 'registrations_good.log'
+            file = open(good_log_file, mode='a', encoding='utf8')
+            log_content = f'{name} {email} {age} \n'
+            file.write(str(log_content))
+            file.close()
+        except Exception as exc:
+            bad_log_file = 'registrations_bad.log'
+            file = open(bad_log_file, mode='a', encoding='utf8')
+            log_content = line + str(exc) + '\n'
+            file.write(str(log_content))
+            file.close()
+
