@@ -63,3 +63,4 @@ with open('registrations.txt', 'r', encoding='utf8') as ff:
                 except Exception as exc:
                     log_content = line + str(exc) + '\n'
                     bad_file.write(str(log_content))
+#зачет!
