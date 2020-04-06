@@ -9,8 +9,14 @@
 
 
 def log_errors(func):
-    pass
-    # TODO здесь ваш код
+    bad_log_file = 'registrations_bad.log'
+    with open(bad_log_file, mode='a', encoding='utf8') as registrations_bad:
+        try:
+            func()
+        except Exception as exc:
+                log_content = str(exc) + '\n' # TODO и тут тожк ступор...
+                registrations_bad.write(str(log_content))
+        return func
 
 
 # Проверить работу на следующих функциях
@@ -44,6 +50,7 @@ for line in lines:
     except Exception as exc:
         print(f'Invalid format: {exc}')
 perky(param=42)
+
 
 
 # Усложненное задание (делать по желанию).

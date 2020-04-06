@@ -16,7 +16,8 @@ sd.set_screen_size(900, 900)
 
 def get_polygon(n):
     pass
-    # TODO здесь ваш код
+    #  здесь ваш код
+    # TODO Максим, тут ппосто темный лес, я просто не понимаю что тут надо сделать, и с чего начать...
 
 
 draw_triangle = get_polygon(n=3)
