@@ -9,14 +9,20 @@
 
 
 def log_errors(func):
+    # TODO Тут нужно ещё одну новую функцию задать через def с параметрами *args, **kwargs
+    # TODO В этой функции уже добавить написанный вами код
     bad_log_file = 'registrations_bad.log'
     with open(bad_log_file, mode='a', encoding='utf8') as registrations_bad:
         try:
-            func()
+            func()  # TODO сюда передавать параметры *args, **kwargs
         except Exception as exc:
-                log_content = str(exc) + '\n' # TODO и тут тожк ступор...
+                log_content = str(exc) + '\n'  # и тут тожк ступор...
+                # TODO имя функции - функция.__name__
+                # TODO параметры - args, kwargs
+                # TODO тип ошибки - type(exc)
+                # TODO текст ошибки - exc.args
                 registrations_bad.write(str(log_content))
-        return func
+        return func  # TODO А возвращать уже не эту функцию, а новую, созданную выше (только отступ другой будет у ретурна)
 
 
 # Проверить работу на следующих функциях
