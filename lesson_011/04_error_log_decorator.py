@@ -9,20 +9,15 @@
 
 
 def log_errors(func):
-    # TODO Тут нужно ещё одну новую функцию задать через def с параметрами *args, **kwargs
-    # TODO В этой функции уже добавить написанный вами код
-    bad_log_file = 'registrations_bad.log'
-    with open(bad_log_file, mode='a', encoding='utf8') as registrations_bad:
-        try:
-            func()  # TODO сюда передавать параметры *args, **kwargs
-        except Exception as exc:
-                log_content = str(exc) + '\n'  # и тут тожк ступор...
-                # TODO имя функции - функция.__name__
-                # TODO параметры - args, kwargs
-                # TODO тип ошибки - type(exc)
-                # TODO текст ошибки - exc.args
+    def write_func(*args, **kwargs):
+        bad_log_file = 'function_errors.log'
+        with open(bad_log_file, mode='a', encoding='utf8') as registrations_bad:
+            try:
+                func(*args, **kwargs)
+            except Exception as exc:
+                log_content = f'{write_func.__name__} {args} {kwargs} {type(exc)} {exc.args} \n'
                 registrations_bad.write(str(log_content))
-        return func  # TODO А возвращать уже не эту функцию, а новую, созданную выше (только отступ другой будет у ретурна)
+    return write_func
 
 
 # Проверить работу на следующих функциях
@@ -57,12 +52,9 @@ for line in lines:
         print(f'Invalid format: {exc}')
 perky(param=42)
 
-
-
 # Усложненное задание (делать по желанию).
 # Написать декоратор с параметром - именем файла
 #
 # @log_errors('function_errors.log')
 # def func():
 #     pass
-
