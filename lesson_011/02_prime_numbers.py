@@ -24,28 +24,36 @@ def get_prime_numbers(n):
 
 class PrimeNumbers:
     def __init__(self, n):
-        self.i, self.a, self.n = 0, 1, n
+        self.i, self.a, self.n = 0, 0, n
 
     def __iter__(self):
         self.i, self.a = 0, 0
         return self
 
     def __next__(self):
-        # TODO Тут нужен цикл while
-        # TODO С проверкой на простое число
-        # TODO В итоге должно получится что-то такое
-        # цикл while
-        #     проверка, если текущее число(i) больше n --> stop iteration
-        #     проверка с циклом по списку простых чисел
-        #          если число - простое, то добавить его к списку простых и вернуть return-ом
-        #     если не простое - прервать цикл по списку
-        #     прибавить к числу +1
-        self.i += 1
-        if self.i > 1:
+        while True:
+            prime_list = []
             if self.i > self.n:
-                raise StopIteration()
-            self.a = self.a + 1
-        return self.a
+                raise StopIteration('число(i) больше n')
+            for self.i in range(2, self.n + 1):
+                for self.a in prime_list:
+                    if self.i % self.a == 0:
+                        break
+                    else:
+                        prime_list.append(self.i)
+                        self.i += 1
+                print(self.i)
+                return self.i
+    #  Тут нужен цикл while
+    #  С проверкой на простое число
+    #  В итоге должно получится что-то такое
+    # цикл while
+    #     проверка, если текущее число(i) больше n --> stop iteration
+    #     проверка с циклом по списку простых чисел
+    #          если число - простое, то добавить его к списку простых и вернуть return-ом
+    #     если не простое - прервать цикл по списку
+    #     прибавить к числу +1
+
 
 
 prime_number_iterator = PrimeNumbers(n=10000)
