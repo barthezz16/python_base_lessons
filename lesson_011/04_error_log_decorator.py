@@ -13,7 +13,11 @@ def log_errors(func):
         bad_log_file = 'function_errors.log'
         with open(bad_log_file, mode='a', encoding='utf8') as registrations_bad:
             try:
-                func(*args, **kwargs)
+                func(*args, **kwargs)  # TODO Забыл совсем. Нужно наладить возврат из функции, которую мы запускаем
+                # TODO Для этого надо создать переменную:
+                # результат = func(*args, **kwargs)
+                # TODO И сразу же после неё, в следующей строке
+                # ретурн результат
             except Exception as exc:
                 log_content = f'{write_func.__name__} {args} {kwargs} {type(exc)} {exc.args} \n'
                 registrations_bad.write(str(log_content))

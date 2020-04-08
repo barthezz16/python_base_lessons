@@ -31,22 +31,28 @@ class PrimeNumbers:
         return self
 
     def __next__(self):
-        while True:
-            prime_list = []
-            if self.i > self.n:
+        while True:  # цикл while
+            prime_list = []  # TODO Этот список стоит создать в атрибутах или в iter
+            if self.i > self.n:  # проверка, если текущее число(i) больше n --> stop iteration
                 raise StopIteration('число(i) больше n')
-            for self.i in range(2, self.n + 1):
-                for self.a in prime_list:
+            for self.i in range(2, self.n + 1):  # TODO Этот цикл тут лишний self.i должен увеличиваться в цикле while
+                for self.a in prime_list:  # проверка с циклом по списку простых чисел
                     if self.i % self.a == 0:
-                        break
+                        break  # если не простое - прервать цикл по списку
                     else:
+                        # если число - простое, то добавить его к списку простых и вернуть return-ом
                         prime_list.append(self.i)
+                        # TODO ретурн должен быть тут, ведь именно тут определяются простые числа
                         self.i += 1
+                        # TODO А Self.i += 1
+                # TODO Должен быть тут
+                # прибавить к числу +1
                 print(self.i)
                 return self.i
     #  Тут нужен цикл while
     #  С проверкой на простое число
     #  В итоге должно получится что-то такое
+    # TODO Перенес эти шаги к вашему коду
     # цикл while
     #     проверка, если текущее число(i) больше n --> stop iteration
     #     проверка с циклом по списку простых чисел
