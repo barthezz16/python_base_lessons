@@ -24,34 +24,25 @@ def get_prime_numbers(n):
 
 class PrimeNumbers:
     def __init__(self, n):
-        self.i, self.a, self.n = 0, 0, n
+        self.i, self.a, = 2, 2
+        self.n = n
 
     def __iter__(self):
-        self.i, self.a = 0, 0
+        self.i, self.a = 2, 2
         self.prime_list = []
         return self
 
     def __next__(self):
-        while True:  # цикл while
+        while True:
             if self.i > self.n:
                 raise StopIteration('число(i) больше n')
             for self.a in self.prime_list:
                 if self.i % self.a == 0:
-                    self.prime_list.append(self.i)
-                    return self.i
-                else:
                     break
-            # TODO Условие не совсем правильно использовано, обратите внимание, что Else в примере относится к for
-            # TODO Раотает это так. Число проверяется с каждым из списка. Если наше число делится на одно из чисел
-            # TODO которые есть в списке - то мы прерываем цикл и else не выполняется.
-            # TODO Если цикл проходит по всему списку без вызова break - выполняется else и число добавляется в список
-            # for prime in prime_numbers:
-            #     if number % prime == 0:
-            #         break
-            # else:
-            #     prime_numbers.append(number)
+            else:
+                self.prime_list.append(self.i)
+                return self.i
             self.i += 1
-            print(self.prime_list, self.i)
 
 
 prime_number_iterator = PrimeNumbers(n=10000)
