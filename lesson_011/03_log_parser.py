@@ -25,9 +25,11 @@
 # 3) заменять старое значение на новое
 
 
-def stat_collector():  # TODO Сюда надо бы передавать название файла для анализа
+def stat_collector(file_name):
+    nok_count = {}
+    item_to_find = 'NOK'
     with open(file_name, mode='r') as file:
-        # TODO Нужна ещё одна переменная, в которой будет храниться "предыдущая" строчка
+        previous_line = 0  # TODO Нужна ещё одна переменная, в которой будет храниться "предыдущая" строчка
         # TODO При нахождении новой строчки - в эту переменную будет записана текущая
         # TODO Можете попробовать отдельно это реализовать
         while True:
@@ -35,11 +37,10 @@ def stat_collector():  # TODO Сюда надо бы передавать наз
             if item_to_find in line:
                 if str(line[1:-16]) in nok_count:
                     nok_count[str(line[1:-16])] += 1  # TODO Перед прибавлением нужно создать ключ
-                    yield str(line[1:-16])  # TODO yield нужен скорее не здесь
                 else:
-                    # TODO А тут.
-                    # TODO
-                    break
+                    nok_count[str(line[1:-16])] = 1
+                    yield nok_count
+
 
 
 # def stat_collector():
@@ -54,14 +55,18 @@ def stat_collector():  # TODO Сюда надо бы передавать наз
 
 
 file_name = 'events.txt'
-nok_count = {}
-item_to_find = 'NOK'
+
 
 # line = stat_collector()
 # for i in nok_count:
 #     print(i, nok_count[i])
 
 
-grouped_events = stat_collector()
-for group_time, event_count in grouped_events:
-    print(f'[{group_time}] {event_count}')
+grouped_events = stat_collector(file_name)
+print(grouped_events)
+for group_time in grouped_events:
+    print(f'[{group_time}]')
+
+# grouped_events = stat_collector(file_name)
+# for group_time, event_count in grouped_events:
+#     print(f'[{group_time}] {event_count}')
