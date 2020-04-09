@@ -54,9 +54,19 @@ class PrimeNumbers:
 # Теперь нужно создать генератор, который выдает последовательность простых чисел до n
 # Распечатать все простые числа до 10000 в столбик
 
+# def prime_numbers_generator(n):
+#     prime_list = []
+#     for i in range(2, n + 1):
+#         if i not in prime_list:
+#             yield i
+#             prime_list.append(range(i * i, n + 1, i))
+#
+#
+# for number in prime_numbers_generator(n=10000):
+#     print(number)
 
-def prime_numbers_generator(n):
-    prime_list = set()
+def prime_numbers_generator(n):  # TODO честно скажу, на решение через множество намекнули в группе, я пробовал
+    prime_list = set()  # TODO способом, который выше
     for i in range(2, n + 1):
         if i not in prime_list:
             yield i
