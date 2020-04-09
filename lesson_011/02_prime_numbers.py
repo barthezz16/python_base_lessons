@@ -36,11 +36,20 @@ class PrimeNumbers:
             if self.i > self.n:
                 raise StopIteration('число(i) больше n')
             for self.a in self.prime_list:
-                if self.i % self.a == 0:  # TODO Максим, не могу понять, поему не заходит в тело цикла? и это условие
-                    self.prime_list.append(self.i)  # TODO не выполняется
+                if self.i % self.a == 0:
+                    self.prime_list.append(self.i)
                     return self.i
                 else:
                     break
+            # TODO Условие не совсем правильно использовано, обратите внимание, что Else в примере относится к for
+            # TODO Раотает это так. Число проверяется с каждым из списка. Если наше число делится на одно из чисел
+            # TODO которые есть в списке - то мы прерываем цикл и else не выполняется.
+            # TODO Если цикл проходит по всему списку без вызова break - выполняется else и число добавляется в список
+            # for prime in prime_numbers:
+            #     if number % prime == 0:
+            #         break
+            # else:
+            #     prime_numbers.append(number)
             self.i += 1
             print(self.prime_list, self.i)
 

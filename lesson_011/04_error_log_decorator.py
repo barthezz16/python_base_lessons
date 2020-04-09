@@ -13,7 +13,6 @@ def log_errors(func):
         bad_log_file = 'function_errors.log'
         with open(bad_log_file, mode='a', encoding='utf8') as registrations_bad:
             try:
-                func(*args, **kwargs)
                 result = func(*args, **kwargs)
                 return result
             except Exception as exc:
@@ -60,3 +59,4 @@ perky(param=42)
 # @log_errors('function_errors.log')
 # def func():
 #     pass
+#зачет!
