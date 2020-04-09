@@ -14,66 +14,31 @@
 #
 # [2018-05-17 01:57] 1234
 
-# TODO Надо не заменять этот код, а превратить его в генератор
-# TODO Генератор должен за одно обращение читать данные за одну минуту
-# TODO И если начинается следующая минута - возвращать результат за предыдущую
-# TODO Для этого надо будет придумать,
-# TODO как сохранять текущее время, чтобы сравнивать его с новым временем следующей строки
-# TODO И если такая проверка не проходит - то
+
 # 1) создавать в словаре по ключу новую запись (nok_count[str(line[1:-16])] = 1)
 # 2) возвращать старое значение (предыдущую минуту) и по этой минуте значение по этому ключу через yield
 # 3) заменять старое значение на новое
 
 
 def stat_collector(file_name):
-    nok_count = {}
+    nok_counter = 0
     item_to_find = 'NOK'
     with open(file_name, mode='r') as file:
         previous_line = {}
         while True:
             line = file.readline()
             if item_to_find in line:
-                if str(line[1:-16]) in nok_count:
-                    nok_count[str(line[1:-16])] += 1  # Перед прибавлением нужно создать ключ
+                if line[1:-16] == previous_line:
+                    nok_counter += 1  # TODO у меня была такая же версия, когда я пробовал решить еще сам,
+                    # TODO но тогда я не подумал что так просто счетчик можно сделать, искал какието сложные пути,
+                    # TODO теперь я понял замечания Вадима в лекциях, что не надо все усложнять....
                 else:
-                    previous_line.update({str(line[1:-16]): 1})
-                    # а разве не тут создается ключ, если его нет выше? TODO Создаётся, просто этой команды не было)
-                    # TODO Только создаётся ведь в другом словаре
-                    yield previous_line.items()  # TODO yield должен быть тут
-# TODO Можно поступить немного иначе
-# 1) Если NOK в линии
-# 2) Если текущая_линия == предыдущая_линия
-# 2.1) если да, то счётчик += 1
-# 2.2) если нет, то
-# yield предыдущая_линия, счётчик
-# предыдущая_линия = текущая_линия
-# счётчик = 1
-
-
-
-# def stat_collector():
-#     with open(file_name, mode='r') as file:
-#         for line in file:
-#             if item_to_find in line:
-#                 if str(line[1:-16]) in nok_count:
-#                     nok_count[str(line[1:-16])] += 1
-#                 else:
-#                     nok_count[str(line[1:-16])] = 1
-#         return nok_count
+                    yield previous_line, nok_counter
+                    previous_line = line[1:-16]
+                    nok_counter = 1
 
 
 file_name = 'events.txt'
-
-
-# line = stat_collector()
-# for i in nok_count:
-#     print(i, nok_count[i])
-
-
-# grouped_events = stat_collector(file_name)
-
-# for group_time in grouped_events:
-#     print(f'[{group_time}]')
 
 grouped_events = stat_collector(file_name)
 for group_time, event_count in grouped_events:
