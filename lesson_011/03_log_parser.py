@@ -23,28 +23,40 @@
 # 1) создавать в словаре по ключу новую запись (nok_count[str(line[1:-16])] = 1)
 # 2) возвращать старое значение (предыдущую минуту) и по этой минуте значение по этому ключу через yield
 # 3) заменять старое значение на новое
+
+
 def stat_collector():
     with open(file_name, mode='r') as file:
-        for line in file:
+        while True:
+            line = file.readline()
             if item_to_find in line:
                 if str(line[1:-16]) in nok_count:
                     nok_count[str(line[1:-16])] += 1
+                    yield str(line[1:-16])
                 else:
-                    nok_count[str(line[1:-16])] = 1
-        return nok_count
+                    break
+
+
+# def stat_collector():
+#     with open(file_name, mode='r') as file:
+#         for line in file:
+#             if item_to_find in line:
+#                 if str(line[1:-16]) in nok_count:
+#                     nok_count[str(line[1:-16])] += 1
+#                 else:
+#                     nok_count[str(line[1:-16])] = 1
+#         return nok_count
 
 
 file_name = 'events.txt'
 nok_count = {}
 item_to_find = 'NOK'
 
-line = stat_collector()
-for i in nok_count:
-    print(i, nok_count[i])
+# line = stat_collector()
+# for i in nok_count:
+#     print(i, nok_count[i])
 
 
-# TODO тут тоже не могу понять, этот итератор/генератор должен заменить всеь код сверху?
-
-# grouped_events = <создание итератора/генератора>
-# for group_time, event_count in grouped_events:
-#     print(f'[{group_time}] {event_count}')
+grouped_events = stat_collector()
+for group_time, event_count in grouped_events:
+    print(f'[{group_time}] {event_count}')
