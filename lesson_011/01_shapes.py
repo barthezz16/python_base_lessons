@@ -15,7 +15,18 @@ sd.set_screen_size(900, 900)
 
 
 def get_polygon(n):
-    pass
+    def figures(start_point=point, angle=0, length=200, width=3):
+        line = sd.get_vector(start_point, angle, length, width)
+        line.draw()
+        return get_polygon(n)
+    return figures(figures())
+
+
+def shapes_draw(start_point, end_point, next_angle=0, length=200, width=3, angle_step=0):
+    for angle in range(0, 360 - angle_step, angle_step):
+        start_point = figures(start_point, angle + next_angle, length, width)  # Чтобы можно было "крутить" фигуры
+    else:
+        sd.line(start_point=start_point, end_point=end_point, width=3)
     #  здесь ваш код
     # Максим, тут ппосто темный лес, я просто не понимаю что тут надо сделать, и с чего начать...
     # TODO Здесь вам нужно внутри этой функции инициализировать общую функцию из 04.01
