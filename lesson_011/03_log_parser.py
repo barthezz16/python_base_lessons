@@ -25,15 +25,20 @@
 # 3) заменять старое значение на новое
 
 
-def stat_collector():
+def stat_collector():  # TODO Сюда надо бы передавать название файла для анализа
     with open(file_name, mode='r') as file:
+        # TODO Нужна ещё одна переменная, в которой будет храниться "предыдущая" строчка
+        # TODO При нахождении новой строчки - в эту переменную будет записана текущая
+        # TODO Можете попробовать отдельно это реализовать
         while True:
             line = file.readline()
             if item_to_find in line:
                 if str(line[1:-16]) in nok_count:
-                    nok_count[str(line[1:-16])] += 1
-                    yield str(line[1:-16])
+                    nok_count[str(line[1:-16])] += 1  # TODO Перед прибавлением нужно создать ключ
+                    yield str(line[1:-16])  # TODO yield нужен скорее не здесь
                 else:
+                    # TODO А тут.
+                    # TODO
                     break
 
 

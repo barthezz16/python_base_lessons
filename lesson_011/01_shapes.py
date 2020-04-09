@@ -16,10 +16,8 @@ sd.set_screen_size(900, 900)
 
 def get_polygon(n):
     def figures(start_point=point, angle=0, length=200, width=3):
-        line = sd.get_vector(start_point, angle, length, width)
-        line.draw()
-        return get_polygon(n)
-    return figures(figures())
+        # TODO А здесь должен быть код с циклом рисования n-угольника
+    return figures  # Возвращать надо просто функцию
 
 
 def shapes_draw(start_point, end_point, next_angle=0, length=200, width=3, angle_step=0):
