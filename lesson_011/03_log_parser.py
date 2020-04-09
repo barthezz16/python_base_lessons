@@ -29,17 +29,15 @@ def stat_collector(file_name):
     nok_count = {}
     item_to_find = 'NOK'
     with open(file_name, mode='r') as file:
-        previous_line = 0  # TODO Нужна ещё одна переменная, в которой будет храниться "предыдущая" строчка
-        # TODO При нахождении новой строчки - в эту переменную будет записана текущая
-        # TODO Можете попробовать отдельно это реализовать
+        previous_line = {}
         while True:
             line = file.readline()
             if item_to_find in line:
                 if str(line[1:-16]) in nok_count:
-                    nok_count[str(line[1:-16])] += 1  # TODO Перед прибавлением нужно создать ключ
+                    nok_count[str(line[1:-16])] += 1  # Перед прибавлением нужно создать ключ
                 else:
-                    nok_count[str(line[1:-16])] = 1
-                    yield nok_count
+                    previous_line.update({str(line[1:-16]): 1})  # TODO а разве не тут создается ключ, если его нет выше?
+                yield previous_line.items()
 
 
 
@@ -62,11 +60,11 @@ file_name = 'events.txt'
 #     print(i, nok_count[i])
 
 
-grouped_events = stat_collector(file_name)
-print(grouped_events)
-for group_time in grouped_events:
-    print(f'[{group_time}]')
-
 # grouped_events = stat_collector(file_name)
-# for group_time, event_count in grouped_events:
-#     print(f'[{group_time}] {event_count}')
+
+# for group_time in grouped_events:
+#     print(f'[{group_time}]')
+
+grouped_events = stat_collector(file_name)
+for group_time, event_count in grouped_events:
+    print(f'[{group_time}] {event_count}')
