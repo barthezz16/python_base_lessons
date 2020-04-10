@@ -57,30 +57,6 @@ prime_number_iterator = PrimeNumbers(n=10000)
 # Теперь нужно создать генератор, который выдает последовательность простых чисел до n
 # Распечатать все простые числа до 10000 в столбик
 
-# def prime_numbers_generator(n):
-#     prime_list = []
-#     for i in range(2, n + 1):
-#         if i not in prime_list:
-#             yield i
-#             prime_list.append(range(i * i, n + 1, i))
-# TODO Тут за основу надо брать функцию из начала
-# def get_prime_numbers(n):
-#     prime_numbers = []
-#     for number in range(2, n + 1):
-#         for prime in prime_numbers:
-#             if number % prime == 0:
-#                 break
-#         else:
-#             prime_numbers.append(number)
-#             TODO Просто надо понять в какой части кода будет простое число появляться
-#             TODO (В этой, тут оно как раз добавляется в список простых чисел, а после этого его можно yield-ить)
-#     return prime_numbers
-
-
-#
-# for number in prime_numbers_generator(n=10000):
-#     print(number)
-
 def prime_numbers_generator(n):
     prime_list = set()
     for i in range(2, n + 1):
@@ -114,19 +90,15 @@ def poli(number):
 
 
 for number in prime_numbers_generator(n=100000):
-    result_happy = happy(number)
-    result_poli = poli(number)
-    print(number, result_happy, result_poli)
-
-
+    # result_happy = happy(number)
+    # result_poli = poli(number)
+    # print(number, result_happy, result_poli)
+    print(number, happy(number), poli(number))  # TODO хотел бы еще уточнить, поидее между этими двумя принтами нет
+    # TODO разницы?
 
 # for number_iter, number_gen in zip(prime_number_iterator, prime_numbers_generator(n=10000)):
 #     print(number_iter == number_gen)
 
-# TODO Отлично! Какое интересное решение) не видел раньше его. Можете приступать к последней части.
-# TODO Хорошо было бы в итератор встроить фильтры, чтобы при нахождении простого числа, после добавления его в список
-# TODO Производилась проверка фильтрами и к нему добавлялась нужная подпись
-# TODO Например str(151) + "- палиндром"
 # Часть 3
 # Написать несколько функций-фильтров, которые выдает True, если число:
 # 1) "счастливое" в обыденном пониманиии - сумма первых цифр равна сумме последних
