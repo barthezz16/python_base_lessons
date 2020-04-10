@@ -97,10 +97,10 @@ def happy(number):
     number_str = str(number)
     number_list = [int(x) for x in list(str(number))]
     x = math.trunc(len(number_str) * 0.5)
-    if len(number_str) >= 2 and sum(number_list[:x]) == sum(number_list[:x:-1]):
-        return number, ' - счастливое'
+    if len(number_str) >= 2 and sum(number_list[:x]) == sum(number_list[-x::]):
+        return '- счастливое'
     else:
-        return number
+        return ''
 
 
 def poli(number):
@@ -108,17 +108,17 @@ def poli(number):
     number_list = [int(x) for x in list(str(number))]
     x = math.trunc(len(number_str) * 0.5)
     if len(number_str) >= 2 and number_list[:x] == number_list[:x:-1]:
-        return ' - полиндромное'
+        return '- полиндромное'
     else:
         return ''
-
-
 
 
 for number in prime_numbers_generator(n=100000):
     result_happy = happy(number)
     result_poli = poli(number)
-    print(result_happy, result_poli)
+    print(number, result_happy, result_poli)
+
+
 
 # for number_iter, number_gen in zip(prime_number_iterator, prime_numbers_generator(n=10000)):
 #     print(number_iter == number_gen)
