@@ -46,6 +46,8 @@ class PrimeNumbers:
 
 
 prime_number_iterator = PrimeNumbers(n=10000)
+
+
 # for number in prime_number_iterator:
 #     print(number)
 
@@ -60,13 +62,26 @@ prime_number_iterator = PrimeNumbers(n=10000)
 #         if i not in prime_list:
 #             yield i
 #             prime_list.append(range(i * i, n + 1, i))
-#
+# TODO Тут за основу надо брать функцию из начала
+# def get_prime_numbers(n):
+#     prime_numbers = []
+#     for number in range(2, n + 1):
+#         for prime in prime_numbers:
+#             if number % prime == 0:
+#                 break
+#         else:
+#             prime_numbers.append(number)
+#             TODO Просто надо понять в какой части кода будет простое число появляться
+#             TODO (В этой, тут оно как раз добавляется в список простых чисел, а после этого его можно yield-ить)
+#     return prime_numbers
+
+
 #
 # for number in prime_numbers_generator(n=10000):
 #     print(number)
 
-def prime_numbers_generator(n):  # TODO честно скажу, на решение через множество намекнули в группе, я пробовал
-    prime_list = set()  # TODO способом, который выше
+def prime_numbers_generator(n):
+    prime_list = set()
     for i in range(2, n + 1):
         if i not in prime_list:
             yield i

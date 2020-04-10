@@ -25,7 +25,7 @@ def stat_collector(file_name):
     item_to_find = 'NOK'
     with open(file_name, mode='r') as file:
         previous_line = {}
-        while True:
+        while True:  # TODO while можно убрать
             for line in file:
                 if item_to_find in line:
                     if line[1:-16] == previous_line:
@@ -35,6 +35,8 @@ def stat_collector(file_name):
                         previous_line = line[1:-16]
                         nok_counter = 1
             return print(f'[{previous_line}] {nok_counter}')
+            # TODO Принт возвращать нет смысла, он возвращает None
+            # TODO Попробуйте yield-ом вернуть эти элементы
 
 
 file_name = 'events.txt'

@@ -51,3 +51,4 @@ draw_hexagon = get_polygon(n=6)
 hexagon_point = sd.get_point(600, 200)
 draw_hexagon(start_point=hexagon_point, end_point=hexagon_point, next_angle=0, length=150, width=3)
 sd.pause()
+#зачет!
