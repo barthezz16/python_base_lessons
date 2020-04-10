@@ -2,6 +2,8 @@
 
 
 # Есть функция генерации списка простых чисел
+import numpy
+
 import math
 
 
@@ -89,11 +91,22 @@ def poli(number):
         return ''
 
 
+def multiplication(number):
+    number_str = str(number)
+    number_list = [int(x) for x in list(str(number))]
+    x = math.trunc(len(number_str) * 0.5)
+    if len(number_str) >= 2 and numpy.prod(number_list[:x]) == numpy.prod(number_list[-x::]):
+        return '- произведение первых числе равно произведению последних'
+    else:
+        return ''
+
+
 for number in prime_numbers_generator(n=100000):
     # result_happy = happy(number)
     # result_poli = poli(number)
-    # print(number, result_happy, result_poli)
-    print(number, happy(number), poli(number))  # TODO хотел бы еще уточнить, поидее между этими двумя принтами нет
+    # result_mul = multiplication(number)
+    # print(number, result_happy, result_poli, result_mul)
+    print(number, happy(number), poli(number), multiplication(number))  # TODO хотел бы еще уточнить, поидее между этими двумя принтами нет
     # TODO разницы?
 
 # for number_iter, number_gen in zip(prime_number_iterator, prime_numbers_generator(n=10000)):
