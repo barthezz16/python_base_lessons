@@ -2,6 +2,7 @@
 
 
 # Есть функция генерации списка простых чисел
+import math
 
 
 def get_prime_numbers(n):
@@ -88,8 +89,39 @@ def prime_numbers_generator(n):
             prime_list.update(range(i * i, n + 1, i))
 
 
-for number_iter, number_gen in zip(prime_number_iterator, prime_numbers_generator(n=10000)):
-    print(number_iter == number_gen)
+# for number in prime_numbers_generator(n=100000):
+#     print(number)
+
+
+def happy(number):
+    number_str = str(number)
+    number_list = [int(x) for x in list(str(number))]
+    x = math.trunc(len(number_str) * 0.5)
+    if len(number_str) >= 2 and sum(number_list[:x]) == sum(number_list[:x:-1]):
+        return number, ' - счастливое'
+    else:
+        return number
+
+
+def poli(number):
+    number_str = str(number)
+    number_list = [int(x) for x in list(str(number))]
+    x = math.trunc(len(number_str) * 0.5)
+    if len(number_str) >= 2 and number_list[:x] == number_list[:x:-1]:
+        return ' - полиндромное'
+    else:
+        return ''
+
+
+
+
+for number in prime_numbers_generator(n=100000):
+    result_happy = happy(number)
+    result_poli = poli(number)
+    print(result_happy, result_poli)
+
+# for number_iter, number_gen in zip(prime_number_iterator, prime_numbers_generator(n=10000)):
+#     print(number_iter == number_gen)
 
 # TODO Отлично! Какое интересное решение) не видел раньше его. Можете приступать к последней части.
 # TODO Хорошо было бы в итератор встроить фильтры, чтобы при нахождении простого числа, после добавления его в список
