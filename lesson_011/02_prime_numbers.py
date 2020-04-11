@@ -63,19 +63,12 @@ def prime_numbers_generator(n):
     prime_list = set()
     for i in range(2, n + 1):
         if i not in prime_list:
-            #  Идея фильтров в том, чтобы передавать их в функцию, а затем производить манипуляции над результатом
-            #  например написать x = str(i)
-            #  а далее циклом пройти по полученному списку(или не циклом и не по списку, а по 1-2 фильтрам)
-            #  фильтров и добавить строки к иксу, после этого вернув его вместо i (а сам i добавлять в множество)
-            #  Если честно чейчас я не совсем понял, в данный момент мы получаем список чисел, а потом уже их
-            #  обрабатываем через фильтры. А надо сделать так что бы числа сразу обрабатывались фильтрами?
-            # TODO Да, чтобы внутри функции происходило это всё
-            yield i
+            x, y, z = str(i), str(i), str(i)
+            x = happy(x)
+            y = poli(y)
+            z = multiplication(z)  # TODO что то мне подсказывает, что это так себе сбособ, но другое не лезет в голову
+            yield i, x, y, z
             prime_list.update(range(i * i, n + 1, i))
-
-
-# for number in prime_numbers_generator(n=100000):
-#     print(number)
 
 
 def happy(number):
@@ -89,15 +82,18 @@ def happy(number):
 
 
 def poli(number):
+    number = str(number)
     # Тут можно было бы просто number == number[::-1]
     # а для чего тут переворачивать число?
     # 2) "палиндромное" - одинаково читающееся в обоих направлениях. Например 723327 и 101
-    # TODO Из этого условия следует, что строка будет равна себе перевернутой
-    # TODO И самый простой способ это проверить - перевернуть и сравнить)
-    number_str = str(number)
-    number_list = [int(x) for x in list(str(number))]
-    x = math.trunc(len(number_str) * 0.5)
-    if len(number_str) >= 2 and number_list[:x] == number_list[:x:-1]:
+    #  Из этого условия следует, что строка будет равна себе перевернутой
+    #  И самый простой способ это проверить - перевернуть и сравнить)
+    # TODO согласен, это как раз о том, что я через чур усложняю, и потом сам в этом путаюсь
+    # number_str = str(number)
+    # number_list = [int(x) for x in list(str(number))]
+    # x = math.trunc(len(number_str) * 0.5)
+    # if len(number_str) >= 2 and number_list[:x] == number_list[:x:-1]:
+    if number == number[::-1]:
         return '- полиндромное'
     else:
         return ''
@@ -114,11 +110,14 @@ def multiplication(number):
 
 
 for number in prime_numbers_generator(n=100000):
-    # result_happy = happy(number)
-    # result_poli = poli(number)
-    # result_mul = multiplication(number)
-    # print(number, result_happy, result_poli, result_mul)
-    print(number, happy(number), poli(number), multiplication(number))
+    print(number)
+
+# for number in prime_numbers_generator(n=100000):
+#     # result_happy = happy(number)
+#     # result_poli = poli(number)
+#     # result_mul = multiplication(number)
+#     # print(number, result_happy, result_poli, result_mul)
+#     print(number, happy(number), poli(number), multiplication(number))
 
 
 # for number_iter, number_gen in zip(prime_number_iterator, prime_numbers_generator(n=10000)):
