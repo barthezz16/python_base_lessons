@@ -34,8 +34,10 @@ def stat_collector(file_name):
                     previous_line = line[1:-16]
                     nok_counter = 1
         yield previous_line, nok_counter
-        # return print(f'[{previous_line}] {nok_counter}') # TODO я проверял, таким принтом возращается так же
-        # TODO последняя строка?
+        # return print(f'[{previous_line}] {nok_counter}')
+        # так возвращается None, но перед возвратом print печатает эту строку
+        # В чём разница? Если нам надо только печатать в консоль - разницы почти нет
+        # А если нам надо записывать данные в лог - то последней строки у нас не будет
 
 
 file_name = 'events.txt'
@@ -43,3 +45,4 @@ file_name = 'events.txt'
 grouped_events = stat_collector(file_name)
 for group_time, event_count in grouped_events:
     print(f'[{group_time}] {event_count}')
+#зачет!
