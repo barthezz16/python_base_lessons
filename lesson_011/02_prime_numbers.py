@@ -63,10 +63,12 @@ def prime_numbers_generator(n):
     prime_list = set()
     for i in range(2, n + 1):
         if i not in prime_list:
-            # TODO Идея фильтров в том, чтобы передавать их в функцию, а затем производить манипуляции над результатом
-            # TODO например написать x = str(i)
-            # TODO а далее циклом пройти по полученному списку(или не циклом и не по списку, а по 1-2 фильтрам)
-            # TODO фильтров и добавить строки к иксу, после этого вернув его вместо i (а сам i добавлять в множество)
+            #  Идея фильтров в том, чтобы передавать их в функцию, а затем производить манипуляции над результатом
+            #  например написать x = str(i)
+            #  а далее циклом пройти по полученному списку(или не циклом и не по списку, а по 1-2 фильтрам)
+            #  фильтров и добавить строки к иксу, после этого вернув его вместо i (а сам i добавлять в множество)
+            # TODO Если честно чейчас я не совсем понял, в данный момент мы получаем список чисел, а потом уже их
+            # TODO обрабатываем через фильтры. А надо сделать так что бы числа сразу обрабатывались фильтрами?
             yield i
             prime_list.update(range(i * i, n + 1, i))
 
@@ -86,7 +88,8 @@ def happy(number):
 
 
 def poli(number):
-    # TODO Тут можно было бы просто number == number[::-1]
+    # Тут можно было бы просто number == number[::-1]
+    # TODO а для чего тут переворачивать число?
     number_str = str(number)
     number_list = [int(x) for x in list(str(number))]
     x = math.trunc(len(number_str) * 0.5)
@@ -112,8 +115,7 @@ for number in prime_numbers_generator(n=100000):
     # result_mul = multiplication(number)
     # print(number, result_happy, result_poli, result_mul)
     print(number, happy(number), poli(number), multiplication(number))
-    # хотел бы еще уточнить, поидее между этими двумя принтами нет разницы?
-    # Думаю большой разницы нет, да.
+
 
 # for number_iter, number_gen in zip(prime_number_iterator, prime_numbers_generator(n=10000)):
 #     print(number_iter == number_gen)
