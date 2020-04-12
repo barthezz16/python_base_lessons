@@ -66,9 +66,11 @@ def prime_numbers_generator(n):
             x, y, z = str(i), str(i), str(i)
             x = happy(x)
             y = poli(y)
-            z = multiplication(z)  # TODO что то мне подсказывает, что это так себе сбособ, но другое не лезет в голову
+            z = multiplication(z)
             yield i, x, y, z
             prime_list.update(range(i * i, n + 1, i))
+
+
 
 
 def happy(number):
@@ -83,16 +85,6 @@ def happy(number):
 
 def poli(number):
     number = str(number)
-    # Тут можно было бы просто number == number[::-1]
-    # а для чего тут переворачивать число?
-    # 2) "палиндромное" - одинаково читающееся в обоих направлениях. Например 723327 и 101
-    #  Из этого условия следует, что строка будет равна себе перевернутой
-    #  И самый простой способ это проверить - перевернуть и сравнить)
-    # TODO согласен, это как раз о том, что я через чур усложняю, и потом сам в этом путаюсь
-    # number_str = str(number)
-    # number_list = [int(x) for x in list(str(number))]
-    # x = math.trunc(len(number_str) * 0.5)
-    # if len(number_str) >= 2 and number_list[:x] == number_list[:x:-1]:
     if number == number[::-1]:
         return '- полиндромное'
     else:
@@ -138,3 +130,37 @@ for number in prime_numbers_generator(n=100000):
 # простых счастливых палиндромных чисел и так далее. Придумать не менее 2х способов.
 #
 # Подсказка: возможно, нужно будет добавить параметр в итератор/генератор.
+# Пример:
+class PrimeNumbers:
+    def __init__(self, n, list_of_filters):
+        self.i, self.a, = 2, 2
+        self.n = n
+        self.filters = list_of_filters
+
+    def __iter__(self):
+        self.i, self.a = 2, 2
+        self.prime_list = []
+        return self
+
+    def __next__(self):
+        while True:
+            if self.i > self.n:
+                raise StopIteration('число(i) больше n')
+            for self.a in self.prime_list:
+                if self.i % self.a == 0:
+                    break
+            else:
+                self.prime_list.append(self.i)
+                result = str(self.i)
+                for func in self.filters:
+                    result += func(self.i)
+                return result
+            self.i += 1
+
+
+filters = [poli, happy, multiplication]
+prime_number_iterator = PrimeNumbers(n=10000, list_of_filters=filters)
+for i in prime_number_iterator:
+    print(i)
+
+#зачет!
