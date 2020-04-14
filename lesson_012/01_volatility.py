@@ -111,9 +111,14 @@ class VolatilityAnalyser:
             self.volatility = ((max(self.value[0]) - min(self.value[0])) / self.average_price) * 100
             self.result[self.secid] = self.volatility
             # return self.zero_volatility, self.result
-        self.sort_result_list() # TODO Максим можно попростить совет, вылетело из головы и никак не могу понять, как мне
-        # TODO получать значения result не в цикле, а после того как весь цикл со всеми файлами пройдет, и в конце выдаст
-        # TODO два полностью сформированных словаря self.zero_volatility и self.result.
+        self.sort_result_list()
+        # Максим можно попростить совет, вылетело из головы и никак не могу понять, как мне
+        # получать значения result не в цикле,
+        # а после того как весь цикл со всеми файлами пройдет, и в конце выдаст
+        # два полностью сформированных словаря self.zero_volatility и self.result.
+        # TODO Можно создать список объектов в цикле [VolatilityAnalyser(файл) фор файл ин директория]
+        # TODO Затем пройти по списку - запустить метод для расчётов
+        # TODO Затем пройти по списку и сформировать результаты в общий словарь/список
 
     def sort_result_list(self):
         for i in sorted(self.result.items(), key=lambda x: x[1]):
@@ -121,8 +126,6 @@ class VolatilityAnalyser:
         if float(*self.result.values()) == 0.0:
             self.zero_volatility.append(*self.result)
             print(f'Нулевая волатильность: \n {self.zero_volatility}')
-
-
 
 
 for files in os.listdir('trades'):
