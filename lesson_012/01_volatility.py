@@ -92,14 +92,15 @@ class VolatilityAnalyser:
         self.tradetime = 0
         self.price = 0
         self.quantity = 0
+        self.result = {}
+        self.zero_volatility = []
+        self.min_volatility = {}
+        self.max_volatility = {}
 
     def run(self, file_to_read):
         self.file_analytics(file_to_read)
 
     def file_analytics(self, file_to_read):
-        # for filename in os.listdir('trades'):
-        #     with open(os.path.join('trades', filename), 'r') as file:
-        #         with open(os.path.join('trades', 'TICKER_AFH9.csv'), 'r') as file:
         with open(os.path.join('trades', file_to_read), 'r') as file:
             for line in file.readlines()[1:]:
                 self.secid, self.tradetime, self.price, self.quantity = line.split(',')
@@ -108,12 +109,23 @@ class VolatilityAnalyser:
             self.value = list(self.data.values())
             self.average_price = (min(self.value[0]) + max(self.value[0])) / 2
             self.volatility = ((max(self.value[0]) - min(self.value[0])) / self.average_price) * 100
-            print(f'{self.secid} валатильность {self.volatility}')
+            self.result[self.secid] = self.volatility
+        self.sort_result_list() # TODO Максим можно попростить совет, вылетело из головы и никак не могу понять, как мне
+        # TODO получать значения result не в цикле, а после того как весь цикл со всеми файлами пройдет, и в конце выдаст
+        # TODO два полностью сформированных словаря self.zero_volatility и self.result.
+
+    def sort_result_list(self):
+        for i in sorted(self.result.items(), key=lambda x: x[1]):
+            print(i)
+        if float(*self.result.values()) == 0.0:
+            self.zero_volatility.append(*self.result)
+            print(f'Нулевая волатильность: \n {self.zero_volatility}')
 
 
-analyser = VolatilityAnalyser()
+
+
 for files in os.listdir('trades'):
-    # TODO Попробуйте для каждого файла создавать новый объект класса
+    analyser = VolatilityAnalyser()
     analyser.run(file_to_read=files)
 # TODO Ещё было бы удобно выделить сортировку и печать в отдельную функцию
 # TODO И ещё одну функцию-генератор создать, которая на вход будет получать путь к директории
