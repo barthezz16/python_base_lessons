@@ -77,6 +77,10 @@ import os
 
 class VolatilityAnalyser:
 
+    # TODO Класс надо заточить под обработку одного файла, а вне класса пройтись по директории
+    # TODO И для каждого файла создать по объекту для расчётов
+    # TODO Потом пройти по всем объектам и собрать результаты вместе.
+    # TODO Эти все сложности помогут легче выполнить два следующих задания)
     def __init__(self):
         self.files_to_open = None
         self.data = {}
@@ -97,7 +101,7 @@ class VolatilityAnalyser:
         #     with open(os.path.join('trades', filename), 'r') as file:
         #         with open(os.path.join('trades', 'TICKER_AFH9.csv'), 'r') as file:
         with open(os.path.join('trades', file_to_read), 'r') as file:
-            for line in file.readlines()[2:]:
+            for line in file.readlines()[1:]:
                 self.secid, self.tradetime, self.price, self.quantity = line.split(',')
                 self.price_list.append((float(self.price)))
                 self.data[self.secid] = self.price_list
@@ -109,4 +113,9 @@ class VolatilityAnalyser:
 
 analyser = VolatilityAnalyser()
 for files in os.listdir('trades'):
+    # TODO Попробуйте для каждого файла создавать новый объект класса
     analyser.run(file_to_read=files)
+# TODO Ещё было бы удобно выделить сортировку и печать в отдельную функцию
+# TODO И ещё одну функцию-генератор создать, которая на вход будет получать путь к директории
+# TODO А на выход будет выдавать путь к файлу из директории
+# TODO Эти две функции можно будет вынести в отдельный модуль и импортировать в каждое из заданий этого модуля
