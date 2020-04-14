@@ -72,5 +72,41 @@
 #
 #     def run(self):
 #         <обработка данных>
+import os
 
-# TODO написать код в однопоточном/однопроцессорном стиле
+
+class VolatilityAnalyser:
+
+    def __init__(self):
+        self.files_to_open = None
+        self.data = {}
+        self.price_list = []
+        self.value = []
+        self.average_price = 0
+        self.volatility = 0
+        self.secid = 0
+        self.tradetime = 0
+        self.price = 0
+        self.quantity = 0
+
+    def run(self, file_to_read):
+        self.file_analytics(file_to_read)
+
+    def file_analytics(self, file_to_read):
+        # for filename in os.listdir('trades'):
+        #     with open(os.path.join('trades', filename), 'r') as file:
+        #         with open(os.path.join('trades', 'TICKER_AFH9.csv'), 'r') as file:
+        with open(os.path.join('trades', file_to_read), 'r') as file:
+            for line in file.readlines()[2:]:
+                self.secid, self.tradetime, self.price, self.quantity = line.split(',')
+                self.price_list.append((float(self.price)))
+                self.data[self.secid] = self.price_list
+            self.value = list(self.data.values())
+            self.average_price = (min(self.value[0]) + max(self.value[0])) / 2
+            self.volatility = ((max(self.value[0]) - min(self.value[0])) / self.average_price) * 100
+            print(f'{self.secid} валатильность {self.volatility}')
+
+
+analyser = VolatilityAnalyser()
+for files in os.listdir('trades'):
+    analyser.run(file_to_read=files)
