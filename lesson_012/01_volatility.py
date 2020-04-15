@@ -120,3 +120,4 @@ def get_file():
 
 get_file()
 sort_and_print()
+#зачет!
