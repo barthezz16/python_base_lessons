@@ -39,14 +39,6 @@ class VolatilityAnalyser(threading.Thread):
 
     def file_analytics(self, file_to_read):
         with open(os.path.join('trades', file_to_read), 'r') as file:
-            # analysers = [VolatilityAnalyser(file_to_read=line) for line in file.readlines()[1:]]
-            # for analyser in analysers: # вот так уже все работает, но когда я бытаюсь разбить по потокам
-            #     analyser.start()  # чтнение строк, все ломается, line из analysers не видна ниже
-            # for analyser in analysers: # где я хочу ее распаковать
-            #  Разбивать по потокам чтение каждой строки не нужно, тогда на обмен информацией уйдет
-            #  больше времени, разбиения по файлам достаточно
-            #  т.е. другими словами надо стараться большие монотонные задания, которые можно выполнять независимо
-            #     analyser.join() # TODO тут не совсем понял...
             for line in file.readlines()[1:]:
                 secid, tradetime, price, quantity = line.split(',')
                 self.price_list.append((float(price)))
