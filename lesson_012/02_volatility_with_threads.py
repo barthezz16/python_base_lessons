@@ -26,7 +26,6 @@ from Utils import sort_and_print, total, time_track
 class VolatilityAnalyser(threading.Thread):
 
     def __init__(self, file_to_read, lock, *args, **kwargs):
-        # TODO согласен, сам хотел убрать
         super().__init__(*args, **kwargs)
         self.file_to_read = file_to_read
         self.data = {}
@@ -61,11 +60,9 @@ class VolatilityAnalyser(threading.Thread):
             self.total_lock.release()
 
 
-lock = threading.Lock()
-
-
 @time_track
 def get_file():
+    lock = threading.Lock()
     analysers = [VolatilityAnalyser(file_to_read=files, lock=lock) for files in os.listdir('trades')]
     for analyser in analysers:
         analyser.start()
@@ -75,3 +72,4 @@ def get_file():
 
 get_file()
 sort_and_print()
+#Зачет!
