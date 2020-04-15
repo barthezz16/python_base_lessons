@@ -25,27 +25,17 @@ from Utils import sort_and_print, total, time_track
 
 class VolatilityAnalyser(threading.Thread):
 
-    def __init__(self, file_to_read, *args, **kwargs):
-        # TODO Ох, ну прям глаза режет такое количество атрибутов
-        # TODO Большая же часть используется только в одном методе - почему бы их не превратить в обычные переменные?
+    def __init__(self, file_to_read, lock, *args, **kwargs):
+        # TODO согласен, сам хотел убрать
         super().__init__(*args, **kwargs)
         self.file_to_read = file_to_read
-        self.files_to_open = None
         self.data = {}
         self.price_list = []
         self.value = []
-        self.average_price = 0
-        self.volatility = 0
-        self.secid = 0
-        self.tradetime = 0
-        self.price = 0
-        self.quantity = 0
         self.result = {}
-        self.zero_volatility = []
-        self.min_volatility = {}
-        self.max_volatility = {}
+        self.total_lock = lock
 
-    def run(self,):
+    def run(self, ):
         self.file_analytics(self.file_to_read)
 
     def file_analytics(self, file_to_read):
@@ -54,29 +44,34 @@ class VolatilityAnalyser(threading.Thread):
             # for analyser in analysers: # вот так уже все работает, но когда я бытаюсь разбить по потокам
             #     analyser.start()  # чтнение строк, все ломается, line из analysers не видна ниже
             # for analyser in analysers: # где я хочу ее распаковать
-            # TODO Разбивать по потокам чтение каждой строки не нужно, тогда на обмен информацией уйдет
-            # TODO больше времени, разбиения по файлам достаточно
-            # TODO т.е. другими словами надо стараться большие монотонные задания, которые можно выполнять независимо
-            #     analyser.join()
+            #  Разбивать по потокам чтение каждой строки не нужно, тогда на обмен информацией уйдет
+            #  больше времени, разбиения по файлам достаточно
+            #  т.е. другими словами надо стараться большие монотонные задания, которые можно выполнять независимо
+            #     analyser.join() # TODO тут не совсем понял...
             for line in file.readlines()[1:]:
-                self.secid, self.tradetime, self.price, self.quantity = line.split(',')
-                self.price_list.append((float(self.price)))
-                self.data[self.secid] = self.price_list
+                secid, tradetime, price, quantity = line.split(',')
+                self.price_list.append((float(price)))
+                self.data[secid] = self.price_list
             self.value = list(self.data.values())
-            self.average_price = (min(self.value[0]) + max(self.value[0])) / 2
-            self.volatility = ((max(self.value[0]) - min(self.value[0])) / self.average_price) * 100
-            self.result[self.secid] = self.volatility
+            average_price = (min(self.value[0]) + max(self.value[0])) / 2
+            volatility = ((max(self.value[0]) - min(self.value[0])) / average_price) * 100
+            self.result[secid] = volatility
+            self.total_lock.acquire()
             total.update(self.result)
+            self.total_lock.release()
+
+
+lock = threading.Lock()
+
 
 @time_track
 def get_file():
-        # TODO Тут бы Queue прикрутить или хотя бы Lock использовать
-        analysers = [VolatilityAnalyser(file_to_read=files)for files in os.listdir('trades')]
-        for analyser in analysers:
-            analyser.start()
-        for analyser in analysers:
-            analyser.join()
+    analysers = [VolatilityAnalyser(file_to_read=files, lock=lock) for files in os.listdir('trades')]
+    for analyser in analysers:
+        analyser.start()
+    for analyser in analysers:
+        analyser.join()
+
 
 get_file()
 sort_and_print()
-
