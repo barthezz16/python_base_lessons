@@ -26,6 +26,8 @@ from Utils import sort_and_print, total, time_track
 class VolatilityAnalyser(threading.Thread):
 
     def __init__(self, file_to_read, *args, **kwargs):
+        # TODO Ох, ну прям глаза режет такое количество атрибутов
+        # TODO Большая же часть используется только в одном методе - почему бы их не превратить в обычные переменные?
         super().__init__(*args, **kwargs)
         self.file_to_read = file_to_read
         self.files_to_open = None
@@ -49,9 +51,12 @@ class VolatilityAnalyser(threading.Thread):
     def file_analytics(self, file_to_read):
         with open(os.path.join('trades', file_to_read), 'r') as file:
             # analysers = [VolatilityAnalyser(file_to_read=line) for line in file.readlines()[1:]]
-            # for analyser in analysers: # TODO вот так уже все работает, но когда я бытаюсь разбить по потокам
-            #     analyser.start()  # TODO чтнение строк, все ломается, line из analysers не видна ниже
-            # for analyser in analysers: # TODO где я хочу ее распаковать
+            # for analyser in analysers: # вот так уже все работает, но когда я бытаюсь разбить по потокам
+            #     analyser.start()  # чтнение строк, все ломается, line из analysers не видна ниже
+            # for analyser in analysers: # где я хочу ее распаковать
+            # TODO Разбивать по потокам чтение каждой строки не нужно, тогда на обмен информацией уйдет
+            # TODO больше времени, разбиения по файлам достаточно
+            # TODO т.е. другими словами надо стараться большие монотонные задания, которые можно выполнять независимо
             #     analyser.join()
             for line in file.readlines()[1:]:
                 self.secid, self.tradetime, self.price, self.quantity = line.split(',')
@@ -65,7 +70,7 @@ class VolatilityAnalyser(threading.Thread):
 
 @time_track
 def get_file():
-
+        # TODO Тут бы Queue прикрутить или хотя бы Lock использовать
         analysers = [VolatilityAnalyser(file_to_read=files)for files in os.listdir('trades')]
         for analyser in analysers:
             analyser.start()
