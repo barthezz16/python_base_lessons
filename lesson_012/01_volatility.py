@@ -74,13 +74,11 @@
 #         <обработка данных>
 import os
 
+from Utils import sort_and_print, total, time_track
+
 
 class VolatilityAnalyser:
 
-    # TODO Класс надо заточить под обработку одного файла, а вне класса пройтись по директории
-    # TODO И для каждого файла создать по объекту для расчётов
-    # TODO Потом пройти по всем объектам и собрать результаты вместе.
-    # TODO Эти все сложности помогут легче выполнить два следующих задания)
     def __init__(self):
         self.files_to_open = None
         self.data = {}
@@ -110,28 +108,15 @@ class VolatilityAnalyser:
             self.average_price = (min(self.value[0]) + max(self.value[0])) / 2
             self.volatility = ((max(self.value[0]) - min(self.value[0])) / self.average_price) * 100
             self.result[self.secid] = self.volatility
-            # return self.zero_volatility, self.result
-        self.sort_result_list()
-        # Максим можно попростить совет, вылетело из головы и никак не могу понять, как мне
-        # получать значения result не в цикле,
-        # а после того как весь цикл со всеми файлами пройдет, и в конце выдаст
-        # два полностью сформированных словаря self.zero_volatility и self.result.
-        # TODO Можно создать список объектов в цикле [VolatilityAnalyser(файл) фор файл ин директория]
-        # TODO Затем пройти по списку - запустить метод для расчётов
-        # TODO Затем пройти по списку и сформировать результаты в общий словарь/список
-
-    def sort_result_list(self):
-        for i in sorted(self.result.items(), key=lambda x: x[1]):
-            print(i)
-        if float(*self.result.values()) == 0.0:
-            self.zero_volatility.append(*self.result)
-            print(f'Нулевая волатильность: \n {self.zero_volatility}')
 
 
-for files in os.listdir('trades'):
-    analyser = VolatilityAnalyser()
-    analyser.run(file_to_read=files)
-# TODO Ещё было бы удобно выделить сортировку и печать в отдельную функцию
-# TODO И ещё одну функцию-генератор создать, которая на вход будет получать путь к директории
-# TODO А на выход будет выдавать путь к файлу из директории
-# TODO Эти две функции можно будет вынести в отдельный модуль и импортировать в каждое из заданий этого модуля
+@time_track
+def get_file():
+    for files in os.listdir('trades'):
+        analyser = VolatilityAnalyser()
+        analyser.run(file_to_read=files)
+        total.update(analyser.result)
+
+
+get_file()
+sort_and_print()
