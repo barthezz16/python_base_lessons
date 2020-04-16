@@ -73,6 +73,7 @@
 #     def run(self):
 #         <обработка данных>
 import os
+from random import random
 
 from Utils import sort_and_print, total, time_track
 
@@ -80,20 +81,11 @@ from Utils import sort_and_print, total, time_track
 class VolatilityAnalyser:
 
     def __init__(self):
-        self.files_to_open = None
         self.data = {}
         self.price_list = []
         self.value = []
-        self.average_price = 0
-        self.volatility = 0
-        self.secid = 0
-        self.tradetime = 0
-        self.price = 0
-        self.quantity = 0
         self.result = {}
         self.zero_volatility = []
-        self.min_volatility = {}
-        self.max_volatility = {}
 
     def run(self, file_to_read):
         self.file_analytics(file_to_read)
@@ -101,13 +93,13 @@ class VolatilityAnalyser:
     def file_analytics(self, file_to_read):
         with open(os.path.join('trades', file_to_read), 'r') as file:
             for line in file.readlines()[1:]:
-                self.secid, self.tradetime, self.price, self.quantity = line.split(',')
-                self.price_list.append((float(self.price)))
-                self.data[self.secid] = self.price_list
+                secid, tradetime, price, quantity = line.split(',')
+                self.price_list.append((float(price)))
+                self.data[secid] = self.price_list
             self.value = list(self.data.values())
-            self.average_price = (min(self.value[0]) + max(self.value[0])) / 2
-            self.volatility = ((max(self.value[0]) - min(self.value[0])) / self.average_price) * 100
-            self.result[self.secid] = self.volatility
+            average_price = (min(self.value[0]) + max(self.value[0])) / 2
+            volatility = ((max(self.value[0]) - min(self.value[0])) / average_price) * 100
+            self.result[secid] = volatility
 
 
 @time_track
@@ -118,6 +110,6 @@ def get_file():
         total.update(analyser.result)
 
 
-get_file()
-sort_and_print()
-#зачет!
+param = get_file()
+sort_and_print(param)
+# зачет!

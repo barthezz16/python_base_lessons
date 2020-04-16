@@ -62,6 +62,6 @@ def get_file():
         analyser.join()
 
 
-get_file()
-sort_and_print()
-#Зачет!
+param = get_file()
+sort_and_print(param)
+# Зачет!
