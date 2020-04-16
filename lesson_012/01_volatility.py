@@ -73,6 +73,7 @@
 #     def run(self):
 #         <обработка данных>
 import os
+from random import random
 
 from Utils import sort_and_print, total, time_track
 
@@ -118,6 +119,6 @@ def get_file():
         total.update(analyser.result)
 
 
-get_file()
-sort_and_print()
-#зачет!
+param = get_file()
+sort_and_print(param)
+# зачет!

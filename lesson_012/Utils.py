@@ -13,7 +13,7 @@ def time_track(func):
     return surrogate
 
 
-def sort_and_print():
+def sort_and_print(param):
     global item_to_find, list
     sorted_total = list(sorted(total.items(), key=lambda x: x[1], reverse=True))
     dict_total = dict(sorted_total)
