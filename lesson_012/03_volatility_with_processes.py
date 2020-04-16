@@ -69,4 +69,4 @@ if __name__ == '__main__':
     get_file()
     sort_and_print()
 
-# Зачет!
+
