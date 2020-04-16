@@ -108,6 +108,7 @@ def get_file():
         analyser = VolatilityAnalyser()
         analyser.run(file_to_read=files)
         total.update(analyser.result)
+    return total
 
 
 param = get_file()

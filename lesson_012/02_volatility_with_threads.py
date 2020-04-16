@@ -60,6 +60,7 @@ def get_file():
         analyser.start()
     for analyser in analysers:
         analyser.join()
+    return total
 
 
 param = get_file()

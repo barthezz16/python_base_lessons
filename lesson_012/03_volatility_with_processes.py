@@ -50,7 +50,7 @@ class VolatilityAnalyser(multiprocessing.Process):
             self.result[secid] = volatility
             self.total.update(self.result)
             self.collector.put(dict(self.total))
-            return total
+
 
 
 if __name__ == '__main__':
