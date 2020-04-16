@@ -62,9 +62,9 @@ if __name__ == '__main__':
         for analyser in analysers:
             analyser.join()
         while not collector.empty():
-            print(collector.get())  # TODO Максим, вот тут и заминка, коллектор то получил все данные,
-            # TODO но вот как теперь это передать в Utils в sort_and_print не изменяя их, я что то придумать не могу...
-
+            print(collector.get())  # Максим, вот тут и заминка, коллектор то получил все данные,
+            # но вот как теперь это передать в Utils в sort_and_print не изменяя их, я что то придумать не могу...
+        # TODO можно использовать название тикета как ключ и создать из результатов словарь
 
     get_file()
     sort_and_print()
