@@ -52,7 +52,6 @@ class VolatilityAnalyser(multiprocessing.Process):
             self.collector.put(dict(self.total))
 
 
-
 if __name__ == '__main__':
     @time_track
     def get_file():
@@ -69,3 +68,4 @@ if __name__ == '__main__':
 
     param = get_file()
     sort_and_print(param)
+#зачет!
