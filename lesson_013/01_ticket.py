@@ -8,9 +8,32 @@
 # Пример заполнения lesson_013/images/ticket_sample.png
 # Подходящий шрифт искать на сайте ofont.ru
 
+import os
+from PIL import Image, ImageDraw, ImageFont, ImageColor
+
+
 def make_ticket(fio, from_, to, date):
-    # TODO здесь ваш код
-    pass
+    template = "ticket_template.png"
+    image = Image.open(template)
+    draw = ImageDraw.Draw(image)
+    font_path = os.path.join("Calibri.ttf")
+    font = ImageFont.truetype(font_path, size=20)
+    x = 45
+    y = 125
+    message = f"{fio}"
+    draw.text((x, y), message, font=font, fill=ImageColor.colormap['black'])
+    message = f"{from_}"
+    draw.text((x, y + 69), message, font=font, fill=ImageColor.colormap['black'])
+    message = f"{to}"
+    draw.text((x, y + 135), message, font=font, fill=ImageColor.colormap['black'])
+    message = f"{date}"
+    draw.text((x + 242, y + 135), message, font=font, fill=ImageColor.colormap['black'])
+    out_path = 'ticket.png'
+    image.save(out_path)
+    print(f'Post card saved as {out_path}')
+
+
+make_ticket(fio='Sorokin Iurii', from_='Moscow', to='New York', date='4.18.2020')
 
 # Усложненное задание (делать по желанию).
 # Написать консольный скрипт c помощью встроенного python-модуля argparse.
