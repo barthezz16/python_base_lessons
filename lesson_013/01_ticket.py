@@ -11,13 +11,6 @@
 import os, argparse
 from PIL import Image, ImageDraw, ImageFont, ImageColor
 
-parser = argparse.ArgumentParser()
-parser.add_argument('fio', help='Surname and name')
-parser.add_argument('_from', help='Place of departure')
-parser.add_argument('to', help='Place of arriving')
-parser.add_argument('date', help='Departure date')
-parser.add_argument('-s', '--save_to', help='PATH to save file', default='ticket.png')
-args = parser.parse_args()
 
 # print(args)
 
@@ -43,6 +36,14 @@ def make_ticket(fio, from_, to, date, path=None):
     print(f'Post card saved as {out_path}')
 
 
+parser = argparse.ArgumentParser()
+parser.add_argument('fio', help='Surname and name')
+parser.add_argument('_from', help='Place of departure')
+parser.add_argument('to', help='Place of arriving')
+parser.add_argument('date', help='Departure date')
+parser.add_argument('-s', '--save_to', help='PATH to save file', default='ticket.png')
+args = parser.parse_args()
+
 # make_ticket(fio='Sorokin Iurii', from_='Moscow', to='New York', date='4.18.2020')
 make_ticket(args.fio, args._from, args.to, args.date, args.save_to)
 
@@ -55,3 +56,4 @@ make_ticket(args.fio, args._from, args.to, args.date, args.save_to)
 #   --date - обязательный, когда летим.
 #   --save_to - необязательный, путь для сохранения заполненнего билета.
 # и заполнять билет.
+#зачет!
