@@ -85,8 +85,8 @@ FRAME = 10
 # game.run()
 
 
-def bowling(total_score):
-    total_score = []
+def bowling(total_score):  # TODO Параметр выходит не используется внутри функции? Тогда зачем он?
+    total_score = []  # TODO Тут он сразу перезаписывается
     for _ in range(FRAME):
         try_result = []
         remaining_pins = PINS
@@ -104,7 +104,9 @@ def bowling(total_score):
         total_score.append(sum(try_result))
     print('всего очков', sum(total_score))
 
-
+# TODO Я бы советовал первым этапом научиться правильно разделять строку на фрэймы
+# TODO Тогда же можно будет проверить, состоит ли строка из 10 фреймов и правильные ли он
+# TODO А уже потом считать очки. + нужно вынести основной код в движок, а тут оставить только импорты и аргпарс
 parser = argparse.ArgumentParser()
 parser.add_argument('result', help='Show game result')
 args = parser.parse_args()
