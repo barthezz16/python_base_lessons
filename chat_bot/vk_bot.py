@@ -16,7 +16,7 @@ def configure_logging():
     log.addHandler(stream_handler)
 
     file_handler = logging.FileHandler('bot.log', mode='a', encoding='UTF8', delay=False)
-    file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
+    file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s', "%d-%m-%Y %H:%M"))
     file_handler.setLevel(logging.DEBUG)
     log.addHandler(file_handler)
     log.setLevel(logging.DEBUG)
