@@ -1,9 +1,25 @@
 from _token import token
 import random
 import vk_api
-import vk_api.bot_longpoll
+from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
+import logging
 
 group_id = 194398178
+
+log = logging.getLogger('bot')
+
+
+def configure_logging():
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(logging.Formatter('%(levelname)s %(message)s'))
+    stream_handler.setLevel(logging.INFO)
+    log.addHandler(stream_handler)
+
+    file_handler = logging.FileHandler('bot.log', mode='a', encoding='UTF8', delay=False)
+    file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
+    file_handler.setLevel(logging.DEBUG)
+    log.addHandler(file_handler)
+    log.setLevel(logging.DEBUG)
 
 
 class Bot:
@@ -11,28 +27,30 @@ class Bot:
         self.group_id = group_id
         self.token = token
         self.vk = vk_api.VkApi(token=token)
-        self.long_poller = vk_api.bot_longpoll.VkBotLongPoll(self.vk, self.group_id)
+        self.long_poller = VkBotLongPoll(self.vk, self.group_id)
         self.api = self.vk.get_api()
 
     def run(self):
         for event in self.long_poller.listen():
-            print('получено событие')
             try:
                 self.on_event(event)
             except Exception as err:
-                print(err)
+                log.exception('ошибка в обработке события')
 
     def on_event(self, event):
-        if event.type == vk_api.bot_longpoll.VkBotEventType.MESSAGE_NEW:
+        answer = str(event.object.text)
+        if event.type == VkBotEventType.MESSAGE_NEW:
+            log.debug('отправляем сообщение назад')
             self.api.messages.send(
-                message=event.object.text,
+                message='я тебя понял: ' + answer.upper(),
                 random_id=random.randint(0, 2 ** 20),
                 peer_id=event.object.peer_id,
             )
         else:
-            print('мы пока не умеем обрабатывать события такого типа', event.type)
+            log.info('мы пока не умеем обрабатывать события такого типа %s', event.type)
 
 
 if __name__ == '__main__':
+    configure_logging()
     bot = Bot(group_id, token)
     bot.run()
