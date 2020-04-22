@@ -43,7 +43,17 @@ args = parser.parse_args()
 
 analyzing_result(args.result)
 
-# result = 'X34-/1744XX23--4/'  # 118
+# result = 'X34-/1744XX23--4/'
+# analyzing_result(result=result)
+# result = '12X34-/1744XX23--4/'
+# analyzing_result(result=result)
+# result = '1X4-/1744XX23--4/'
+# analyzing_result(result=result)
+# result = '/34-/1744XX23--4/'
+# analyzing_result(result=result)
+# result = '9934-/1744XX23--4/'
+# analyzing_result(result=result)
+# result = '0534-/1744XX23--4/'
 # analyzing_result(result=result)
 
 # При написании кода помнить, что заказчик может захотеть доработок и новых возможностей...
