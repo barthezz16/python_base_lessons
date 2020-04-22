@@ -34,24 +34,17 @@
 
 
 import argparse
-from bowling_engine import bowling as bowling_game
+from bowling_engine import analyzing_result
 
-PINS = 10
-FRAME = 10
-
-#  Я бы советовал первым этапом научиться правильно разделять строку на фрэймы
-#  Тогда же можно будет проверить, состоит ли строка из 10 фреймов и правильные ли он
-#  А уже потом считать очки. + нужно вынести основной код в движок, а тут оставить только импорты и аргпарс
-
-# TODO Максим если честно, не очень понял совет, код в движок перенес, а вот первые две строчки не совсем понял...
 
 parser = argparse.ArgumentParser()
 parser.add_argument('result', help='Show game result')
 args = parser.parse_args()
 
-bowling_game(args.result)
+analyzing_result(args.result)
 
-# bowling_game()
+# result = 'X34-/1744XX23--4/'  # 118
+# analyzing_result(result=result)
 
 # При написании кода помнить, что заказчик может захотеть доработок и новых возможностей...
 # И, возможно, вам пригодится паттерн проектирования "Состояние",
