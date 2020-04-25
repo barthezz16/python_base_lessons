@@ -36,15 +36,14 @@
 import argparse
 from bowling_engine import analyzing_result
 
+# parser = argparse.ArgumentParser()
+# parser.add_argument('result', help='Show game result')
+# args = parser.parse_args()
+#
+# analyzing_result(args.result)
 
-parser = argparse.ArgumentParser()
-parser.add_argument('result', help='Show game result')
-args = parser.parse_args()
-
-analyzing_result(args.result)
-
-# result = 'X34-/1744XX23--4/'
-# analyzing_result(result=result)
+result = '1/6/1/--327-18812382'
+analyzing_result(result=result)
 # result = '12X34-/1744XX23--4/'
 # analyzing_result(result=result)
 # result = '1X4-/1744XX23--4/'

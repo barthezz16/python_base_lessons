@@ -12,8 +12,6 @@ def analyzing_result(result):
         result_count(v)
     if frames != 10:
         raise Exception('Не правильное количество фреймов!')
-    print(f'{result} -> {total}')
-    print(total)
     return total
 
 
@@ -39,6 +37,5 @@ def check_errors(v):
         raise ValueError('Spare на первом броске')
     elif 'X' in v[1]:
         raise ValueError('Strike на втором броске')
-    if v[0].isdigit() and v[1].isdigit() and int(v[0]) + int(v[0]) >= 10:  # TODO вместо v[0] должно быть v[1]
+    if v[0].isdigit() and v[1].isdigit() and int(v[0]) + int(v[1]) >= 10:
         raise ValueError('Введено неправильное значение, сумма одного фрейма больше 9 очков')
-

@@ -26,7 +26,21 @@
 # Из текущего файла сделать консольный скрипт для формирования файла с результатами турнира.
 # Параметры скрипта: --input <файл протокола турнира> и --output <файл результатов турнира>
 
-# TODO тут ваш код
+import argparse
+from file_handler import file_handler
+
+# file_to_read = 'tournament.txt'
+# file_to_write = 'tournament_result.txt'
+#
+# file_reader(read_file=file_to_read, write_file=file_to_write)
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('-i', '--input', required=True, help='File to read')
+parser.add_argument('-o', '--output', required=True, help='File to write', default='tournament_result.txt')
+args = parser.parse_args()
+
+file_handler(args.input, args.output)
 
 # Усложненное задание (делать по желанию)
 #
