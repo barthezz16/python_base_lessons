@@ -3,7 +3,7 @@ from bowling_engine import analyzing_result
 
 
 class MyTests(unittest.TestCase):
-
+    # TODO Нужно побольше тестов - особенно с ошибками
     def test_1(self):
         result = analyzing_result('XXXXXXXXXX')
         self.assertEqual(result, 200)
@@ -15,7 +15,7 @@ class MyTests(unittest.TestCase):
     def test_3(self):
         result = analyzing_result('9934-/1744XX23--4/')
         # self.assertEqual(result, 'Введено неправильное значение, сумма одного фрейма больше 9 очков')
-        # TODO Для проверки ошибок есть подобный синтаксис
+        # Для проверки ошибок есть подобный синтаксис
         # with self.assertRaises(Exception) as err:
         #     get_score(game_result)
         # self.assertEqual("Неверное число ходов", str(err.exception))
