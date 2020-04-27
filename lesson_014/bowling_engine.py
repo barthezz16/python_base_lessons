@@ -9,7 +9,7 @@ def analyzing_result(result):
     for k, v in analized_res.items():
         frames += 1
         check_errors(v)
-        result_count(v)
+        result_count_worldwide(v)
     if frames != 10:
         raise Exception('Не правильное количество фреймов!')
     return total
@@ -23,6 +23,18 @@ def result_count(v):
         total += 15
     elif '-' in v:
         total += 0
+    else:
+        total += int(v[0]) + int(v[1])
+    return v
+
+
+def result_count_worldwide(v):
+    global total
+    print(v)
+    if 'X' in v:
+        total += 20
+    elif '/' in v:
+        total += 15
     elif '-' in v:
         total += 0
     else:

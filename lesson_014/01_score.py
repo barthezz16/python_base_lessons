@@ -42,7 +42,7 @@ from bowling_engine import analyzing_result
 #
 # analyzing_result(args.result)
 
-result = '1/6/1/--327-18812382'
+result = 'XXXXX5/5/5/5/5/'  # 30+30+30+25+20+15+15+15+15+10
 analyzing_result(result=result)
 # result = '12X34-/1744XX23--4/'
 # analyzing_result(result=result)
