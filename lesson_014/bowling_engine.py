@@ -30,7 +30,6 @@ def result_count(v):
 
 def result_count_worldwide(v):
     global total
-    print(v)
     if 'X' in v:
         total += 20
     elif '/' in v:
