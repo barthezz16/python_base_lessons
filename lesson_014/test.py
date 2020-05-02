@@ -11,15 +11,20 @@ def analyzing_result_worldwide(result):
             analized_res[i] = k
     for k, v in analized_res.items():
         frames += 1
+        if frames + 1 > 10:
+            analized_res[k + 1] = (0, 0)
+            print(analized_res[k + 1])
+        else:
+            analized_res[k + 1] = analized_res[k + 1]
         check_errors(v)
-        count(k, v)
+        count_worldwide(k, v)
         print(total)
     if frames != 10:
         raise Exception('Не правильное количество фреймов!')
     return total
 
 
-def count(k, v):
+def count_worldwide(k, v):
     global total
     if 'X' in v:
         if 'X' in analized_res[k + 1]:
@@ -52,11 +57,13 @@ def count(k, v):
     else:
         total += int(v[0]) + int(v[1])
 
+
 # что то вроде вырисовывается, но не могу теперь понять, как сделать проверку на то что есть ли дальше фреймы
 # пробовал ставить if analized_res[k + 1] in analized_res, но что то это не сработало
-# TODO Можно написать функцию, которая будет получать словарь с номером и возвращать следующий фрэйм.
-# TODO В функции, раз уж фрэймы пронумерованы - просто прибавлять +1 к номеру и проверять, если он больше 10
-# TODO то возвращать (0, 0), если меньше, то возвращать нужный фрэйм.
+# Можно написать функцию, которая будет получать словарь с номером и возвращать следующий фрэйм.
+# В функции, раз уж фрэймы пронумерованы - просто прибавлять +1 к номеру и проверять, если он больше 10
+# то возвращать (0, 0), если меньше, то возвращать нужный фрэйм.
+# TODO Максим, что то я совсем туплю на ровном месте, несколько дней пытался тут что то решить, просто нет идей....
 
 result = '12X34-/1744XX23--4/'
 analyzing_result_worldwide(result=result)
