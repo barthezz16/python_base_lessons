@@ -49,7 +49,7 @@ def count_worldwide(k, v):
         if 'X' in analized_res[k + 1]:
             if 'X' in analized_res[k + 2]:
                 total += 30
-            elif '-' in analized_res[k + 2][1]:
+            elif '-' in analized_res[k + 2][0]:
                 total += 20
             else:
                 total += 20 + int(analized_res[k + 2][0])
@@ -120,3 +120,8 @@ def check_errors(v):
 # # rules(result=result, rules='worldwide')
 # result = '3532X332/3/62--62X'  # 8 13 29 35 48 64 72 72 80 90
 # rules(result=result, rules='worldwide')
+
+# result = 'XXXXXXXXXX'
+# rules(result=result, rules='worldwide')
+# result = '0434-/1744XX23--4/'
+# rules(result=result, rules='local')
