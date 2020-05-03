@@ -38,9 +38,10 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument('-i', '--input', required=True, help='File to read')
 parser.add_argument('-o', '--output', required=True, help='File to write', default='tournament_result.txt')
+parser.add_argument('-r', '--rules', help='Result count rules l --> local, w --> worldwide', default='local')
 args = parser.parse_args()
 
-file_handler(args.input, args.output)
+file_handler(args.input, args.output, args.rules)
 
 # Усложненное задание (делать по желанию)
 #

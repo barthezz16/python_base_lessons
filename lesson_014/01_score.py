@@ -34,26 +34,20 @@
 
 
 import argparse
-from bowling_engine import analyzing_result
+from bowling_engine import analyzing_result, analyzing_result_worldwide, rules
 
-# parser = argparse.ArgumentParser()
-# parser.add_argument('result', help='Show game result')
-# args = parser.parse_args()
-#
-# analyzing_result(args.result)
+parser = argparse.ArgumentParser()
+parser.add_argument('result', help='Show game result')
+parser.add_argument('-r', '--rules', help='Result count rules l --> local, w --> worldwide', default='local')
+args = parser.parse_args()
 
-result = 'XXXXX5/5/5/5/5/'  # 30+30+30+25+20+15+15+15+15+10
-analyzing_result(result=result)
-# result = '12X34-/1744XX23--4/'
+rules(args.result, args.rules)
+
+# result = 'XXXXX5/5/5/5/5/'  # 20+20+20+20+20+15+15+15+15+15
 # analyzing_result(result=result)
-# result = '1X4-/1744XX23--4/'
-# analyzing_result(result=result)
-# result = '/34-/1744XX23--4/'
-# analyzing_result(result=result)
-# result = '9934-/1744XX23--4/'
-# analyzing_result(result=result)
-# result = '0534-/1744XX23--4/'
-# analyzing_result(result=result)
+# result = 'XXXXX5/5/5/5/5/'  # 30+30+30+25+20+15+15+15+15+10
+# analyzing_result_worldwide(result=result)
+
 
 # При написании кода помнить, что заказчик может захотеть доработок и новых возможностей...
 # И, возможно, вам пригодится паттерн проектирования "Состояние",

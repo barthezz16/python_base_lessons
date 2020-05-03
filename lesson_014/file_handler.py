@@ -1,9 +1,9 @@
 import operator
 
-from bowling_engine import analyzing_result
+from bowling_engine import analyzing_result, analyzing_result_worldwide
 
 
-def file_handler(read_file, write_file):
+def file_handler(read_file, write_file, rules):
     with open(file=read_file, mode='r', encoding='UTF-8') as read_file:
         with open(file=write_file, mode='a', encoding='utf8') as write_file:
             res = {}
@@ -26,7 +26,10 @@ def file_handler(read_file, write_file):
                 else:
                     player_name = line[:-1].split()
                     try:
-                        count_res = analyzing_result(result=player_name[1])
+                        if rules == 'worldwide' or rules == 'w' or rules == 'W':
+                            count_res = analyzing_result_worldwide(result=player_name[1])
+                        elif rules == 'local' or rules == 'l' or rules == 'L':
+                            count_res = analyzing_result(result=player_name[1])
                         write_file.write(f'{player_name[0]:<8} {player_name[1]:<20} --> {count_res} \n')
                         res.update({player_name[0]: count_res})
                     except Exception as exc:
