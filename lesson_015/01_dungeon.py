@@ -91,12 +91,21 @@
 #  ...
 #
 # и так далее...
-
+import json
+import re
+from pprint import pprint
 
 remaining_time = '123456.0987654321'
 # если изначально не писать число в виде строки - теряется точность!
 field_names = ['current_location', 'current_experience', 'current_date']
 
-# TODO тут ваш код
+re_location = r'Location_(\d)_tm(\d+)'
+re_mobs = r'Mob_exp(\d+)_tm(\d+)'
+re_exit = r'Hatch_tm159.098765432'
+
+with open('rpg.json', 'r', encoding='utf8') as file_with_data:
+    data = json.load(file_with_data)
+
+pprint(data)
 
 # Учитывая время и опыт, не забывайте о точности вычислений!
