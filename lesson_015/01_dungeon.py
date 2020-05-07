@@ -121,23 +121,32 @@ def game():
             mob_list.append(location)
             print('— Монстра: ', location)
         else:
-            for value in location:
+            for value in location:  # TODO Тут можно попробовать location_list.extend(location)
                 location_list.append(value)
                 print('— Вход в локацию: ', value)
     print('Выберите действие:')
     if len(mob_list) != 0:
-        for _, monster_name in enumerate(mob_list, start=1):
+        for _, monster_name in enumerate(mob_list, start=1):  # TODO Если переменная используется внутри цикла
+            # TODO стоит назвать её как-нибудь вместо "_"
             print(f'1) Атаковать монстра {_} {monster_name}')
     for _, location_name in enumerate(location_list, start=1):
         print(f'2) Перейти в локацию {_} {location_name}')
     print('3) Сдаться и выйти из игры!')
-    choice = input()
+    # TODO Тут лучше разделить перечень мобов/локаций и действий.
+    # TODO Сперва вывести доступные действия с номерами.
+    # TODO Затем, по выбранному действию распечатывать новые возможные выборы, например список мобов.
+    choice = input()  # TODO А если будет введена буква?
     if int(choice[0]) == 1:
         monster_to_kill = int(choice[-1])
         mob_list.pop(monster_to_kill - 1)
     if int(choice[0]) == 2:
         new_location = int(choice[-1])
         location = location_list[new_location - 1]
+        # TODO Так вы запишите вместо локации строку с её названием.
+        # TODO Нужно же location = location[индекс][название локации]
+        # TODO Т.е. чтобы после этого перехода в локации был список из нужного словаря.
+        print(location_list)
+        print(type(location))
 
 
 game()
