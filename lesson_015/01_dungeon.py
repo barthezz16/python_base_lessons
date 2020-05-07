@@ -98,6 +98,7 @@ from pprint import pprint
 remaining_time = '123456.0987654321'
 # если изначально не писать число в виде строки - теряется точность!
 field_names = ['current_location', 'current_experience', 'current_date']
+exp = 0
 
 re_location = r'Location_(\d)_tm(\d+)'
 re_mobs = r'Mob_exp(\d+)_tm(\d+)'
@@ -106,6 +107,40 @@ re_exit = r'Hatch_tm159.098765432'
 with open('rpg.json', 'r', encoding='utf8') as file_with_data:
     data = json.load(file_with_data)
 
-pprint(data)
+
+def game():
+    location = data["Location_0_tm0"]
+    mob_list = []
+    location_list = []
+    print(f'Вы находитесь в ' + str(list(data.keys())[0]))
+    print(f'У вас {exp} опыта и осталось {remaining_time} секунд до наводнения')
+    print(f'Прошло времени: 00:00')
+    print('Внутри вы видите:')
+    for key, location in enumerate(location, start=1):
+        if type(location) == str:
+            mob_list.append(location)
+            print('— Монстра: ', location)
+        else:
+            for value in location:
+                location_list.append(value)
+                print('— Вход в локацию: ', value)
+    print('Выберите действие:')
+    if len(mob_list) != 0:
+        for _, monster_name in enumerate(mob_list, start=1):
+            print(f'1) Атаковать монстра {_} {monster_name}')
+    for _, location_name in enumerate(location_list, start=1):
+        print(f'2) Перейти в локацию {_} {location_name}')
+    print('3) Сдаться и выйти из игры!')
+    choice = input()
+    if int(choice[0]) == 1:
+        monster_to_kill = int(choice[-1])
+        mob_list.pop(monster_to_kill - 1)
+    if int(choice[0]) == 2:
+        new_location = int(choice[-1])
+        location = location_list[new_location - 1]
+
+
+game()
+
 
 # Учитывая время и опыт, не забывайте о точности вычислений!
