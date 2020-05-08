@@ -95,6 +95,76 @@ import json
 import re
 from pprint import pprint
 
+with open('rpg.json', 'r', encoding='utf8') as file_with_data:
+    data = json.load(file_with_data)
+
+
+def game(location, exp, remaining_time):
+    mob_list = []
+    location_list = []
+    print(f'Вы находитесь в ', str(list(data.keys())[0]))
+    print(f'У вас {exp} опыта и осталось {remaining_time} секунд до наводнения')
+    print(f'Прошло времени: 00:00')
+    print('Внутри вы видите:')
+    for key, location in enumerate(location, start=1):
+        # if type(location) == str:
+        #     mob_list.append(location)
+        #     print('— Монстра: ', location)
+        # else:
+        #     for value in location:
+        #         location_list.extend(location)
+        #         print('— Вход в локацию: ', value)
+        # TODO вот тут не совсем понимаю, если оставить так, то через try/except смог, иначе ошибка TypeError
+        #  если разкоментратить верхгнюю часть и закоментарить нижнюю, то на втором проходе мобы мешаются с локациями,
+        #  следовательно надо искать черещ регулярки, но там что то идет не так...
+        try:
+            if re.search(re_mobs, location)[0]:
+                mob_list.append(location)
+                print('— Монстра: ', location)
+        except TypeError:
+            pass
+        try:
+            for value in location:
+                if str(re.search(re_location, location)[0]):
+                    location_list.extend(location)
+                    print('— Вход в локацию: ', value)
+        except TypeError:
+            pass
+    print('Выберите действие:')
+    if len(mob_list) != 0:
+        for key, monster_name in enumerate(mob_list, start=1):
+            print(f'1) Атаковать монстра {key} {monster_name}')
+    for key, location_name in enumerate(location_list, start=1):
+        print(f'2) Перейти в локацию {key} {location_name}')
+    print('3) Сдаться и выйти из игры!')
+    #  Тут лучше разделить перечень мобов/локаций и действий.
+    #  Сперва вывести доступные действия с номерами.
+    #  Затем, по выбранному действию распечатывать новые возможные выборы, например список мобов.
+    choice = input()
+    if int(choice[0]) == 3:
+        print('Вы уходите? \nНичего, в следующий раз получится!')
+    else:
+        while not choice[0].isdigit() or not choice[1].isdigit() or len(choice) > 2:
+            choice = input('Введено непрвильное значение попоробуйте еще раз! ')
+        if int(choice[0]) == 1:
+            while int(choice[1]) > len(mob_list):
+                choice = input('Нет такого моба, попробуйте еще раз! ')
+            mob_list.pop(int(choice[-1]) - 1)
+            # exp += re.search(re_mobs, location)[1] # TODO тут таже проблема, TypeError и все тут....
+            print(exp)
+        if int(choice[0]) == 2:
+            while int(choice[1]) > len(location_list):
+                choice = input('Такого пути нет, попробуйте еще раз! ')
+            new_location = int(choice[-1])
+            location = location[location_list[new_location - 1]]
+        #  Так вы запишите вместо локации строку с её названием.
+        #  Нужно же location = location[индекс][название локации]
+        #  Т.е. чтобы после этого перехода в локации был список из нужного словаря.
+        # TODO тут с индекчами вообще не понятно что должно быть...
+
+        game(location, exp, remaining_time)
+
+
 remaining_time = '123456.0987654321'
 # если изначально не писать число в виде строки - теряется точность!
 field_names = ['current_location', 'current_experience', 'current_date']
@@ -103,53 +173,7 @@ exp = 0
 re_location = r'Location_(\d)_tm(\d+)'
 re_mobs = r'Mob_exp(\d+)_tm(\d+)'
 re_exit = r'Hatch_tm159.098765432'
-
-with open('rpg.json', 'r', encoding='utf8') as file_with_data:
-    data = json.load(file_with_data)
-
-
-def game():
-    location = data["Location_0_tm0"]
-    mob_list = []
-    location_list = []
-    print(f'Вы находитесь в ' + str(list(data.keys())[0]))
-    print(f'У вас {exp} опыта и осталось {remaining_time} секунд до наводнения')
-    print(f'Прошло времени: 00:00')
-    print('Внутри вы видите:')
-    for key, location in enumerate(location, start=1):
-        if type(location) == str:
-            mob_list.append(location)
-            print('— Монстра: ', location)
-        else:
-            for value in location:  # TODO Тут можно попробовать location_list.extend(location)
-                location_list.append(value)
-                print('— Вход в локацию: ', value)
-    print('Выберите действие:')
-    if len(mob_list) != 0:
-        for _, monster_name in enumerate(mob_list, start=1):  # TODO Если переменная используется внутри цикла
-            # TODO стоит назвать её как-нибудь вместо "_"
-            print(f'1) Атаковать монстра {_} {monster_name}')
-    for _, location_name in enumerate(location_list, start=1):
-        print(f'2) Перейти в локацию {_} {location_name}')
-    print('3) Сдаться и выйти из игры!')
-    # TODO Тут лучше разделить перечень мобов/локаций и действий.
-    # TODO Сперва вывести доступные действия с номерами.
-    # TODO Затем, по выбранному действию распечатывать новые возможные выборы, например список мобов.
-    choice = input()  # TODO А если будет введена буква?
-    if int(choice[0]) == 1:
-        monster_to_kill = int(choice[-1])
-        mob_list.pop(monster_to_kill - 1)
-    if int(choice[0]) == 2:
-        new_location = int(choice[-1])
-        location = location_list[new_location - 1]
-        # TODO Так вы запишите вместо локации строку с её названием.
-        # TODO Нужно же location = location[индекс][название локации]
-        # TODO Т.е. чтобы после этого перехода в локации был список из нужного словаря.
-        print(location_list)
-        print(type(location))
-
-
-game()
-
+location = data["Location_0_tm0"]
+game(location, exp, remaining_time)
 
 # Учитывая время и опыт, не забывайте о точности вычислений!
