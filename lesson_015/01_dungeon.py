@@ -93,103 +93,98 @@
 # и так далее...
 import json
 import re
-from pprint import pprint
+from datetime import datetime, timedelta
+from decimal import Decimal
+
+
+class DungeonGame:
+
+    def __init__(self):
+        self.re_location = r'Location_(\d)_tm(\d+)'
+        self.re_mobs = r'Mob_exp(\d+)_tm(\d+)'
+        self.re_exit = r'Hatch_tm159.098765432'
+        self.location = data["Location_0_tm0"]
+        self.mob_list = []
+        self.location_list = []
+        self.location = {}
+        self.exp = 0
+        self.time_elapsed = datetime.strptime('00:00', '%M:%S')
+        self.remaining_time = '123456.0987654321'
+        self.choice = None
+
+    def run(self):
+        self.print_and_data_check()
+        self.make_a_choice()
+
+    def print_and_data_check(self):
+        print(f'Вы находитесь в', str(list(data.keys())[0]))
+        print(f'У вас {self.exp} опыта и осталось {self.remaining_time} секунд до наводнения')
+        print(f'Прошло времени: {self.time_elapsed.time()}')
+        print('Внутри вы видите:')
+        for key, item in enumerate(location, start=1):
+            self.mob_list_update(item)
+            self.location_list_update(item)
+        print('Выберите действие:')
+        self.kill_or_move()
+        return location
+
+    def kill_or_move(self):
+        if len(self.mob_list) != 0:
+            for key, monster_name in enumerate(self.mob_list, start=1):
+                print(f'1) Атаковать монстра {key} {monster_name}')
+        for key, location_name in enumerate(self.location_list, start=1):
+            print(f'2) Перейти в локацию {key} {location_name}')
+        print('3) Сдаться и выйти из игры!')
+
+    def location_list_update(self, item):
+        if isinstance(item, dict):
+            for value in item:
+                self.location_list.extend(item)
+                print('— Вход в локацию: ', value)
+
+    def mob_list_update(self, item):
+        if isinstance(item, str):
+            self.mob_list.append(item)
+            print('— Монстра: ', item)
+
+    def make_a_choice(self):
+        self.choice = input()
+        if int(self.choice[0]) == 3:
+            print('Вы уходите? \nНичего, в следующий раз получится!')
+        else:
+            while not self.choice[0].isdigit() or not self.choice[1].isdigit() or len(self.choice) > 2:
+                self.choice = input('Введено непрвильное значение попоробуйте еще раз! ')
+            if int(self.choice[0]) == 1:
+                while int(self.choice[1]) > len(self.mob_list):
+                    self.choice = input('Нет такого моба, попробуйте еще раз! ')
+                self.mob_list.pop(int(self.choice[-1]) - 1)
+                self.kill_mob()
+                self.kill_or_move()
+                self.make_a_choice()
+            if int(self.choice[0]) == 2:
+                while int(self.choice[1]) > len(self.location_list):
+                    self.choice = input('Такого пути нет, попробуйте еще раз! ')
+                new_location = int(self.choice[-1])
+                self.location = self.location[self.location_list[new_location - 1]]
+
+    def kill_mob(self):
+        self.exp += Decimal(int(re.search(self.re_mobs, str(location))[1]))
+        time_spend = re.search(self.re_mobs, str(location))[2]
+        self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
+        self.time_elapsed = self.time_elapsed + timedelta(seconds=int(re.search(self.re_mobs, str(location))[2]))
+        print(f'Поздравляю, вы убили моба и вы получили {self.exp} опыта и потратили на это '
+              f'{Decimal(int(time_spend))} секунд!')
+
 
 with open('rpg.json', 'r', encoding='utf8') as file_with_data:
     data = json.load(file_with_data)
 
-
-def game(location, exp, remaining_time):
-    mob_list = []
-    location_list = []
-    print(f'Вы находитесь в ', str(list(data.keys())[0]))
-    print(f'У вас {exp} опыта и осталось {remaining_time} секунд до наводнения')
-    print(f'Прошло времени: 00:00')
-    print('Внутри вы видите:')
-    for key, location in enumerate(location, start=1):
-        # if type(location) == str:
-        #     mob_list.append(location)
-        #     print('— Монстра: ', location)
-        # else:
-        #     for value in location:  # TODO цикл тут не нужен, хватит location_list.extend(location)
-        # TODO Хотя возможно стоит ещё индекс сохранять на котором эта локации в списке находится - key который
-        #         location_list.extend(location)
-        #         print('— Вход в локацию: ', value)
-        # вот тут не совсем понимаю, если оставить так, то через try/except смог, иначе ошибка TypeError
-        # если разкоментратить верхгнюю часть и закоментарить нижнюю, то на втором проходе мобы мешаются с локациями,
-        # следовательно надо искать черещ регулярки, но там что то идет не так...
-        # TODO Вот это ход не в правильную сторону. Цикл по списку и проверка на тип встречающихся объектов
-        # TODO гораздо проще (isinstance поможет сделать это корректно)
-        # TODO Если объект строка - значит это моб, если словарь - значит это вход в новую локацию
-        try:
-            if re.search(re_mobs, location)[0]:
-                mob_list.append(location)
-                print('— Монстра: ', location)
-        except TypeError:
-            pass
-        try:
-            for value in location:
-                if str(re.search(re_location, location)[0]):
-                    location_list.extend(location)
-                    print('— Вход в локацию: ', value)
-        except TypeError:
-            pass
-    print('Выберите действие:')
-    if len(mob_list) != 0:
-        for key, monster_name in enumerate(mob_list, start=1):
-            print(f'1) Атаковать монстра {key} {monster_name}')
-    for key, location_name in enumerate(location_list, start=1):
-        print(f'2) Перейти в локацию {key} {location_name}')
-    print('3) Сдаться и выйти из игры!')
-    #  Тут лучше разделить перечень мобов/локаций и действий.
-    #  Сперва вывести доступные действия с номерами.
-    #  Затем, по выбранному действию распечатывать новые возможные выборы, например список мобов.
-    choice = input()
-    if int(choice[0]) == 3:
-        print('Вы уходите? \nНичего, в следующий раз получится!')
-    else:
-        while not choice[0].isdigit() or not choice[1].isdigit() or len(choice) > 2:
-            choice = input('Введено непрвильное значение попоробуйте еще раз! ')
-        if int(choice[0]) == 1:
-            while int(choice[1]) > len(mob_list):
-                choice = input('Нет такого моба, попробуйте еще раз! ')
-            mob_list.pop(int(choice[-1]) - 1)
-            # exp += re.search(re_mobs, location)[1] # тут таже проблема, TypeError и все тут....
-            # TODO У вас усложнение происходит, в частности потому что всё идёт в одной функции
-            # TODO Разделите по частям программу, потестите отдельно.
-            # TODO Например создайте вручную список с мобами и потестируйте эту часть кода.
-            # TODO Чтобы из списков правильно убирались монстры и опыт возвращался.
-            print(exp)
-        if int(choice[0]) == 2:
-            while int(choice[1]) > len(location_list):
-                choice = input('Такого пути нет, попробуйте еще раз! ')
-            new_location = int(choice[-1])
-            location = location[location_list[new_location - 1]]
-        # Так вы запишите вместо локации строку с её названием.
-        # Нужно же location = location[индекс][название локации]
-        # Т.е. чтобы после этого перехода в локации был список из нужного словаря.
-        # тут с индекчами вообще не понятно что должно быть...
-        # TODO Индекс нужно либо сохранять вместе с названием локации, как я писал выше
-        # TODO Либо брать это название и искать среди ключей у словарей, которые есть в текущей локации
-        # TODO Первый способ лучше, как мне кажется.
-        game(location, exp, remaining_time)
-
-
-remaining_time = '123456.0987654321'
 # если изначально не писать число в виде строки - теряется точность!
 field_names = ['current_location', 'current_experience', 'current_date']
-exp = 0
 
-re_location = r'Location_(\d)_tm(\d+)'
-re_mobs = r'Mob_exp(\d+)_tm(\d+)'
-re_exit = r'Hatch_tm159.098765432'
 location = data["Location_0_tm0"]
-game(location, exp, remaining_time)
+start_game = DungeonGame()
+start_game.run()
 
 # Учитывая время и опыт, не забывайте о точности вычислений!
-# TODO Я бы советовал помимо тестов отдельных частей - разделить всё по классам (или хотя бы на один класс)
-# TODO занести все нужные переменные в атрибуты
-# TODO там можно разместить списки мобов/локаций с индексами
-# TODO Сделать метод, который обновляет эти списки при вхождении в новую локацию
-# TODO метод, который изменяет текущую локацию на новую и запускает метод выше
-# TODO метод для атаки мобов отдельный, который будет убирать мобов из списка и добавлять опыт герою
+
