@@ -123,12 +123,22 @@ class DungeonGame:
         print('Внутри вы видите:')
         for key, item in enumerate(location, start=1):
             self.mob_list_update(item)
-            self.location_list_update(item)
+            self.location_list_update(item, key)
         print('Выберите действие:')
         self.kill_or_move()
         return location
 
     def kill_or_move(self):
+        # TODO Вот этот метод мне тоже не очень нравится.
+        # TODO Как мне кажется лучше было бы давать выбор
+        # 1) Атака
+        # 2) Переход
+        # 3) Выход
+        # TODO И уже при выборе 1/2
+        # TODO Запускать нужный цикл и выводить перечень мобов
+        # 1) Моб первый
+        # 2) Моб второй
+        # TODO и тд
         if len(self.mob_list) != 0:
             for key, monster_name in enumerate(self.mob_list, start=1):
                 print(f'1) Атаковать монстра {key} {monster_name}')
@@ -136,11 +146,15 @@ class DungeonGame:
             print(f'2) Перейти в локацию {key} {location_name}')
         print('3) Сдаться и выйти из игры!')
 
-    def location_list_update(self, item):
+    def location_list_update(self, item, index):
         if isinstance(item, dict):
-            for value in item:
-                self.location_list.extend(item)
-                print('— Вход в локацию: ', value)
+            #for value in item:  # TODO В этом цикле всегда одна итерация, зачем он?)
+            self.location_list.extend(item)
+            self.location_list.append(index)  # TODO Надо вот этот индекс сохранять
+            # TODO Хотя лучше придумать способ получше, чем в моём примере
+            # TODO Ниже напишу как его использовать
+            print(self.location_list, '+++')
+            print('— Вход в локацию: ', self.location_list[-2])
 
     def mob_list_update(self, item):
         if isinstance(item, str):
@@ -166,6 +180,7 @@ class DungeonGame:
                     self.choice = input('Такого пути нет, попробуйте еще раз! ')
                 new_location = int(self.choice[-1])
                 self.location = self.location[self.location_list[new_location - 1]]
+                # TODO тут self.location будет равна self.location[индекс_который_мы_сохранили_выше][название_локации]
 
     def kill_mob(self):
         self.exp += Decimal(int(re.search(self.re_mobs, str(location))[1]))
