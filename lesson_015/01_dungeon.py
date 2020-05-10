@@ -125,35 +125,14 @@ class DungeonGame:
             self.mob_list_update(item)
             self.location_list_update(item, key)
         print('Выберите действие:')
-        self.kill_or_move()
+        self.choose_action()
         return location
-
-    def kill_or_move(self):
-        # TODO Вот этот метод мне тоже не очень нравится.
-        # TODO Как мне кажется лучше было бы давать выбор
-        # 1) Атака
-        # 2) Переход
-        # 3) Выход
-        # TODO И уже при выборе 1/2
-        # TODO Запускать нужный цикл и выводить перечень мобов
-        # 1) Моб первый
-        # 2) Моб второй
-        # TODO и тд
-        if len(self.mob_list) != 0:
-            for key, monster_name in enumerate(self.mob_list, start=1):
-                print(f'1) Атаковать монстра {key} {monster_name}')
-        for key, location_name in enumerate(self.location_list, start=1):
-            print(f'2) Перейти в локацию {key} {location_name}')
-        print('3) Сдаться и выйти из игры!')
 
     def location_list_update(self, item, index):
         if isinstance(item, dict):
-            #for value in item:  # TODO В этом цикле всегда одна итерация, зачем он?)
             self.location_list.extend(item)
-            self.location_list.append(index)  # TODO Надо вот этот индекс сохранять
-            # TODO Хотя лучше придумать способ получше, чем в моём примере
-            # TODO Ниже напишу как его использовать
-            print(self.location_list, '+++')
+            self.location_list.append(index)
+            # print(self.location_list, '+++')
             print('— Вход в локацию: ', self.location_list[-2])
 
     def mob_list_update(self, item):
@@ -161,45 +140,90 @@ class DungeonGame:
             self.mob_list.append(item)
             print('— Монстра: ', item)
 
-    def make_a_choice(self):
-        self.choice = input()
-        if int(self.choice[0]) == 3:
-            print('Вы уходите? \nНичего, в следующий раз получится!')
+    def choose_action(self):
+        self.input()
+        if int(self.choice) > 3:
+            print('Введено непрвильное значение попоробуйте еще раз! ')
+            self.choose_action()
         else:
-            while not self.choice[0].isdigit() or not self.choice[1].isdigit() or len(self.choice) > 2:
+            if int(self.choice) == 1 and len(self.mob_list) > 0:
+                print(len(self.mob_list))
+                if len(self.mob_list) > 0:
+                    for key, monster_name in enumerate(self.mob_list, start=1):
+                        print(f'Похвально, вы выбрали бой!'
+                              f'\n!!!Ну что-же начнем!!!'
+                              f'\nАтаковать монстра {key} {monster_name}')
+            elif int(self.choice) == 1 and len(self.mob_list) == 0:
+                print('Локация полностью зачищенна!')
+                self.choose_action()
+        if int(self.choice) == 2:
+            for key, location_name in enumerate(self.location_list, start=1):
+                print(f'Перейти в локацию {key} {location_name}')
+        elif int(self.choice) == 3:
+            self.exit()
+
+    def input(self):
+        if len(self.mob_list) > 0:
+            self.choice = input('\n1) Атаковать монстров на локации. '
+                                '\n2) Переход в другую локацию. '
+                                '\n3) Сдаться и выйти из игры! ')
+        else:
+            self.choice = input('\n1) На локации нет монстров! '
+                                '\n2) Переход в другую локацию. '
+                                '\n3) Сдаться и выйти из игры! ')
+
+    def make_a_choice(self):
+        if int(self.choice) == 3:
+            pass
+        else:
+            while not self.choice.isdigit() or len(self.choice) > 2:
                 self.choice = input('Введено непрвильное значение попоробуйте еще раз! ')
-            if int(self.choice[0]) == 1:
-                while int(self.choice[1]) > len(self.mob_list):
-                    self.choice = input('Нет такого моба, попробуйте еще раз! ')
-                self.mob_list.pop(int(self.choice[-1]) - 1)
+            if int(self.choice) == 1:
                 self.kill_mob()
-                self.kill_or_move()
-                self.make_a_choice()
-            if int(self.choice[0]) == 2:
-                while int(self.choice[1]) > len(self.location_list):
-                    self.choice = input('Такого пути нет, попробуйте еще раз! ')
-                new_location = int(self.choice[-1])
-                self.location = self.location[self.location_list[new_location - 1]]
-                # TODO тут self.location будет равна self.location[индекс_который_мы_сохранили_выше][название_локации]
+                self.choose_action()
+            if int(self.choice) == 2:
+                self.location_change()
+
+    def location_change(self):
+        choice_to_relocate = input('Выберите локацию для перехода. ')
+        while int(choice_to_relocate) > len(self.location_list):
+            choice_to_relocate = input('Такого пути нет, попробуйте еще раз! ')
+        self.location = self.location[self.location_list[int(choice_to_relocate) - 1]][
+            self.location_list[int(choice_to_relocate) - 1]]
+        time_spend = re.search(self.re_location, str(location))[2]
+        self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
+        self.time_elapsed = self.time_elapsed + timedelta(seconds=int(re.search(self.re_location, str(location))[2]))
+        print(f'Вы перешли на следующую локацию и потратили на это '
+              f'{Decimal(int(time_spend))} секунд!')
+        # тут self.location будет равна self.location[индекс_который_мы_сохранили_выше][название_локации]
+        # TODO Вот тут хоть убейте, не пойму, почему переход не работает и зачем нам индекс?
+        #  Сначала мы жа запустили с названием локации, которое было ключем, почему же сейчас с другим ключем
+        #  не получается... или я не правильно понял принцип перехода...
 
     def kill_mob(self):
+        choice_to_kill = input('Выберите монстра для атаки. ')
+        while int(choice_to_kill) > len(self.mob_list):
+            choice_to_kill = input('Нет такого моба, попробуйте еще раз! ')
+        self.mob_list.pop(int(choice_to_kill) - 1)
         self.exp += Decimal(int(re.search(self.re_mobs, str(location))[1]))
         time_spend = re.search(self.re_mobs, str(location))[2]
         self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
         self.time_elapsed = self.time_elapsed + timedelta(seconds=int(re.search(self.re_mobs, str(location))[2]))
         print(f'Поздравляю, вы убили моба и вы получили {self.exp} опыта и потратили на это '
               f'{Decimal(int(time_spend))} секунд!')
+        print(f'У вас {self.exp} опыта и осталось {self.remaining_time} секунд до наводнения')
+        print(f'Прошло времени: {self.time_elapsed.time()}')
+
+    def exit(self):
+        print('Вы уходите? \nНичего, в следующий раз получится!')
 
 
 with open('rpg.json', 'r', encoding='utf8') as file_with_data:
     data = json.load(file_with_data)
-
 # если изначально не писать число в виде строки - теряется точность!
 field_names = ['current_location', 'current_experience', 'current_date']
-
 location = data["Location_0_tm0"]
 start_game = DungeonGame()
 start_game.run()
 
 # Учитывая время и опыт, не забывайте о точности вычислений!
-
