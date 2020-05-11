@@ -106,7 +106,6 @@ class DungeonGame:
         self.location = data["Location_0_tm0"]
         self.mob_list = []
         self.location_list = []
-        self.location = {}
         self.exp = 0
         self.time_elapsed = datetime.strptime('00:00', '%M:%S')
         self.remaining_time = '123456.0987654321'
@@ -117,23 +116,22 @@ class DungeonGame:
         self.make_a_choice()
 
     def print_and_data_check(self):
+        self.location_list = []
         print(f'Вы находитесь в', str(list(data.keys())[0]))
         print(f'У вас {self.exp} опыта и осталось {self.remaining_time} секунд до наводнения')
         print(f'Прошло времени: {self.time_elapsed.time()}')
         print('Внутри вы видите:')
         for key, item in enumerate(location, start=1):
             self.mob_list_update(item)
-            self.location_list_update(item, key)
+            self.location_list_update(item)
         print('Выберите действие:')
         self.choose_action()
         return location
 
-    def location_list_update(self, item, index):
+    def location_list_update(self, item):
         if isinstance(item, dict):
             self.location_list.extend(item)
-            self.location_list.append(index)
-            # print(self.location_list, '+++')
-            print('— Вход в локацию: ', self.location_list[-2])
+            print('— Вход в локацию: ', self.location_list[-1])
 
     def mob_list_update(self, item):
         if isinstance(item, str):
@@ -188,31 +186,32 @@ class DungeonGame:
         choice_to_relocate = input('Выберите локацию для перехода. ')
         while int(choice_to_relocate) > len(self.location_list):
             choice_to_relocate = input('Такого пути нет, попробуйте еще раз! ')
-        self.location = self.location[self.location_list[int(choice_to_relocate) - 1]][
-            self.location_list[int(choice_to_relocate) - 1]]
-        time_spend = re.search(self.re_location, str(location))[2]
-        self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
-        self.time_elapsed = self.time_elapsed + timedelta(seconds=int(re.search(self.re_location, str(location))[2]))
-        print(f'Вы перешли на следующую локацию и потратили на это '
-              f'{Decimal(int(time_spend))} секунд!')
+        self.location = data["Location_0_tm0"][int(choice_to_relocate[0])][self.location_list[int(choice_to_relocate[-1]) - 1]]
+        print('локация', self.location)
+        self.run()
+        # time_spend = re.search(self.re_location, str(location))[2]
+        # self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
+        # self.time_elapsed = self.time_elapsed + timedelta(seconds=int(re.search(self.re_location, str(location))[2]))
+        # print(f'Вы перешли на следующую локацию и потратили на это '
+        #       f'{Decimal(int(time_spend))} секунд!')
         # тут self.location будет равна self.location[индекс_который_мы_сохранили_выше][название_локации]
         # Вот тут хоть убейте, не пойму, почему переход не работает и зачем нам индекс?
         # Сначала мы жа запустили с названием локации, которое было ключем, почему же сейчас с другим ключем
         # не получается... или я не правильно понял принцип перехода...
-        # TODO Мы имеем дело с подобной структурой. Первая локация отличается от других тем, что другие находятся
-        # TODO внутри списка, а она нет. "Переход" это по сути получение значения по ключу словаря.
-        # TODO И ключ нужно добавлять к словарю, а не списку, что вроде как понятно.
-        # TODO Однако - data["Location_0_tm0"] - это список
-        # TODO Мы не можем приставить к нему ключ data["Location_0_tm0"]["Location_1_tm1040"]
-        # TODO Это будет ошибка.
-        # TODO Однако, зная, что словарь с локацией расположен в списке на втором месте мы можем сделать два шага
-        # TODO 1) Получение словаря из списка: локация = data["Location_0_tm0"][1]
-        # TODO 2) Повторение такого же шага, как и спервой локацией: локация = локация["Location_1_tm1040"]
-        # TODO Я просто подумал, что проще будет объединить эти две операции в локация = локация[1]["Location_1_tm1040"]
-        # TODO т.е. локация[индекс][название_локации]
-        # TODO {"Location_0_tm0": ["Mob_exp10_tm0", {"Location_1_tm1040": [...], ...}, ],...}
-        # TODO Для практики - попробуйте вручную, без циклов и прочих усложнений, только при помощи ключей и индексов
-        # TODO Вытащить из этого словаря строку "Boss100_exp100_tm10" (можно в отдельном модуле код добавить)
+        #  Мы имеем дело с подобной структурой. Первая локация отличается от других тем, что другие находятся
+        #  внутри списка, а она нет. "Переход" это по сути получение значения по ключу словаря.
+        #  И ключ нужно добавлять к словарю, а не списку, что вроде как понятно.
+        #  Однако - data["Location_0_tm0"] - это список
+        #  Мы не можем приставить к нему ключ data["Location_0_tm0"]["Location_1_tm1040"]
+        #  Это будет ошибка.
+        #  Однако, зная, что словарь с локацией расположен в списке на втором месте мы можем сделать два шага
+        #  1) Получение словаря из списка: локация = data["Location_0_tm0"][1]
+        #  2) Повторение такого же шага, как и спервой локацией: локация = локация["Location_1_tm1040"]
+        #  Я просто подумал, что проще будет объединить эти две операции в локация = локация[1]["Location_1_tm1040"]
+        #  т.е. локация[индекс][название_локации]
+        #  {"Location_0_tm0": ["Mob_exp10_tm0", {"Location_1_tm1040": [...], ...}, ],...}
+        #  Для практики - попробуйте вручную, без циклов и прочих усложнений, только при помощи ключей и индексов
+        #  Вытащить из этого словаря строку "Boss100_exp100_tm10" (можно в отдельном модуле код добавить)
 
     def kill_mob(self):
         choice_to_kill = input('Выберите монстра для атаки. ')
