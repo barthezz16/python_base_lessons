@@ -100,8 +100,8 @@ from decimal import Decimal
 class DungeonGame:
 
     def __init__(self):
-        self.re_location = r'Location_(\d)_tm(\d+)'
-        self.re_mobs = r'Mob_exp(\d+)_tm(\d+)'
+        self.re_location = r'Location_\w(\d+)_tm(\d+)'
+        self.re_mobs = r'\w+_exp(\d+)_tm(\d+)'
         self.re_exit = r'Hatch_tm159.098765432'
         self.location = data["Location_0_tm0"]
         self.mob_list = []
@@ -111,27 +111,33 @@ class DungeonGame:
         self.remaining_time = '123456.0987654321'
         self.choice = None
 
-    def run(self):
-        self.print_and_data_check()
-        self.make_a_choice()
+    def run(self, start_location):
+        if Decimal(self.remaining_time) > 0:
+            self.print_and_data_check(start_location)
+            self.make_a_choice()
+        else:
+            print('В этот раз не получилось, вы возвращаетесь в начало')
+            self.remaining_time = '123456.0987654321'
+            self.run(start_location=data["Location_0_tm0"])
 
-    def print_and_data_check(self):
+    def print_and_data_check(self, location):
         self.location_list = []
-        print(f'Вы находитесь в', str(list(data.keys())[0]))
+        self.mob_list = []
+        print(f'Вы находитесь в', self.location[0])  # TODO понять бы что тут написать...
         print(f'У вас {self.exp} опыта и осталось {self.remaining_time} секунд до наводнения')
         print(f'Прошло времени: {self.time_elapsed.time()}')
         print('Внутри вы видите:')
-        for key, item in enumerate(location, start=1):
+        for key, item in enumerate(location):
             self.mob_list_update(item)
-            self.location_list_update(item)
+            self.location_list_update(item, key)
         print('Выберите действие:')
         self.choose_action()
         return location
 
-    def location_list_update(self, item):
+    def location_list_update(self, item, key):
         if isinstance(item, dict):
-            self.location_list.extend(item)
-            print('— Вход в локацию: ', self.location_list[-1])
+            self.location_list.append((list(item.keys())[0], key))
+            print('— Вход в локацию: ', self.location_list[-1][0])
 
     def mob_list_update(self, item):
         if isinstance(item, str):
@@ -182,47 +188,33 @@ class DungeonGame:
             if int(self.choice) == 2:
                 self.location_change()
 
-    def location_change(self):
+    def location_change(self):  # TODO пока не понял как тут пройти проверку на выход
         choice_to_relocate = input('Выберите локацию для перехода. ')
         while int(choice_to_relocate) > len(self.location_list):
             choice_to_relocate = input('Такого пути нет, попробуйте еще раз! ')
-        self.location = data["Location_0_tm0"][int(choice_to_relocate[0])][self.location_list[int(choice_to_relocate[-1]) - 1]]
-        print('локация', self.location)
-        self.run()
-        # time_spend = re.search(self.re_location, str(location))[2]
-        # self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
-        # self.time_elapsed = self.time_elapsed + timedelta(seconds=int(re.search(self.re_location, str(location))[2]))
-        # print(f'Вы перешли на следующую локацию и потратили на это '
-        #       f'{Decimal(int(time_spend))} секунд!')
-        # тут self.location будет равна self.location[индекс_который_мы_сохранили_выше][название_локации]
-        # Вот тут хоть убейте, не пойму, почему переход не работает и зачем нам индекс?
-        # Сначала мы жа запустили с названием локации, которое было ключем, почему же сейчас с другим ключем
-        # не получается... или я не правильно понял принцип перехода...
-        #  Мы имеем дело с подобной структурой. Первая локация отличается от других тем, что другие находятся
-        #  внутри списка, а она нет. "Переход" это по сути получение значения по ключу словаря.
-        #  И ключ нужно добавлять к словарю, а не списку, что вроде как понятно.
-        #  Однако - data["Location_0_tm0"] - это список
-        #  Мы не можем приставить к нему ключ data["Location_0_tm0"]["Location_1_tm1040"]
-        #  Это будет ошибка.
-        #  Однако, зная, что словарь с локацией расположен в списке на втором месте мы можем сделать два шага
-        #  1) Получение словаря из списка: локация = data["Location_0_tm0"][1]
-        #  2) Повторение такого же шага, как и спервой локацией: локация = локация["Location_1_tm1040"]
-        #  Я просто подумал, что проще будет объединить эти две операции в локация = локация[1]["Location_1_tm1040"]
-        #  т.е. локация[индекс][название_локации]
-        #  {"Location_0_tm0": ["Mob_exp10_tm0", {"Location_1_tm1040": [...], ...}, ],...}
-        #  Для практики - попробуйте вручную, без циклов и прочих усложнений, только при помощи ключей и индексов
-        #  Вытащить из этого словаря строку "Boss100_exp100_tm10" (можно в отдельном модуле код добавить)
+        key, index = self.location_list[int(choice_to_relocate) - 1]
+        self.location = self.location[int(index)][key]
+        time_spend = re.search(self.re_location, str(self.location))[2]
+        self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
+        self.time_elapsed = \
+            self.time_elapsed + timedelta(seconds=int(re.search(self.re_location, str(self.location))[2]))
+        print(f'Вы перешли на новую локацию и потратили на это {Decimal(int(time_spend))} секунд!')
+        print(f'У вас {self.exp} опыта и осталось {self.remaining_time} секунд до наводнения')
+        print(f'Прошло времени: {self.time_elapsed.time()}')
+        self.run(start_location=self.location)
 
     def kill_mob(self):
         choice_to_kill = input('Выберите монстра для атаки. ')
+        print(self.mob_list)
         while int(choice_to_kill) > len(self.mob_list):
             choice_to_kill = input('Нет такого моба, попробуйте еще раз! ')
         self.mob_list.pop(int(choice_to_kill) - 1)
-        self.exp += Decimal(int(re.search(self.re_mobs, str(location))[1]))
-        time_spend = re.search(self.re_mobs, str(location))[2]
+        gain_exp = Decimal(int(re.search(self.re_mobs, str(self.location))[1]))
+        self.exp += gain_exp
+        time_spend = re.search(self.re_mobs, str(self.location))[2]
         self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
-        self.time_elapsed = self.time_elapsed + timedelta(seconds=int(re.search(self.re_mobs, str(location))[2]))
-        print(f'Поздравляю, вы убили моба и вы получили {self.exp} опыта и потратили на это '
+        self.time_elapsed = self.time_elapsed + timedelta(seconds=int(re.search(self.re_mobs, str(self.location))[2]))
+        print(f'Поздравляю, вы убили моба и вы получили {gain_exp} опыта и потратили на это '
               f'{Decimal(int(time_spend))} секунд!')
         print(f'У вас {self.exp} опыта и осталось {self.remaining_time} секунд до наводнения')
         print(f'Прошло времени: {self.time_elapsed.time()}')
@@ -235,8 +227,8 @@ with open('rpg.json', 'r', encoding='utf8') as file_with_data:
     data = json.load(file_with_data)
 # если изначально не писать число в виде строки - теряется точность!
 field_names = ['current_location', 'current_experience', 'current_date']
-location = data["Location_0_tm0"]
+start_location = data["Location_0_tm0"]
 start_game = DungeonGame()
-start_game.run()
+start_game.run(start_location=start_location)
 
 # Учитывая время и опыт, не забывайте о точности вычислений!
