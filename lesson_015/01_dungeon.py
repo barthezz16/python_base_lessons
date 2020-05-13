@@ -95,13 +95,15 @@ import json
 import re
 from datetime import datetime, timedelta
 from decimal import Decimal
+from pprint import pprint
 
 
 class DungeonGame:
 
     def __init__(self):
-        self.re_location = r'Location_\w(\d+)_tm(\d+)'
+        self.re_location = r'Location_\w+(\d+)_tm(\d+)'
         self.re_mobs = r'\w+_exp(\d+)_tm(\d+)'
+        self.current_location_name = "Location_0_tm0"
         self.re_exit = r'Hatch_tm159.098765432'
         self.location = data["Location_0_tm0"]
         self.mob_list = []
@@ -112,22 +114,24 @@ class DungeonGame:
         self.choice = None
 
     def run(self, start_location):
-        if Decimal(self.remaining_time) > 0:
-            self.print_and_data_check(start_location)
-            self.make_a_choice()
+        if self.current_location_name == 'Hatch_tm159.098765432':  # TODO понимаю, что чтобы это строка сработала
+            # TODO надо что бы self.location поменялась на 'Hatch_tm159.098765432' но почему регулярка не ловит ее
+            # TODO пока не пойму
+            print('Поздравляю!!! ВЫ ПОБЕДИТЕЛЬ!!!')
         else:
-            print('В этот раз не получилось, вы возвращаетесь в начало')
-            self.remaining_time = '123456.0987654321'
-            self.run(start_location=data["Location_0_tm0"])
+            if Decimal(self.remaining_time) > 0:
+                self.print_and_data_check(start_location)
+                self.make_a_choice()
+            else:
+                print('В этот раз не получилось, вы возвращаетесь в начало')
+                self.remaining_time = '123456.0987654321'
+                self.run(start_location=data["Location_0_tm0"])
+                self.time_elapsed = datetime.strptime('00:00', '%M:%S')
 
     def print_and_data_check(self, location):
         self.location_list = []
         self.mob_list = []
-        print(f'Вы находитесь в', self.location[0])  # понять бы что тут написать...
-        # TODO Либо можно завеси отдельную переменную для названия текущей локации
-        # TODO Либо добавить печать текущей локации в метод смены локации
-        # TODO Либо изменить метод смены локации, добавлять при смене только индекс
-        # TODO А ключ использовать как имя (но этот вариант самый плохой, как мне кажется)
+        print(f'Вы находитесь в', self.current_location_name)  # понять бы что тут написать...
         print(f'У вас {self.exp} опыта и осталось {self.remaining_time} секунд до наводнения')
         print(f'Прошло времени: {self.time_elapsed.time()}')
         print('Внутри вы видите:')
@@ -141,7 +145,7 @@ class DungeonGame:
     def location_list_update(self, item, key):
         if isinstance(item, dict):
             self.location_list.append((list(item.keys())[0], key))
-            print('— Вход в локацию: ', self.location_list[-1][0])
+            print('— Вход в локацию:', self.location_list[-1][0])
 
     def mob_list_update(self, item):
         if isinstance(item, str):
@@ -166,7 +170,7 @@ class DungeonGame:
                 self.choose_action()
         if int(self.choice) == 2:
             for key, location_name in enumerate(self.location_list, start=1):
-                print(f'Перейти в локацию {key} {location_name}')
+                print(f'Перейти в локацию {key} {location_name[0]}')
         elif int(self.choice) == 3:
             self.exit()
 
@@ -177,25 +181,25 @@ class DungeonGame:
                                 '\n3) Сдаться и выйти из игры! ')
         else:
             self.choice = input('\n1) На локации нет монстров! '
-                                # TODO Если тут после убийства мобов нажать ещё раз на "На локации нет монстров"
-                                # TODO То дальше, при нажатии "переход в другую локацию" локаций будет в 2 раза больше
+                                # Если тут после убийства мобов нажать ещё раз на "На локации нет монстров"
+                                # То дальше, при нажатии "переход в другую локацию" локаций будет в 2 раза больше
                                 # Перейти в локацию 1 ('Location_8_tm30000', 0)
                                 # Перейти в локацию 2 ('Location_9_tm26000', 1)
                                 # Перейти в локацию 1 ('Location_8_tm30000', 0)
                                 # Перейти в локацию 2 ('Location_9_tm26000', 1)
-                                # TODO Вместо
+                                # Вместо
                                 # Перейти в локацию 1 ('Location_8_tm30000', 0)
                                 # Перейти в локацию 2 ('Location_9_tm26000', 1)
+                                # TODO этот момент тоже заметил, пока не смог отследить где именно список удваивается... 
                                 '\n2) Переход в другую локацию. '
                                 '\n3) Сдаться и выйти из игры! ')
 
     def make_a_choice(self):
+        while not self.choice.isdigit() or len(self.choice) > 2:
+            self.choice = input('Введено непрвильное значение попоробуйте еще раз! ')
         if int(self.choice) == 3:
             pass
         else:
-            while not self.choice.isdigit() or len(self.choice) > 2:  # TODO проверку надо перенести в начало метода
-                # TODO перед if int(self.choice) == 3:
-                self.choice = input('Введено непрвильное значение попоробуйте еще раз! ')
             if int(self.choice) == 1:
                 self.kill_mob()
                 self.choose_action()
@@ -203,20 +207,16 @@ class DungeonGame:
                 self.location_change()
 
     def location_change(self):  # пока не понял как тут пройти проверку на выход
-        # TODO Думаю проверку на выход можно перенести в run.
-        # TODO Чтобы не сильно "загрязнять" его, можно отдельный метод добавить is_it_win или что-то такое
-        # TODO Там проверять, является ли текущая локация выходом и, если да, выполнены ли требования к победе
         choice_to_relocate = input('Выберите локацию для перехода. ')
         while int(choice_to_relocate) > len(self.location_list):
             choice_to_relocate = input('Такого пути нет, попробуйте еще раз! ')
+        self.current_location_name = self.location_list[int(choice_to_relocate) - 1][0]
         key, index = self.location_list[int(choice_to_relocate) - 1]
         self.location = self.location[int(index)][key]
-        time_spend = re.search(self.re_location, str(self.location))[2]
+        time_spend = re.search(self.re_location, str(self.location))[2]  # TODO и что то с ругулярками опять не то
+        # TODO было вроде все нормально, теперь опять нет... опыт при переходе берется не тот...
         self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
-        self.time_elapsed = \
-            self.time_elapsed + timedelta(seconds=int(re.search(self.re_location, str(self.location))[2]))
-        # TODO Тут используется re.search(self.re_location, str(self.location))[2], которое выше записано в переменную
-        # TODO можно ли заменить это на неё?
+        self.time_elapsed = self.time_elapsed + timedelta(seconds=int(time_spend))
         print(f'Вы перешли на новую локацию и потратили на это {Decimal(int(time_spend))} секунд!')
         print(f'У вас {self.exp} опыта и осталось {self.remaining_time} секунд до наводнения')
         print(f'Прошло времени: {self.time_elapsed.time()}')
@@ -224,7 +224,6 @@ class DungeonGame:
 
     def kill_mob(self):
         choice_to_kill = input('Выберите монстра для атаки. ')
-        print(self.mob_list)
         while int(choice_to_kill) > len(self.mob_list):
             choice_to_kill = input('Нет такого моба, попробуйте еще раз! ')
         self.mob_list.pop(int(choice_to_kill) - 1)
@@ -232,8 +231,7 @@ class DungeonGame:
         self.exp += gain_exp
         time_spend = re.search(self.re_mobs, str(self.location))[2]
         self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
-        self.time_elapsed = self.time_elapsed + timedelta(seconds=int(re.search(self.re_mobs, str(self.location))[2]))
-        # TODO И тут дублируется re.search(self.re_mobs, str(self.location))[2]
+        self.time_elapsed = self.time_elapsed + timedelta(seconds=int(time_spend))
         print(f'Поздравляю, вы убили моба и вы получили {gain_exp} опыта и потратили на это '
               f'{Decimal(int(time_spend))} секунд!')
         print(f'У вас {self.exp} опыта и осталось {self.remaining_time} секунд до наводнения')
