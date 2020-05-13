@@ -114,9 +114,10 @@ class DungeonGame:
         self.choice = None
 
     def run(self, start_location):
-        if self.current_location_name == 'Hatch_tm159.098765432':  # TODO понимаю, что чтобы это строка сработала
-            # TODO надо что бы self.location поменялась на 'Hatch_tm159.098765432' но почему регулярка не ловит ее
-            # TODO пока не пойму
+        if self.current_location_name == 'Hatch_tm159.098765432':
+            # понимаю, что чтобы это строка сработала
+            # надо что бы self.location поменялась на 'Hatch_tm159.098765432' но почему регулярка не ловит ее
+            # пока не пойму
             print('Поздравляю!!! ВЫ ПОБЕДИТЕЛЬ!!!')
         else:
             if Decimal(self.remaining_time) > 0:
@@ -167,7 +168,12 @@ class DungeonGame:
                               f'\nАтаковать монстра {key} {monster_name}')
             elif int(self.choice) == 1 and len(self.mob_list) == 0:
                 print('Локация полностью зачищенна!')
-                self.choose_action()
+                self.choose_action()  # TODO Вот где проблема. Рекурсия, которой стоит избегать, показала своё лицо)
+                # TODO Выбирая действие "на локции нет монстров" мы запускаем рекурсию
+                # TODO выбираем новый self.choice = 2, распечатываем все локации
+                # TODO Затем продолжается текущий метод, из которого вызван был self.choose_action()
+                # TODO Он выполняет следующую проверку if int(self.choice) == 2:
+                # TODO И опять распечатывает локации)
         if int(self.choice) == 2:
             for key, location_name in enumerate(self.location_list, start=1):
                 print(f'Перейти в локацию {key} {location_name[0]}')
@@ -190,7 +196,7 @@ class DungeonGame:
                                 # Вместо
                                 # Перейти в локацию 1 ('Location_8_tm30000', 0)
                                 # Перейти в локацию 2 ('Location_9_tm26000', 1)
-                                # TODO этот момент тоже заметил, пока не смог отследить где именно список удваивается... 
+                                # этот момент тоже заметил, пока не смог отследить где именно список удваивается... 
                                 '\n2) Переход в другую локацию. '
                                 '\n3) Сдаться и выйти из игры! ')
 
@@ -211,10 +217,15 @@ class DungeonGame:
         while int(choice_to_relocate) > len(self.location_list):
             choice_to_relocate = input('Такого пути нет, попробуйте еще раз! ')
         self.current_location_name = self.location_list[int(choice_to_relocate) - 1][0]
+        # TODO в эту переменную можно просто key записать, разве нет?
         key, index = self.location_list[int(choice_to_relocate) - 1]
         self.location = self.location[int(index)][key]
-        time_spend = re.search(self.re_location, str(self.location))[2]  # TODO и что то с ругулярками опять не то
-        # TODO было вроде все нормально, теперь опять нет... опыт при переходе берется не тот...
+        time_spend = re.search(self.re_location, str(self.location))[2]
+        # TODO Тут кстати тоже Key наверное стоит использовать, там же название локации расположено в которую
+        # TODO переходим
+        # и что то с ругулярками опять не то
+        # TODO По регуляркам добавил записи в test
+        # было вроде все нормально, теперь опять нет... опыт при переходе берется не тот...
         self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
         self.time_elapsed = self.time_elapsed + timedelta(seconds=int(time_spend))
         print(f'Вы перешли на новую локацию и потратили на это {Decimal(int(time_spend))} секунд!')

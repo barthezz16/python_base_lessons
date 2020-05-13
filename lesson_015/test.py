@@ -1,6 +1,6 @@
 import json
 from pprint import pprint
-
+import re
 with open('rpg.json', 'r', encoding='utf8') as file_with_data:
     data = json.load(file_with_data)
 pprint(data["Location_0_tm0"]
@@ -23,8 +23,15 @@ for index, item in enumerate(data):
 for index, name_loc in enumerate(loc_list):
     print(f'{index + 1}.{name_loc[0]}')
 
-input_user = input('Сделайте выбор!')
+input_user = '1'
 print(loc_list[int(input_user) - 1])
 key, index = loc_list[int(input_user) - 1]
 data = data[int(index)][key]
 print(data)
+
+
+re_location = r'Location_\w*(\d+)_tm(\d+)'
+time_spend = re.search(re_location, 'Location_10_tm1040')
+print(time_spend[2])
+time_spend = re.search(re_location, 'Location_B10_tm123')
+print(time_spend[2])
