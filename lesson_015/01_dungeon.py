@@ -91,6 +91,7 @@
 #  ...
 #
 # и так далее...
+import csv
 import json
 import re
 from datetime import datetime, timedelta
@@ -101,7 +102,9 @@ from pprint import pprint
 class DungeonGame:
 
     def __init__(self):
-        self.re_location = r'Location_\w+(\d+)_tm(\d+)'
+        self.re_location = r'\w+_\w*(\d+)_tm(\d+).*\d+'
+        # TODO тут не понятно, почему эта регулярка не ловит
+        # TODO 'Hatch_tm159.098765432'
         self.re_mobs = r'\w+_exp(\d+)_tm(\d+)'
         self.current_location_name = "Location_0_tm0"
         self.re_exit = r'Hatch_tm159.098765432'
@@ -119,15 +122,29 @@ class DungeonGame:
             # надо что бы self.location поменялась на 'Hatch_tm159.098765432' но почему регулярка не ловит ее
             # пока не пойму
             print('Поздравляю!!! ВЫ ПОБЕДИТЕЛЬ!!!')
+            self.writter()
         else:
             if Decimal(self.remaining_time) > 0:
                 self.print_and_data_check(start_location)
                 self.make_a_choice()
+                self.writter()
             else:
                 print('В этот раз не получилось, вы возвращаетесь в начало')
                 self.remaining_time = '123456.0987654321'
                 self.run(start_location=data["Location_0_tm0"])
                 self.time_elapsed = datetime.strptime('00:00', '%M:%S')
+                self.writter()
+
+    def writter(self):
+        result = [{'current_location': self.current_location_name,
+                   'current_experience': self.exp,
+                   'current_date': str(self.time_elapsed.time())
+                   }
+                  ]
+
+        with open('result.csv', 'a', encoding='utf8') as result_file:
+            writer = csv.DictWriter(result_file, fieldnames=['current_location', 'current_experience', 'current_date'])
+            writer.writerows(result)
 
     def print_and_data_check(self, location):
         self.location_list = []
@@ -160,20 +177,22 @@ class DungeonGame:
             self.choose_action()
         else:
             if int(self.choice) == 1 and len(self.mob_list) > 0:
-                print(len(self.mob_list))
                 if len(self.mob_list) > 0:
+                    print(f'Похвально, вы выбрали бой!'
+                          f'\n!!!Ну что-же начнем!!!')
                     for key, monster_name in enumerate(self.mob_list, start=1):
-                        print(f'Похвально, вы выбрали бой!'
-                              f'\n!!!Ну что-же начнем!!!'
-                              f'\nАтаковать монстра {key} {monster_name}')
+                        print(f'Атаковать монстра {key} {monster_name}')
+                        # TODO тут тоже всплыла проблема, если на локации больше одного мобы, то программа завершается
+                        #  пока в процессе решения =)
             elif int(self.choice) == 1 and len(self.mob_list) == 0:
                 print('Локация полностью зачищенна!')
-                self.choose_action()  # TODO Вот где проблема. Рекурсия, которой стоит избегать, показала своё лицо)
-                # TODO Выбирая действие "на локции нет монстров" мы запускаем рекурсию
-                # TODO выбираем новый self.choice = 2, распечатываем все локации
-                # TODO Затем продолжается текущий метод, из которого вызван был self.choose_action()
-                # TODO Он выполняет следующую проверку if int(self.choice) == 2:
-                # TODO И опять распечатывает локации)
+                self.make_a_choice()  # Вот где проблема. Рекурсия, которой стоит избегать, показала своё лицо)
+                #  Выбирая действие "на локции нет монстров" мы запускаем рекурсию
+                #  выбираем новый self.choice = 2, распечатываем все локации
+                #  Затем продолжается текущий метод, из которого вызван был self.choose_action()
+                #  Он выполняет следующую проверку if int(self.choice) == 2:
+                #  И опять распечатывает локации)
+                # TODO я видел эту проблему, пока не нашел решение к ней
         if int(self.choice) == 2:
             for key, location_name in enumerate(self.location_list, start=1):
                 print(f'Перейти в локацию {key} {location_name[0]}')
@@ -187,16 +206,6 @@ class DungeonGame:
                                 '\n3) Сдаться и выйти из игры! ')
         else:
             self.choice = input('\n1) На локации нет монстров! '
-                                # Если тут после убийства мобов нажать ещё раз на "На локации нет монстров"
-                                # То дальше, при нажатии "переход в другую локацию" локаций будет в 2 раза больше
-                                # Перейти в локацию 1 ('Location_8_tm30000', 0)
-                                # Перейти в локацию 2 ('Location_9_tm26000', 1)
-                                # Перейти в локацию 1 ('Location_8_tm30000', 0)
-                                # Перейти в локацию 2 ('Location_9_tm26000', 1)
-                                # Вместо
-                                # Перейти в локацию 1 ('Location_8_tm30000', 0)
-                                # Перейти в локацию 2 ('Location_9_tm26000', 1)
-                                # этот момент тоже заметил, пока не смог отследить где именно список удваивается... 
                                 '\n2) Переход в другую локацию. '
                                 '\n3) Сдаться и выйти из игры! ')
 
@@ -216,21 +225,16 @@ class DungeonGame:
         choice_to_relocate = input('Выберите локацию для перехода. ')
         while int(choice_to_relocate) > len(self.location_list):
             choice_to_relocate = input('Такого пути нет, попробуйте еще раз! ')
-        self.current_location_name = self.location_list[int(choice_to_relocate) - 1][0]
-        # TODO в эту переменную можно просто key записать, разве нет?
         key, index = self.location_list[int(choice_to_relocate) - 1]
+        self.current_location_name = key
         self.location = self.location[int(index)][key]
-        time_spend = re.search(self.re_location, str(self.location))[2]
-        # TODO Тут кстати тоже Key наверное стоит использовать, там же название локации расположено в которую
-        # TODO переходим
-        # и что то с ругулярками опять не то
-        # TODO По регуляркам добавил записи в test
-        # было вроде все нормально, теперь опять нет... опыт при переходе берется не тот...
+        time_spend = re.search(self.re_location, key)[2]
         self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
         self.time_elapsed = self.time_elapsed + timedelta(seconds=int(time_spend))
         print(f'Вы перешли на новую локацию и потратили на это {Decimal(int(time_spend))} секунд!')
         print(f'У вас {self.exp} опыта и осталось {self.remaining_time} секунд до наводнения')
         print(f'Прошло времени: {self.time_elapsed.time()}')
+        self.writter()
         self.run(start_location=self.location)
 
     def kill_mob(self):
@@ -254,10 +258,12 @@ class DungeonGame:
 
 with open('rpg.json', 'r', encoding='utf8') as file_with_data:
     data = json.load(file_with_data)
-# если изначально не писать число в виде строки - теряется точность!
+
+with open('result.csv', 'w', encoding='utf8') as result_file:
+    writer = csv.DictWriter(result_file, fieldnames=['current_location', 'current_experience', 'current_date'])
+    writer.writeheader()
+
 field_names = ['current_location', 'current_experience', 'current_date']
 start_location = data["Location_0_tm0"]
 start_game = DungeonGame()
 start_game.run(start_location=start_location)
-
-# Учитывая время и опыт, не забывайте о точности вычислений!
