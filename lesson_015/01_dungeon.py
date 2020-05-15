@@ -118,24 +118,21 @@ class DungeonGame:
 
     def run(self, start_location):
         if self.current_location_name == 'Hatch_tm159.098765432':
-            # понимаю, что чтобы это строка сработала
-            # надо что бы self.location поменялась на 'Hatch_tm159.098765432' но почему регулярка не ловит ее
-            # пока не пойму
             print('Поздравляю!!! ВЫ ПОБЕДИТЕЛЬ!!!')
-            self.writter()
+            self.writer()
         else:
             if Decimal(self.remaining_time) > 0:
                 self.print_and_data_check(start_location)
                 self.make_a_choice()
-                self.writter()
+                self.writer()
             else:
                 print('В этот раз не получилось, вы возвращаетесь в начало')
                 self.remaining_time = '123456.0987654321'
                 self.run(start_location=data["Location_0_tm0"])
                 self.time_elapsed = datetime.strptime('00:00', '%M:%S')
-                self.writter()
+                self.writer()
 
-    def writter(self):
+    def writer(self):
         result = [{'current_location': self.current_location_name,
                    'current_experience': self.exp,
                    'current_date': str(self.time_elapsed.time())
@@ -149,7 +146,7 @@ class DungeonGame:
     def print_and_data_check(self, location):
         self.location_list = []
         self.mob_list = []
-        print(f'Вы находитесь в', self.current_location_name)  # понять бы что тут написать...
+        print(f'Вы находитесь в', self.current_location_name)
         print(f'У вас {self.exp} опыта и осталось {self.remaining_time} секунд до наводнения')
         print(f'Прошло времени: {self.time_elapsed.time()}')
         print('Внутри вы видите:')
@@ -182,8 +179,6 @@ class DungeonGame:
                           f'\n!!!Ну что-же начнем!!!')
                     for key, monster_name in enumerate(self.mob_list, start=1):
                         print(f'Атаковать монстра {key} {monster_name}')
-                        # тут тоже всплыла проблема, если на локации больше одного мобы, то программа завершается
-                        # пока в процессе решения =)
             elif int(self.choice) == 1 and len(self.mob_list) == 0:
                 print('Локация полностью зачищенна!')
                 self.make_a_choice()
@@ -205,11 +200,11 @@ class DungeonGame:
 
     def input(self):
         if len(self.mob_list) > 0:
-            self.choice = input('\n1) Атаковать монстров на локации. '
+            self.choice = input('1) Атаковать монстров на локации. '
                                 '\n2) Переход в другую локацию. '
                                 '\n3) Сдаться и выйти из игры! ')
         else:
-            self.choice = input('\n1) На локации нет монстров! '
+            self.choice = input('1) На локации нет монстров! '
                                 '\n2) Переход в другую локацию. '
                                 '\n3) Сдаться и выйти из игры! ')
 
@@ -233,7 +228,7 @@ class DungeonGame:
             if int(self.choice) == 2:
                 self.location_change()
 
-    def location_change(self):  # пока не понял как тут пройти проверку на выход
+    def location_change(self):
         choice_to_relocate = input('Выберите локацию для перехода. ')
         while int(choice_to_relocate) > len(self.location_list):
             choice_to_relocate = input('Такого пути нет, попробуйте еще раз! ')
@@ -246,7 +241,7 @@ class DungeonGame:
         print(f'Вы перешли на новую локацию и потратили на это {Decimal(int(time_spend))} секунд!')
         print(f'У вас {self.exp} опыта и осталось {self.remaining_time} секунд до наводнения')
         print(f'Прошло времени: {self.time_elapsed.time()}')
-        self.writter()
+        self.writer()
         self.run(start_location=self.location)
 
     def kill_mob(self):
