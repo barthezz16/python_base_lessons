@@ -133,9 +133,6 @@ class DungeonGame:
                     self.mob_list_update()
                 self.location_list_update()
                 self.player_choice()
-                # if self.choice.isalpha:
-                #     print('Выбрано неправильное действие. \nПопробуйте еще раз!')
-                #     self._try = 0
                 if int(self.choice) == 1:
                     while len(self.mob_list) != 0:
                         self.kill_monster()
@@ -176,24 +173,35 @@ class DungeonGame:
                 print('— Монстра: ', data)
 
     def player_choice(self):
-        # TODO Да просто
-        # TODO while True:
-        # TODO     инпут
-        # TODO     если инпут in '1', '2', '3'
-        # TODO     то вернуть input
-        # TODO     если нет - написать сообщение "ошибка, введите заново"
-        cprint('Выберите действие: ', color='red')
-        if len(self.mob_list) > 0 and not self.fight_exit:
-            self.choice = input('1) Атаковать монстров на локации. '
-                                '\n2) Переход в другую локацию. '
-                                '\n3) Сдаться и выйти из игры! ')
-        elif self.fight_exit:
-            self.choice = input('2) Переход в другую локацию. '
-                                '\n3) Сдаться и выйти из игры! ')
-        else:
-            self.choice = input('1) На локации нет монстров! '
-                                '\n2) Переход в другую локацию. '
-                                '\n3) Сдаться и выйти из игры! ')
+        while True:
+            cprint('Выберите действие: ', color='red')
+            if len(self.mob_list) > 0 and not self.fight_exit:
+                self.choice = input('1) Атаковать монстров на локации. '
+                                    '\n2) Переход в другую локацию. '
+                                    '\n3) Сдаться и выйти из игры! ')
+                if self.choice in ['1', '2', '3']:
+                    self._try = 1
+                    return self.choice, self._try
+                else:
+                    cprint('Введено неправильное значение. \nВведите число.', color='red')
+            elif self.fight_exit:
+                self.choice = input('2) Переход в другую локацию. '
+                                    '\n3) Сдаться и выйти из игры! ')
+                if self.choice in ['1', '2', '3']:
+                    self._try = 1
+                    return self.choice, self._try
+                else:
+                    cprint('Введено неправильное значение. \nВведите число.', color='red')
+            else:
+                self.choice = input('1) На локации нет монстров! '
+                                    '\n2) Переход в другую локацию. '
+                                    '\n3) Сдаться и выйти из игры! ')
+                if self.choice in ['1', '2', '3']:
+                    self._try = 1
+                    return self.choice, self._try
+
+                else:
+                    cprint('Введено неправильное значение. \nВведите число.', color='red')
 
     def location_change(self):
         if len(self.location_list) == 0:
