@@ -35,3 +35,9 @@ time_spend = re.search(re_location, 'Location_10_tm1040')
 print(time_spend[2])
 time_spend = re.search(re_location, 'Location_B10_tm123')
 print(time_spend[2])
+
+import re
+re_location = r'\w+_*\w*(\d+)*_tm(\d+).*\d+'
+s = 'Location_B2_tm33300'
+print(re.search(re_location, s).start(2))
+print(s[re.search(re_location, s).start(2):])

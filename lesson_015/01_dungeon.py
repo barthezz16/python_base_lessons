@@ -179,8 +179,14 @@ class DungeonGame:
         #  Добавьте тут проверку инпута(можно цикл завести.
         #  И мне кажется тут лучше return-ом возвращать выбор, так будет проще
         #  Т.е. идёт цикл, если ввод правильный - return числа, а там уже его используете
-        # TODO Максим, я думал над проверкой но что то так и не смог придумать как сюда внедрить проверку ввода
+        #  Максим, я думал над проверкой но что то так и не смог придумать как сюда внедрить проверку ввода
         #  по сути нужна только одна, если введено не число...
+        # TODO Да просто
+        # TODO while True:
+        # TODO     инпут
+        # TODO     если инпут in '1', '2', '3'
+        # TODO     то вернуть input
+        # TODO     если нет - написать сообщение "ошибка, введите заново"
         cprint('Выберите действие: ', color='red')
         if len(self.mob_list) > 0 and not self.fight_exit:
             self.choice = input('1) Атаковать монстров на локации. '
@@ -211,8 +217,10 @@ class DungeonGame:
             key, index = self.location_list[int(choice_to_relocate) - 1]
             self.current_location_name = key
             self.location = self.location[int(index)][key]
+            # TODO А вот тут ищет неверно
             time_spend = re.search(self.re_location, key)[2]
             cprint(re.search(self.re_location, key)[2], color='red')
+            print(time_spend, '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
             self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
             self.time_elapsed = self.time_elapsed + timedelta(seconds=int(time_spend))
             print(f'Вы перешли на новую локацию и потратили на это {Decimal(int(time_spend))} секунд!')
@@ -240,8 +248,9 @@ class DungeonGame:
             gain_exp = Decimal(int(re.search(self.re_mobs, str(self.location))[1]))
             self.exp += gain_exp
             time_spend = re.search(self.re_mobs, str(self.location))[2]
-            # TODO а насчет этого бага, я что то не очень понял
-            # TODO такое ощущение, что регулярка неправильное число берет... или я что то не пойму
+            # а насчет этого бага, я что то не очень понял
+            # такое ощущение, что регулярка неправильное число берет... или я что то не пойму
+            # TODO Эта вроде правильно находит
             self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
             self.time_elapsed = self.time_elapsed + timedelta(seconds=int(time_spend))
             print(f'Поздравляю, вы убили моба и вы получили {gain_exp} опыта и потратили на это '
