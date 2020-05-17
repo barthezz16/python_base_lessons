@@ -94,7 +94,7 @@
 import csv
 import json
 from datetime import datetime, timedelta
-from decimal import Decimal
+from decimal import Decimal, getcontext
 import re
 from termcolor import cprint
 
@@ -133,6 +133,9 @@ class DungeonGame:
                     self.mob_list_update()
                 self.location_list_update()
                 self.player_choice()
+                # if self.choice.isalpha:
+                #     print('Выбрано неправильное действие. \nПопробуйте еще раз!')
+                #     self._try = 0
                 if int(self.choice) == 1:
                     while len(self.mob_list) != 0:
                         self.kill_monster()
@@ -173,9 +176,11 @@ class DungeonGame:
                 print('— Монстра: ', data)
 
     def player_choice(self):
-        # TODO Добавьте тут проверку инпута(можно цикл завести.
-        # TODO И мне кажется тут лучше return-ом возвращать выбор, так будет проще
-        # TODO Т.е. идёт цикл, если ввод правильный - return числа, а там уже его используете
+        #  Добавьте тут проверку инпута(можно цикл завести.
+        #  И мне кажется тут лучше return-ом возвращать выбор, так будет проще
+        #  Т.е. идёт цикл, если ввод правильный - return числа, а там уже его используете
+        # TODO Максим, я думал над проверкой но что то так и не смог придумать как сюда внедрить проверку ввода
+        #  по сути нужна только одна, если введено не число...
         cprint('Выберите действие: ', color='red')
         if len(self.mob_list) > 0 and not self.fight_exit:
             self.choice = input('1) Атаковать монстров на локации. '
@@ -207,6 +212,7 @@ class DungeonGame:
             self.current_location_name = key
             self.location = self.location[int(index)][key]
             time_spend = re.search(self.re_location, key)[2]
+            cprint(re.search(self.re_location, key)[2], color='red')
             self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
             self.time_elapsed = self.time_elapsed + timedelta(seconds=int(time_spend))
             print(f'Вы перешли на новую локацию и потратили на это {Decimal(int(time_spend))} секунд!')
@@ -234,6 +240,8 @@ class DungeonGame:
             gain_exp = Decimal(int(re.search(self.re_mobs, str(self.location))[1]))
             self.exp += gain_exp
             time_spend = re.search(self.re_mobs, str(self.location))[2]
+            # TODO а насчет этого бага, я что то не очень понял
+            # TODO такое ощущение, что регулярка неправильное число берет... или я что то не пойму
             self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
             self.time_elapsed = self.time_elapsed + timedelta(seconds=int(time_spend))
             print(f'Поздравляю, вы убили моба и вы получили {gain_exp} опыта и потратили на это '
@@ -265,16 +273,16 @@ with open('dungeon.csv', 'w', encoding='utf8') as result_header:
 
 start_game = DungeonGame()
 start_game.run()
-# TODO Баг репорт:
-# TODO Пробелмы с учётом времени:
-# TODO У вас 10 опыта и осталось 123456.0987654321 секунд до наводнения
-# TODO Перейти в локацию 1 Location_1_tm1040
-# TODO Перейти в локацию 2 Location_2_tm33300
-# TODO Выберите локацию для перехода. 2
-# TODO Вы перешли на новую локацию и потратили на это 3330 секунд!
-# TODO Должно было отняться 33300, отнимается 3330 :)
-# TODO Далее
+#  Баг репорт:
+#  Пробелмы с учётом времени:
+#  У вас 10 опыта и осталось 123456.0987654321 секунд до наводнения
+#  Перейти в локацию 1 Location_1_tm1040
+#  Перейти в локацию 2 Location_2_tm33300
+#  Выберите локацию для перехода. 2
+#  Вы перешли на новую локацию и потратили на это 3330 секунд!
+#  Должно было отняться 33300, отнимается 3330 :)
+#  Далее
 # Перейти в локацию 1 Hatch_tm159.098765432
 # Выберите локацию для перехода. 1
 # Вы перешли на новую локацию и потратили на это 159 секунд!
-# TODO Не должно было быть округления такого, должно было отняться 159.098765432
+#  Не должно было быть округления такого, должно было отняться 159.098765432
