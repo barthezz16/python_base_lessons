@@ -222,8 +222,11 @@ class DungeonGame:
             self.location = self.location[int(index)][key]
             time_spend = key[re.search(self.re_location, key).start(2):]
             self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
-            self.time_elapsed = self.time_elapsed + timedelta(seconds=int(time_spend))
-            print(f'Вы перешли на новую локацию и потратили на это {Decimal(int(time_spend))} секунд!')
+            # TODO Decimal(int(time_spend)) -- int тут лишний
+            # TODO Попробуйте просто убрать int здесь
+            print(time_spend)
+            self.time_elapsed = self.time_elapsed + timedelta(seconds=int(time_spend))  # TODO Тут добавить float
+            print(f'Вы перешли на новую локацию и потратили на это {Decimal(int(time_spend))} секунд!')  # TODO Тут тоже убрать Int
             self._try = 0
             self.fight_exit = False
 
