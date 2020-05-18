@@ -221,12 +221,10 @@ class DungeonGame:
             self.current_location_name = key
             self.location = self.location[int(index)][key]
             time_spend = key[re.search(self.re_location, key).start(2):]
-            self.remaining_time = Decimal(self.remaining_time) - Decimal(int(time_spend))
-            # TODO Decimal(int(time_spend)) -- int тут лишний
-            # TODO Попробуйте просто убрать int здесь
+            self.remaining_time = Decimal(self.remaining_time) - Decimal(time_spend)
             print(time_spend)
-            self.time_elapsed = self.time_elapsed + timedelta(seconds=int(time_spend))  # TODO Тут добавить float
-            print(f'Вы перешли на новую локацию и потратили на это {Decimal(int(time_spend))} секунд!')  # TODO Тут тоже убрать Int
+            self.time_elapsed = self.time_elapsed + timedelta(seconds=float(time_spend))
+            print(f'Вы перешли на новую локацию и потратили на это {Decimal(time_spend)} секунд!')
             self._try = 0
             self.fight_exit = False
 
@@ -282,16 +280,4 @@ with open('dungeon.csv', 'w', encoding='utf8') as result_header:
 
 start_game = DungeonGame()
 start_game.run()
-#  Баг репорт:
-#  Пробелмы с учётом времени:
-#  У вас 10 опыта и осталось 123456.0987654321 секунд до наводнения
-#  Перейти в локацию 1 Location_1_tm1040
-#  Перейти в локацию 2 Location_2_tm33300
-#  Выберите локацию для перехода. 2
-#  Вы перешли на новую локацию и потратили на это 3330 секунд!
-#  Должно было отняться 33300, отнимается 3330 :)
-#  Далее
-# Перейти в локацию 1 Hatch_tm159.098765432
-# Выберите локацию для перехода. 1
-# Вы перешли на новую локацию и потратили на это 159 секунд!
-#  Не должно было быть округления такого, должно было отняться 159.098765432
+
