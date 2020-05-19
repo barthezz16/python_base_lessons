@@ -222,7 +222,6 @@ class DungeonGame:
             self.location = self.location[int(index)][key]
             time_spend = key[re.search(self.re_location, key).start(2):]
             self.remaining_time = Decimal(self.remaining_time) - Decimal(time_spend)
-            print(time_spend)
             self.time_elapsed = self.time_elapsed + timedelta(seconds=float(time_spend))
             print(f'Вы перешли на новую локацию и потратили на это {Decimal(time_spend)} секунд!')
             self._try = 0
@@ -281,3 +280,4 @@ with open('dungeon.csv', 'w', encoding='utf8') as result_header:
 start_game = DungeonGame()
 start_game.run()
 
+#зачет!
