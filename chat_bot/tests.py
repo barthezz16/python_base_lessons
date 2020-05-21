@@ -9,7 +9,7 @@ class Test1(TestCase):
         count = 5
         obj = {'a': 1}
         events = [obj] * count
-        long_poller_mock = Mock(retun_value=events)
+        long_poller_mock = Mock(retun_value=events)  # TODO return_value должен быть
         long_poller_listen_mock = Mock()
         long_poller_listen_mock.listen = long_poller_mock
 
