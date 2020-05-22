@@ -1,76 +1,13 @@
-import re
 import datetime as DT
 import pandas as pd
 
-re_city = re.compile(r'^(?ix)^[A-Z.-]+(?:\s+[A-Z.-]+)*$')
-re_date = re.compile(r'\b\d+.\d+.\d+\b')
-re_phone = re.compile(r'\b\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4}\b')
-re_message = re.compile(r'\w+')
-re_digit = re.compile(r'[1-5]')
 
+def handler_flights(flights, departure, arrival):
+    if arrival in flights[departure]:
+        return f'Пять ближайших рейсов из {dep_i} в {arr_i}: {", ".join(map(str, flights[departure][arrival][0: 5]))}.'
 
-def handler_city_departure(text, context):
-    matches = re.match(re_city, text)
-    if matches:
-        context['city_departure'] = text
-        return True
     else:
-        return False
-
-
-def handler_message(text, context):
-    matches = re.match(re_message, text)
-    if matches:
-        context['message'] = text
-        return True
-    else:
-        return False
-
-
-def handler_digit(text, context):
-    matches = re.match(re_digit, text)
-    if matches:
-        context['digit'] = text
-        return True
-    else:
-        return False
-
-
-def handler_city_arrival(text, context):
-    matches = re.match(re_city, text)
-    if matches:
-        context['city_arrival'] = text
-        return True
-    else:
-        return False
-
-
-def handler_phone(text, context):
-    matches = re.findall(re_phone, text)
-    if len(matches) > 0:
-        context['phone'] = matches[0]
-        return True
-    else:
-        return False
-
-
-def handler_date(text, context):
-    matches = re.findall(re_date, text)
-    if len(matches) > 0:
-        context['date'] = matches[0]
-        return True
-    else:
-        return False
-
-
-def handler_flights(context, *args, **kwargs):
-    global flights
-    print(context['city_arrival'])
-    print(context['city_departure'])
-    if context['city_departure'] in flights[context['city_arrival']]:
-        return True
-    else:
-        return False
+        return f'Нет прямого рейса из {departure} в {arrival}. Из {departure} доступны рейсы в: {", ".join(map(str, flights[departure].keys()))}.'
 
 
 start_date = DT.datetime.now()
@@ -136,4 +73,16 @@ flights = {
         'Madrid': res_madrid_london
     }
 }
+departure = ['Moscow', 'Berlin', 'Madrid', 'New-York', 'London']
+arrival_list = ['Moscow', 'Berlin', 'Madrid', 'New-York', 'London']
+for dep_i in departure:
+    for arr_i in arrival_list:
+        if dep_i == arr_i:
+            pass
+        else:
+            try:
+                result = handler_flights(flights=flights, departure=dep_i.title(), arrival=arr_i.title())
+                print(result)
+            except KeyError:
+                print('Из данного города нет рейсов')
 
