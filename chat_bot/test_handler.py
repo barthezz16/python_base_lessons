@@ -7,7 +7,8 @@ def handler_flights(flights, departure, arrival):
         return f'Пять ближайших рейсов из {dep_i} в {arr_i}: {", ".join(map(str, flights[departure][arrival][0: 5]))}.'
 
     else:
-        return f'Нет прямого рейса из {departure} в {arrival}. Из {departure} доступны рейсы в: {", ".join(map(str, flights[departure].keys()))}.'
+        return f'Нет прямого рейса из {departure} в {arrival}. Из {departure} доступны рейсы в: ' \
+               f'{", ".join(map(str, flights[departure].keys()))}.'
 
 
 start_date = DT.datetime.now()
@@ -85,4 +86,3 @@ for dep_i in departure:
                 print(result)
             except KeyError:
                 print('Из данного города нет рейсов')
-
