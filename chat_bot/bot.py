@@ -108,7 +108,6 @@ class Bot:
         state = self.user_states[user_id]
         steps = settings.SCENARIOS[state.scenario_name]['steps']
         step = steps[state.step_name]
-
         handler = getattr(handlers, step['handler'])
         if handler(text=text, context=state.context):
             next_step = steps[step['next_step']]
@@ -117,7 +116,7 @@ class Bot:
                 state.step_name = step['next_step']
             else:
                 self.user_states.pop(user_id)
-                log.info('Зарегистрирован: {name} {email}'.format(**state.context))
+                log.info('Билет из {city_departure} в {city_arrival} куплен.'.format(**state.context))
         else:
             text_to_send = step['failure_text'].format(**state.context)
         return text_to_send
