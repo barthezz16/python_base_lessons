@@ -63,7 +63,8 @@ def handler_date(text, context):
         return False
 
 
-def handler_flights(context, *args, **kwargs):
+def handler_flights(context, *args, **kwargs):  # TODO Handler вызывается с двумя параметрами - text/context
+    # TODO Нужно их и записать, как в остальных
     global flights
     print(context['city_arrival'])
     print(context['city_departure'])
@@ -73,11 +74,13 @@ def handler_flights(context, *args, **kwargs):
         return False
 
 
+# TODO Это создание хорошо бы в функцию убрать
 start_date = DT.datetime.now()
 end_date = start_date + DT.timedelta(days=30)
 
 number_of_flights_per_mounth_moscow_berlin = 8
 res_moscow_berlin = pd.date_range(min(start_date, end_date), max(start_date, end_date),
+                                  # TODO Ещё не понимаю зачем тут нужны min/max?
                                   periods=number_of_flights_per_mounth_moscow_berlin).strftime('%d.%m.%Y').tolist()
 number_of_flights_per_mounth_moscow_newyork = 15
 res_moscow_newyork = pd.date_range(min(start_date, end_date), max(start_date, end_date),
@@ -103,7 +106,9 @@ res_berlin_london = pd.date_range(min(start_date, end_date), max(start_date, end
 number_of_flights_per_mounth_madrid_london = 10
 res_madrid_london = pd.date_range(min(start_date, end_date), max(start_date, end_date),
                                   periods=number_of_flights_per_mounth_madrid_london).strftime('%d.%m.%Y').tolist()
-
+# TODO И стоит это автоматизировать при помощи циклов
+# TODO Создать заранее список городов и начальную/конечную даты
+# TODO И циклом сформировать подобный словарь.
 flights = {
     'Moscow': {
         'Berlin': res_moscow_berlin,
