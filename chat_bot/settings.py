@@ -1,3 +1,4 @@
+
 GROUP_ID = 194398178
 TOKEN = 'aa3755f8807e08d5e1759193c1f0b59ec60c9164b5f64fe42512c9b3cce4e95429ba9ac7b197cc27f873c'
 
@@ -34,14 +35,21 @@ SCENARIOS = {
                 'next_step': 'step2.1'
             },
             'step2.1': {
-                'text': 'Межды выбранными городами есть рейсы.',
-                'failure_text': 'Межды выбранными городами нет рейсов, попробуйте выбрать другой город.',
+                'text': 'Вы ищите рейс из из {city_departure} в {city_arrival}.',
+                'failure_text': 'Нет прямого рейса из {city_departure} в {city_arrival}. '
+                                'Из {city_departure} доступны рейсы в: ',
+                                # '{", ".join(map(str, flights[city_departure].keys()))}.',
+                # TODO не пойму как это заставить тут работать...
+                # TODO точнее как взаимодействовать со словарем flights
+
                 'handler': 'handler_flights',
                 'next_step': 'step3'
             },
             'step3': {
                 'text': 'Введите дату вылета в формате MM-DD-YYYY.',
-                'failure_text': 'На выбраную дату нет рейсов, попробуйте еще раз.',
+                'failure_text': 'Пять ближайших рейсов из {city_departure} в {city_arrival}: ',
+                                # '{", ".join(map(str, flights[context["city_departure"]][context["city_arrival"]]'
+                                # '[0: 5]))}.',   # TODO не пойму как это заставить тут работать...
                 'handler': 'handler_date',
                 'next_step': 'step4'
             },
