@@ -39,9 +39,14 @@ SCENARIOS = {
                 'failure_text': 'Нет прямого рейса из {city_departure} в {city_arrival}. '
                                 'Из {city_departure} доступны рейсы в: ',
                                 # '{", ".join(map(str, flights[city_departure].keys()))}.',
-                # TODO не пойму как это заставить тут работать...
-                # TODO точнее как взаимодействовать со словарем flights
-
+                # не пойму как это заставить тут работать...
+                # точнее как взаимодействовать со словарем flights
+                # TODO Тут нужно вызывать функцию из handler, но, до её вызова надо сформировать сам словарь в том
+                # TODO модуле.
+                # TODO Для этого нужно добавить генерацию словаря в функцию и эту функцию вызывать при старте бота
+                # TODO Т.е. при инициализации Бота - вызываем функцию в модуле handlers, которая
+                # TODO создает словарь глобальный.
+                # TODO Затем уже к этому словарю обращаться через функцию из handler
                 'handler': 'handler_flights',
                 'next_step': 'step3'
             },
@@ -49,7 +54,7 @@ SCENARIOS = {
                 'text': 'Введите дату вылета в формате MM-DD-YYYY.',
                 'failure_text': 'Пять ближайших рейсов из {city_departure} в {city_arrival}: ',
                                 # '{", ".join(map(str, flights[context["city_departure"]][context["city_arrival"]]'
-                                # '[0: 5]))}.',   # TODO не пойму как это заставить тут работать...
+                                # '[0: 5]))}.',   # не пойму как это заставить тут работать...
                 'handler': 'handler_date',
                 'next_step': 'step4'
             },
