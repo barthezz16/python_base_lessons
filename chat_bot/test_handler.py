@@ -1,4 +1,6 @@
 import datetime as DT
+from pprint import pprint
+
 import pandas as pd
 
 
@@ -12,7 +14,6 @@ def handler_flights(departure, arrival):
 
 
 def dates_creator():
-    global flights
     start_date = DT.datetime.now()
     end_date = start_date + DT.timedelta(days=30)
     number_of_flights_per_month_moscow_berlin = 8
@@ -42,7 +43,7 @@ def dates_creator():
     number_of_flights_per_month_madrid_london = 10
     res_madrid_london = pd.date_range(start_date, end_date,
                                       periods=number_of_flights_per_month_madrid_london).strftime('%d.%m.%Y').tolist()
-    flights = {
+    flights_list = {
         'Moscow': {
             'Berlin': res_moscow_berlin,
             'Madrid': res_moscow_madrid,
@@ -74,9 +75,10 @@ def dates_creator():
             'Madrid': res_madrid_london
         }
     }
+    return flights_list
 
 
-dates_creator()
+flights = dates_creator()
 departure = ['Moscow', 'Berlin', 'Madrid', 'New-York', 'London']
 arrival_list = ['Moscow', 'Berlin', 'Madrid', 'New-York', 'London']
 for dep_i in departure:

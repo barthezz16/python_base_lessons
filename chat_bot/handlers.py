@@ -1,5 +1,7 @@
 import re
 import datetime as DT
+from pprint import pprint
+
 import pandas as pd
 
 re_city = re.compile(r'^(?ix)^[A-Z.-]+(?:\s+[A-Z.-]+)*$')
@@ -65,77 +67,77 @@ def handler_date(text, context):
 
 
 def handler_flights(context, text):
-    global flights
+    context['flights'] = flights
+    pprint(context['flights'][context['city_departure']])
     if context['city_arrival'] in flights[(context['city_departure'])]:
         return True
     else:
         return False
 
 
-# Это создание хорошо бы в функцию убрать
-start_date = DT.datetime.now()
-end_date = start_date + DT.timedelta(days=30)
+def dates_creator():
+    start_date = DT.datetime.now()
+    end_date = start_date + DT.timedelta(days=30)
+    number_of_flights_per_month_moscow_berlin = 8
+    res_moscow_berlin = pd.date_range(start_date, end_date,
+                                      periods=number_of_flights_per_month_moscow_berlin).strftime('%d.%m.%Y').tolist()
+    number_of_flights_per_month_moscow_newyork = 15
+    res_moscow_newyork = pd.date_range(start_date, end_date,
+                                       periods=number_of_flights_per_month_moscow_newyork).strftime('%d.%m.%Y').tolist()
+    number_of_flights_per_month_moscow_madrid = 6
+    res_moscow_madrid = pd.date_range(start_date, end_date,
+                                      periods=number_of_flights_per_month_moscow_madrid).strftime('%d.%m.%Y').tolist()
+    number_of_flights_per_month_berlin_madrid = 11
+    res_berlin_madrid = pd.date_range(start_date, end_date,
+                                      periods=number_of_flights_per_month_berlin_madrid).strftime('%d.%m.%Y').tolist()
+    number_of_flights_per_month_newyork_madrid = 16
+    res_newyork_madrid = pd.date_range(start_date, end_date,
+                                       periods=number_of_flights_per_month_newyork_madrid).strftime('%d.%m.%Y').tolist()
+    number_of_flights_per_month_newyork_london = 12
+    res_newyork_london = pd.date_range(start_date, end_date,
+                                       periods=number_of_flights_per_month_newyork_london).strftime('%d.%m.%Y').tolist()
+    number_of_flights_per_month_moscow_london = 9
+    res_moscow_london = pd.date_range(start_date, end_date,
+                                      periods=number_of_flights_per_month_moscow_london).strftime('%d.%m.%Y').tolist()
+    number_of_flights_per_month_berlin_london = 10
+    res_berlin_london = pd.date_range(start_date, end_date,
+                                      periods=number_of_flights_per_month_berlin_london).strftime('%d.%m.%Y').tolist()
+    number_of_flights_per_month_madrid_london = 10
+    res_madrid_london = pd.date_range(start_date, end_date,
+                                      periods=number_of_flights_per_month_madrid_london).strftime('%d.%m.%Y').tolist()
+    flights_list = {
+        'Moscow': {
+            'Berlin': res_moscow_berlin,
+            'Madrid': res_moscow_madrid,
+            'New-York': res_moscow_newyork,
+            'London': res_moscow_london
+        },
+        'Berlin': {
+            'Moscow': res_moscow_berlin,
+            'Madrid': res_berlin_madrid,
+            'London': res_berlin_london
 
-number_of_flights_per_month_moscow_berlin = 8
-res_moscow_berlin = pd.date_range(start_date, end_date,
-                                  periods=number_of_flights_per_month_moscow_berlin).strftime('%d.%m.%Y').tolist()
-number_of_flights_per_month_moscow_newyork = 15
-res_moscow_newyork = pd.date_range(start_date, end_date,
-                                   periods=number_of_flights_per_month_moscow_newyork).strftime('%d.%m.%Y').tolist()
-number_of_flights_per_month_moscow_madrid = 6
-res_moscow_madrid = pd.date_range(start_date, end_date,
-                                  periods=number_of_flights_per_month_moscow_madrid).strftime('%d.%m.%Y').tolist()
-number_of_flights_per_month_berlin_madrid = 11
-res_berlin_madrid = pd.date_range(start_date, end_date,
-                                  periods=number_of_flights_per_month_berlin_madrid).strftime('%d.%m.%Y').tolist()
-number_of_flights_per_month_newyork_madrid = 16
-res_newyork_madrid = pd.date_range(start_date, end_date,
-                                   periods=number_of_flights_per_month_newyork_madrid).strftime('%d.%m.%Y').tolist()
-number_of_flights_per_month_newyork_london = 12
-res_newyork_london = pd.date_range(start_date, end_date,
-                                   periods=number_of_flights_per_month_newyork_london).strftime('%d.%m.%Y').tolist()
-number_of_flights_per_month_moscow_london = 9
-res_moscow_london = pd.date_range(start_date, end_date,
-                                  periods=number_of_flights_per_month_moscow_london).strftime('%d.%m.%Y').tolist()
-number_of_flights_per_month_berlin_london = 10
-res_berlin_london = pd.date_range(start_date, end_date,
-                                  periods=number_of_flights_per_month_berlin_london).strftime('%d.%m.%Y').tolist()
-number_of_flights_per_month_madrid_london = 10
-res_madrid_london = pd.date_range(start_date, end_date,
-                                  periods=number_of_flights_per_month_madrid_london).strftime('%d.%m.%Y').tolist()
-#  И стоит это автоматизировать при помощи циклов
-#  Создать заранее список городов и начальную/конечную даты
-#  И циклом сформировать подобный словарь.
-# TODO я это сделаю, самому эта часть не нравится, просто хочу чтобы так сначала запустилось..
-flights = {
-    'Moscow': {
-        'Berlin': res_moscow_berlin,
-        'Madrid': res_moscow_madrid,
-        'New-York': res_moscow_newyork,
-        'London': res_moscow_london
-    },
-    'Berlin': {
-        'Moscow': res_moscow_berlin,
-        'Madrid': res_berlin_madrid,
-        'London': res_berlin_london
+        },
+        'Madrid': {
+            'Moscow': res_moscow_madrid,
+            'Berlin': res_berlin_madrid,
+            'New-York': res_newyork_madrid,
+            'London': res_madrid_london
 
-    },
-    'Madrid': {
-        'Moscow': res_moscow_madrid,
-        'Berlin': res_berlin_madrid,
-        'New-York': res_newyork_madrid,
-        'London': res_madrid_london
-
-    },
-    'New-York': {
-        'Moscow': res_moscow_newyork,
-        'Madrid': res_newyork_madrid,
-        'London': res_newyork_london
-    },
-    'London': {
-        'Moscow': res_moscow_london,
-        'Berlin': res_moscow_london,
-        'New-York': res_newyork_london,
-        'Madrid': res_madrid_london
+        },
+        'New-York': {
+            'Moscow': res_moscow_newyork,
+            'Madrid': res_newyork_madrid,
+            'London': res_newyork_london
+        },
+        'London': {
+            'Moscow': res_moscow_london,
+            'Berlin': res_moscow_london,
+            'New-York': res_newyork_london,
+            'Madrid': res_madrid_london
+        }
     }
-}
+    return flights_list
+
+
+flights = dates_creator()

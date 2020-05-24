@@ -2,6 +2,7 @@ import random
 import vk_api
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 import logging
+from handlers import dates_creator
 
 import handlers
 
@@ -33,6 +34,7 @@ class UserState:
         self.context = context or {}
 
 
+
 class Bot:
     """
     Echo bot для vk.com
@@ -52,6 +54,7 @@ class Bot:
         self.long_poller = VkBotLongPoll(self.vk, self.group_id)
         self.api = self.vk.get_api()
         self.user_states = dict()
+        self.flights = dates_creator()
 
     def run(self):
         """ Запуск бота."""

@@ -1,3 +1,4 @@
+from handlers import dates_creator
 
 GROUP_ID = 194398178
 TOKEN = 'aa3755f8807e08d5e1759193c1f0b59ec60c9164b5f64fe42512c9b3cce4e95429ba9ac7b197cc27f873c'
@@ -5,7 +6,7 @@ TOKEN = 'aa3755f8807e08d5e1759193c1f0b59ec60c9164b5f64fe42512c9b3cce4e95429ba9ac
 INTENTS = [
     {
         'name': 'Помощь',
-        'tokens': ('\help', 'помощь', 'как', 'что делать'),
+        'tokens': ('\\help', 'помощь', 'как', 'что делать'),
         'scenario': None,
         'answer': 'чтобы купить билет введите \\ticket, или купить билет'
     },
@@ -17,6 +18,8 @@ INTENTS = [
 
     }
 ]
+
+flights = dates_creator()
 
 SCENARIOS = {
     'registration': {
@@ -37,24 +40,18 @@ SCENARIOS = {
             'step2.1': {
                 'text': 'Вы ищите рейс из из {city_departure} в {city_arrival}.',
                 'failure_text': 'Нет прямого рейса из {city_departure} в {city_arrival}. '
-                                'Из {city_departure} доступны рейсы в: ',
-                                # '{", ".join(map(str, flights[city_departure].keys()))}.',
-                # не пойму как это заставить тут работать...
-                # точнее как взаимодействовать со словарем flights
-                # TODO Тут нужно вызывать функцию из handler, но, до её вызова надо сформировать сам словарь в том
-                # TODO модуле.
-                # TODO Для этого нужно добавить генерацию словаря в функцию и эту функцию вызывать при старте бота
-                # TODO Т.е. при инициализации Бота - вызываем функцию в модуле handlers, которая
-                # TODO создает словарь глобальный.
-                # TODO Затем уже к этому словарю обращаться через функцию из handler
+                                'Из {city_departure} доступны рейсы в: '
+                                '{", ".join(map(str, flights))}.',  # TODO врое через какието костыли запихнул список сюда
+                # TODO но получается вызвать только весь список, с ключами беда какая то...
+                # TODO или я все таки не правльно это сделал...
                 'handler': 'handler_flights',
                 'next_step': 'step3'
             },
             'step3': {
                 'text': 'Введите дату вылета в формате MM-DD-YYYY.',
-                'failure_text': 'Пять ближайших рейсов из {city_departure} в {city_arrival}: ',
-                                # '{", ".join(map(str, flights[context["city_departure"]][context["city_arrival"]]'
-                                # '[0: 5]))}.',   # не пойму как это заставить тут работать...
+                'failure_text': 'Пять ближайших рейсов из {city_departure} в {city_arrival}: '
+                                '{", ".join(map(str, flights[context["city_departure"]][context["city_arrival"]]'
+                                '[0: 5]))}.',  # не пойму как это заставить тут работать...
                 'handler': 'handler_date',
                 'next_step': 'step4'
             },
