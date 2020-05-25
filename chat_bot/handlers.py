@@ -38,6 +38,15 @@ def handler_digit(text, context):
         return False
 
 
+def handler_seats(text, context):
+    matches = re.match(re_digit, text)
+    if matches:
+        context['seats'] = text
+        return True
+    else:
+        return False
+
+
 def handler_city_arrival(text, context):
     matches = re.match(re_city, text)
     if matches:
@@ -68,7 +77,12 @@ def handler_date(text, context):
 
 def handler_flights(context, text):
     context['flights'] = flights
+    context['flights_possible'] = {", ".join(map(str, context['flights'][context['city_departure']].keys()))}
+    context['five_nearest'] = {", ".join(map(str, flights[context['city_departure']][context['city_arrival']][0: 5]))}
+
     pprint(context['flights'][context['city_departure']])
+    pprint(context['flights_possible'])
+    pprint(context['five_nearest'])
     if context['city_arrival'] in flights[(context['city_departure'])]:
         return True
     else:
