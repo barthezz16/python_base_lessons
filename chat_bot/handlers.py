@@ -15,14 +15,25 @@ def handler_city_departure(text, context):
     matches = re.match(re_city, text)
     if matches:
         context['city_departure'] = text.title()
-        return True
-    else:
-        return False
+        if context['city_departure'] in flights:
+            return True
+        else:
+            return False
 
 
 def handler_message(text, context):
     matches = re.match(re_message, text)
     if matches:
+        context['message'] = text
+        return True
+    else:
+        return False
+
+
+def handler_confirm(text, context):
+    context['confirmation'] = text
+    confirm_answers = ['Да', 'да', 'Yes', 'yes']
+    if context['confirmation'] in confirm_answers:
         context['message'] = text
         return True
     else:
@@ -49,8 +60,13 @@ def handler_seats(text, context):
 
 def handler_city_arrival(text, context):
     matches = re.match(re_city, text)
-    if matches:
-        context['city_arrival'] = text.title()
+    context['city_arrival'] = text.title()
+    context['flights'] = flights
+    context['flights_possible'] = {", ".join(map(str, context['flights'][context['city_departure']].keys()))}
+
+    if matches and context['city_arrival'] in flights[(context['city_departure'])]:
+        context['five_nearest'] = {
+            ", ".join(map(str, flights[context['city_departure']][context['city_arrival']][0: 5]))}
         return True
     else:
         return False
@@ -65,10 +81,30 @@ def handler_phone(text, context):
         return False
 
 
+# def handler_date(text, context):
+#     matches = re.findall(re_date, text)
+#     if len(matches) > 0:
+#         context['date'] = matches[0]
+#         if context['date'] in flights[(context['city_departure'])][(context['city_arrival'])]:
+#             return True
+#         else:
+#             return False
+
+
 def handler_date(text, context):
     matches = re.findall(re_date, text)
     if len(matches) > 0:
         context['date'] = matches[0]
+        my_date = DT.datetime.strptime(context['date'], '%d.%m.%Y')
+        while not my_date.strftime('%d.%m.%Y') in flights[context['city_departure']][context['city_arrival']]:
+            try:
+                my_date_index = flights[context['city_departure']][context['city_arrival']].index(my_date)
+            except ValueError:
+                my_date += DT.timedelta(days=1)
+                print(my_date.strftime('%d.%m.%Y'))
+        my_date_index = flights[context['city_departure']][context['city_arrival']].index(my_date.strftime('%d.%m.%Y'))
+        context['dates_list'] = flights[context['city_departure']][context['city_arrival']][
+                                my_date_index: my_date_index + 5]
         if context['date'] in flights[(context['city_departure'])][(context['city_arrival'])]:
             return True
         else:
@@ -76,13 +112,7 @@ def handler_date(text, context):
 
 
 def handler_flights(context, text):
-    context['flights'] = flights
     context['flights_possible'] = {", ".join(map(str, context['flights'][context['city_departure']].keys()))}
-    context['five_nearest'] = {", ".join(map(str, flights[context['city_departure']][context['city_arrival']][0: 5]))}
-
-    pprint(context['flights'][context['city_departure']])
-    pprint(context['flights_possible'])
-    pprint(context['five_nearest'])
     if context['city_arrival'] in flights[(context['city_departure'])]:
         return True
     else:
@@ -91,32 +121,32 @@ def handler_flights(context, text):
 
 def dates_creator():
     start_date = DT.datetime.now()
-    end_date = start_date + DT.timedelta(days=30)
-    number_of_flights_per_month_moscow_berlin = 8
+    end_date = start_date + DT.timedelta(days=365)
+    number_of_flights_per_month_moscow_berlin = 80
     res_moscow_berlin = pd.date_range(start_date, end_date,
                                       periods=number_of_flights_per_month_moscow_berlin).strftime('%d.%m.%Y').tolist()
-    number_of_flights_per_month_moscow_newyork = 15
+    number_of_flights_per_month_moscow_newyork = 180
     res_moscow_newyork = pd.date_range(start_date, end_date,
                                        periods=number_of_flights_per_month_moscow_newyork).strftime('%d.%m.%Y').tolist()
-    number_of_flights_per_month_moscow_madrid = 6
+    number_of_flights_per_month_moscow_madrid = 75
     res_moscow_madrid = pd.date_range(start_date, end_date,
                                       periods=number_of_flights_per_month_moscow_madrid).strftime('%d.%m.%Y').tolist()
-    number_of_flights_per_month_berlin_madrid = 11
+    number_of_flights_per_month_berlin_madrid = 135
     res_berlin_madrid = pd.date_range(start_date, end_date,
                                       periods=number_of_flights_per_month_berlin_madrid).strftime('%d.%m.%Y').tolist()
-    number_of_flights_per_month_newyork_madrid = 16
+    number_of_flights_per_month_newyork_madrid = 185
     res_newyork_madrid = pd.date_range(start_date, end_date,
                                        periods=number_of_flights_per_month_newyork_madrid).strftime('%d.%m.%Y').tolist()
-    number_of_flights_per_month_newyork_london = 12
+    number_of_flights_per_month_newyork_london = 145
     res_newyork_london = pd.date_range(start_date, end_date,
                                        periods=number_of_flights_per_month_newyork_london).strftime('%d.%m.%Y').tolist()
-    number_of_flights_per_month_moscow_london = 9
+    number_of_flights_per_month_moscow_london = 110
     res_moscow_london = pd.date_range(start_date, end_date,
                                       periods=number_of_flights_per_month_moscow_london).strftime('%d.%m.%Y').tolist()
-    number_of_flights_per_month_berlin_london = 10
+    number_of_flights_per_month_berlin_london = 120
     res_berlin_london = pd.date_range(start_date, end_date,
                                       periods=number_of_flights_per_month_berlin_london).strftime('%d.%m.%Y').tolist()
-    number_of_flights_per_month_madrid_london = 10
+    number_of_flights_per_month_madrid_london = 125
     res_madrid_london = pd.date_range(start_date, end_date,
                                       periods=number_of_flights_per_month_madrid_london).strftime('%d.%m.%Y').tolist()
     flights_list = {

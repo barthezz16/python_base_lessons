@@ -121,7 +121,6 @@ class Bot:
                 self.user_states.pop(user_id)
                 log.info('Билет из {city_departure} в {city_arrival} на {date} куплен.'.format(**state.context))
         else:
-            # TODO Вот тут тогда будет next_step переключаться на fail_step
             text_to_send = step['failure_text'].format(**state.context)
         return text_to_send
 
