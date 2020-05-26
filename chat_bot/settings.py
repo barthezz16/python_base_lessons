@@ -86,7 +86,8 @@ SCENARIOS = {
                         '\nКомментарий: {message}.',
                 'failure_text': 'Вы нашли ошибку в введенных данных, давайте повторим еще раз.',
                 'handler': 'handler_confirm',
-                'next_step': 'step8'  # TODO restart
+                'next_step': 'step8'  # TODO тут не совсем понял как сделать рестарт если после проверки обнаружена
+                # TODO ошибка...
             },
             'step8': {
                 'text': 'Введите номер телефона в формате (XXX)XXX-XX-XX.',
