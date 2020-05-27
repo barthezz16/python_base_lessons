@@ -43,7 +43,10 @@ class Test1(TestCase):
         '5',
         'ok',
         'yes',
-        '9179631309',
+        '9179631309',  # TODO ValueError: time data '9179631309' does not match format '%d.%m.%Y'
+        # TODO На этом этапе вот такая ошибка вылезает.
+        # TODO Как я понял ошибка из handler_date
+        # TODO Только как номер телефона попадает в этот handler?)
     ]
     EXPECTED_OUTPUTS = [
         settings.SCENARIOS['registration']['steps']['step1']['text'],
