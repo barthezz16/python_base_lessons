@@ -34,7 +34,6 @@ class UserState:
         self.context = context or {}
 
 
-
 class Bot:
     """
     Echo bot для vk.com
@@ -99,6 +98,7 @@ class Bot:
             peer_id=user_id,
         )
 
+
     def start_scenario(self, user_id, scenario_name):
         scenario = settings.SCENARIOS[scenario_name]
         first_step = scenario['first_step']
@@ -121,6 +121,7 @@ class Bot:
                 self.user_states.pop(user_id)
                 log.info('Билет из {city_departure} в {city_arrival} на {date} куплен.'.format(**state.context))
         else:
+            next_step = steps[step['failure_step']]
             text_to_send = step['failure_text'].format(**state.context)
         return text_to_send
 

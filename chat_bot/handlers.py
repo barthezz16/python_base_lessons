@@ -81,16 +81,6 @@ def handler_phone(text, context):
         return False
 
 
-# def handler_date(text, context):
-#     matches = re.findall(re_date, text)
-#     if len(matches) > 0:
-#         context['date'] = matches[0]
-#         if context['date'] in flights[(context['city_departure'])][(context['city_arrival'])]:
-#             return True
-#         else:
-#             return False
-
-
 def handler_date(text, context):
     matches = re.findall(re_date, text)
     if len(matches) > 0:

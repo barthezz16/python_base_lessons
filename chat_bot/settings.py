@@ -29,6 +29,7 @@ SCENARIOS = {
                 'text': 'Чтобы купить билет, введите город вылета.',
                 'failure_text': 'Город вылета должен состоять из 3-30 букв и дефиса. Попробуйте еще раз',
                 'handler': 'handler_city_departure',
+                'failure_step': 'step1',
                 'next_step': 'step2'
             },
             'step2': {
@@ -38,18 +39,9 @@ SCENARIOS = {
                                 '\n Из {city_departure} доступны рейсы в: '
                                 '{flights_possible}.)',
                 'handler': 'handler_city_arrival',
+                'failure_step': 'step2',
                 'next_step': 'step3'
             },
-            # 'step2.1': {
-            #     'text': 'Вы ищите рейс из {city_departure} в {city_arrival}?.'
-            #             '\n Пять ближайших рейсов из {city_departure} в {city_arrival}: {five_nearest}.'
-            #             '\n press anykey to continue',
-            #     'failure_text': 'Нет прямого рейса из {city_departure} в {city_arrival}. '
-            #                     'Из {city_departure} доступны рейсы в: '
-            #                     '{flights_possible}. Давайте начнем заново!',
-            #     'handler': 'handler_flights',
-            #     'next_step': 'step3'
-            # },
             'step3': {
                 'text': 'Вы ищите рейс из {city_departure} в {city_arrival}?.'
                         '\n Пять ближайших рейсов из {city_departure} в {city_arrival}: {five_nearest}.'
@@ -57,24 +49,28 @@ SCENARIOS = {
                 'failure_text': 'Пять ближайших рейсов из {city_departure} в {city_arrival}: '
                                 '{five_nearest}.',
                 'handler': 'handler_date',
+                'failure_step': 'step3',
                 'next_step': 'step4'
             },
             'step4': {
                 'text': 'Выберите желаемую дату вылета из ближайших к желаемой дате вылета {dates_list}.',
                 'failure_text': 'Введите желаемую дату вылета в формате DD.MM.YYYY.',
                 'handler': 'handler_date',
+                'failure_step': 'step4',
                 'next_step': 'step5'
             },
             'step5': {
                 'text': 'Выберите количество мест от 1 до 5.',
                 'failure_text': 'Максиммальное количество мест 5.',
                 'handler': 'handler_seats',
+                'failure_step': 'step5',
                 'next_step': 'step6'
             },
             'step6': {
                 'text': 'Введите коментарий к заказу.',
                 'failure_text': 'Введите коментарий к заказу.',
                 'handler': 'handler_message',
+                'failure_step': 'step6',
                 'next_step': 'step7'
             },
             'step7': {
@@ -84,34 +80,23 @@ SCENARIOS = {
                         '\nДата: {date}. '
                         '\nКоличество мест: {seats}.'
                         '\nКомментарий: {message}.',
+                'failure_step': 'step1',  # TODO ну вроде поставил все шаги, но все равно не прохожит рестарт...
                 'failure_text': 'Вы нашли ошибку в введенных данных, давайте повторим еще раз.',
                 'handler': 'handler_confirm',
-                'next_step': 'step8'  # тут не совсем понял как сделать рестарт если после проверки обнаружена
-                # ошибка....
-                # TODO Тут, как я писал выше, можно создать ещё один ключ 'fail_handler'
-                # TODO Т.е. действие, которое будет выполняться при ошибке.
-                # TODO Либо указывать шаг, который будет выполнен в случае ошибки.
-                # TODO Правда тогда, нужно будет эти же ключи добавить в каждой из этапов
-                # TODO Там где он не нужен просто указать, что в случае ошибки следующим действием будет текущее
-
-                # TODO Тогда, если пользователь вводит что-то кроме Да - будет запускаться новый шаг
-                # TODO В котором надо будет решить - что пользовател хочет изменить.
-                # TODO И, либо менять данные напрямую, либо в зависимости от ввода пользователя,
-                # TODO выбирать шаг, к которому надо будет вернуться.for
-
-                # TODO Либо можно просто, без запроса, начинать сценарий с города вылета.
-                # TODO Это конечно в реальности приводило бы к раздражению клиентов, но это самый простой способ
+                'next_step': 'step8'
             },
             'step8': {
                 'text': 'Введите номер телефона в формате (XXX)XXX-XX-XX.',
                 'failure_text': 'Вы ввели неправильный номер, формат ввода (XXX)XXX-XX-XX, попробуйте еще раз.',
                 'handler': 'handler_phone',
+                'failure_step': 'step8',
                 'next_step': 'step9'
             },
             'step9': {
                 'text': 'Спасибо за покупку, мы свяжемся с вами по указанному номеру ({phone})..',
                 'failure_text': None,
                 'handler': None,
+                'failure_step': None,
                 'next_step': None
 
             }
