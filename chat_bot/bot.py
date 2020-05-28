@@ -59,6 +59,7 @@ class Bot:
         """ Запуск бота."""
         for event in self.long_poller.listen():
             try:
+                print('Пришло сообщение', event)
                 self.on_event(event)
             except Exception:
                 log.exception("ошибка в обработке события")
@@ -91,7 +92,8 @@ class Bot:
                     break
             else:
                 text_to_send = settings.DEFAULT_ANSWER
-
+        print('Ответ пользователю:', text_to_send)
+        print('-' * 84)
         self.api.messages.send(
             message=text_to_send,
             random_id=random.randint(0, 2 ** 20),
@@ -111,6 +113,7 @@ class Bot:
         state = self.user_states[user_id]
         steps = settings.SCENARIOS[state.scenario_name]['steps']
         step = steps[state.step_name]
+        print('=' * 30, 'Текущий этап -', state.step_name, '=' * 30)
         handler = getattr(handlers, step['handler'])
         if handler(text=text, context=state.context):
             next_step = steps[step['next_step']]  # TODO Обратите внимание, что для указания следующего шага
@@ -118,10 +121,12 @@ class Bot:
             text_to_send = next_step['text'].format(**state.context)
             if next_step['next_step']:
                 state.step_name = step['next_step']  # TODO В частности вот это.
+                print('+' * 15, 'Следующий этап будет -', step['next_step'], '+' * 15)
             else:
                 self.user_states.pop(user_id)
                 log.info('Билет из {city_departure} в {city_arrival} на {date} куплен.'.format(**state.context))
         else:
+            print('-' * 15, 'Ошибка на этапе -', state.step_name, '-' * 15)
             next_step = steps[step['failure_step']]
             text_to_send = step['failure_text'].format(**state.context)
         return text_to_send

@@ -91,7 +91,7 @@ def handler_date(text, context):
                 my_date_index = flights[context['city_departure']][context['city_arrival']].index(my_date)
             except ValueError:
                 my_date += DT.timedelta(days=1)
-                print(my_date.strftime('%d.%m.%Y'))
+                # print(my_date.strftime('%d.%m.%Y'))
         my_date_index = flights[context['city_departure']][context['city_arrival']].index(my_date.strftime('%d.%m.%Y'))
         context['dates_list'] = flights[context['city_departure']][context['city_arrival']][
                                 my_date_index: my_date_index + 5]
