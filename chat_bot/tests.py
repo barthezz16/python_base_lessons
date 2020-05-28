@@ -65,6 +65,7 @@ class Test1(TestCase):
     ]
 
     def test_tun_ok(self):
+        print('-' * 84)
         send_mock = Mock()
         api_mock = Mock()
         api_mock.messages.send = send_mock
@@ -82,11 +83,12 @@ class Test1(TestCase):
             bot = Bot('', '')
             bot.api = api_mock
             bot.run()
-
+        print(send_mock.call_count, len(self.INPUTS))
         assert send_mock.call_count == len(self.INPUTS)
 
         real_outputs = []
         for call in send_mock.call_args_list:
             args, kwargs = call
             real_outputs.append(kwargs['message'])
+        print(real_outputs, self.EXPECTED_OUTPUTS)
         assert real_outputs == self.EXPECTED_OUTPUTS
