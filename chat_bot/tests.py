@@ -1,6 +1,7 @@
 from copy import deepcopy
 from unittest import TestCase
 from unittest.mock import patch, Mock
+import datetime as DT
 
 from vk_api.bot_longpoll import VkBotEvent
 
@@ -34,19 +35,22 @@ class Test1(TestCase):
                 bot.on_event.assert_any_call(obj)
                 assert bot.on_event.call_count == count
 
+    date = DT.datetime.now().strftime('%d.%m.%Y')
+
     INPUTS = [
         '\\ticket',
         'moscow',
         'berlin',
-        '26.06.2020',
-        '26.06.2020',
+        date,
+        date,
         '5',
         'ok',
         'yes',
-        '9179631309',  # TODO ValueError: time data '9179631309' does not match format '%d.%m.%Y'
-        # TODO На этом этапе вот такая ошибка вылезает.
-        # TODO Как я понял ошибка из handler_date
-        # TODO Только как номер телефона попадает в этот handler?)
+        '9179631309',  # ValueError: time data '9179631309' does not match format '%d.%m.%Y'
+        #  На этом этапе вот такая ошибка вылезает.
+        #  Как я понял ошибка из handler_date
+        #  Только как номер телефона попадает в этот handler?)
+        # TODO просто нет идей почему эта ошибка вылетает.... вчера вроде все ok было...
     ]
     EXPECTED_OUTPUTS = [
         settings.SCENARIOS['registration']['steps']['step1']['text'],

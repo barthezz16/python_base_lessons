@@ -50,11 +50,11 @@ def dates_creator():
             my_date_index = res_moscow_berlin.index(my_date)
         except ValueError:
             my_date += DT.timedelta(days=1)
-            print(my_date.strftime('%d.%m.%Y'))
+            # print(my_date.strftime('%d.%m.%Y'))
     my_date_index = res_moscow_berlin.index(my_date.strftime('%d.%m.%Y'))
     dates_list = res_moscow_berlin[my_date_index: my_date_index + 5]
-    print(dates_list)
-    pprint(res_moscow_berlin)
+    # print(dates_list)
+    # pprint(res_moscow_berlin)
 
     flights_list = {
         'Moscow': {
@@ -90,6 +90,9 @@ def dates_creator():
     }
     return flights_list
 
+
+date = DT.datetime.now().strftime('%d.%m.%Y')
+print(date,type(date))
 
 flights = dates_creator()
 departure = ['Moscow', 'Berlin', 'Madrid', 'New-York', 'London']
