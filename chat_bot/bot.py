@@ -98,7 +98,6 @@ class Bot:
             peer_id=user_id,
         )
 
-
     def start_scenario(self, user_id, scenario_name):
         scenario = settings.SCENARIOS[scenario_name]
         first_step = scenario['first_step']
@@ -113,11 +112,13 @@ class Bot:
         step = steps[state.step_name]
         handler = getattr(handlers, step['handler'])
         if handler(text=text, context=state.context):
-            next_step = steps[step['next_step']]  # TODO Обратите внимание, что для указания следующего шага
-            # TODO Нужно после этого действия сделать ещё и другие
+            next_step = steps[step['next_step']]  # Обратите внимание, что для указания следующего шага
+            # Нужно после этого действия сделать ещё и другие
             text_to_send = next_step['text'].format(**state.context)
             if next_step['next_step']:
-                state.step_name = step['next_step']  # TODO В частности вот это.
+                state.step_name = step['next_step']
+                next_step = steps[step['failure_step']]# В частности вот это.
+                # TODO да и тут что то не пойму что надо дальше...
             else:
                 self.user_states.pop(user_id)
                 log.info('Билет из {city_departure} в {city_arrival} на {date} куплен.'.format(**state.context))
