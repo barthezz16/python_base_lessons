@@ -1,4 +1,5 @@
 from copy import deepcopy
+from pprint import pprint
 from unittest import TestCase
 from unittest.mock import patch, Mock
 import datetime as DT
@@ -46,23 +47,23 @@ class Test1(TestCase):
         '5',
         'ok',
         'yes',
-        '9179631309',  # ValueError: time data '9179631309' does not match format '%d.%m.%Y'
-        #  На этом этапе вот такая ошибка вылезает.
-        #  Как я понял ошибка из handler_date
-        #  Только как номер телефона попадает в этот handler?)
-        # TODO просто нет идей почему эта ошибка вылетает.... вчера вроде все ok было...
+        '9179631309',
     ]
     EXPECTED_OUTPUTS = [
         settings.SCENARIOS['registration']['steps']['step1']['text'],
         settings.SCENARIOS['registration']['steps']['step2']['text'],
-        settings.SCENARIOS['registration']['steps']['step3']['text'],
-        settings.SCENARIOS['registration']['steps']['step4']['text'],
+        "Вы ищите рейс из Moscow в Berlin?.\n Пять ближайших рейсов из Moscow в Berlin: "
+        "{'31.05.2020, 05.06.2020, 10.06.2020, 14.06.2020, 19.06.2020'}."
+        "\n\n\nВведите желаемую дату вылета в формате DD.MM.YYYY.",
+        "Выберите желаемую дату вылета из ближайших к желаемой дате вылета "
+        "['31.05.2020', '05.06.2020', '10.06.2020', '14.06.2020', '19.06.2020'].",
         settings.SCENARIOS['registration']['steps']['step5']['text'],
         settings.SCENARIOS['registration']['steps']['step6']['text'],
-        settings.SCENARIOS['registration']['steps']['step7']['text'],
+        'Проверьте пожалуйста введенные данные, если все верно, введите "Да".\nГород вылета: Moscow. '
+        '\nГород прилета: Berlin.\nДата: 31.05.2020. \nКоличество мест: 5.\nКомментарий: ok.',
         settings.SCENARIOS['registration']['steps']['step8']['text'],
-        settings.SCENARIOS['registration']['steps']['step9']['text'],
-    ]
+        'Спасибо за покупку, мы свяжемся с вами по указанному номеру (9179631309)..',
+    ]  # TODO неужели надо вот так расписать, чтобы тест прошел?
 
     def test_tun_ok(self):
         print('-' * 84)
@@ -90,5 +91,6 @@ class Test1(TestCase):
         for call in send_mock.call_args_list:
             args, kwargs = call
             real_outputs.append(kwargs['message'])
-        print(real_outputs, self.EXPECTED_OUTPUTS)
+        print(real_outputs)
+        print(self.EXPECTED_OUTPUTS)
         assert real_outputs == self.EXPECTED_OUTPUTS

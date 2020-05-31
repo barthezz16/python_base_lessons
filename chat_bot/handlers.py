@@ -32,7 +32,7 @@ def handler_message(text, context):
 
 def handler_confirm(text, context):
     context['confirmation'] = text
-    confirm_answers = ['Да', 'да', 'Yes', 'yes']
+    confirm_answers = ['Да', 'да', 'ok', 'Ok', 'Yes', 'yes']
     if context['confirmation'] in confirm_answers:
         context['message'] = text
         return True
