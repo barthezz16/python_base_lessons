@@ -65,8 +65,7 @@ def handler_city_arrival(text, context):
     context['flights_possible'] = {", ".join(map(str, context['flights'][context['city_departure']].keys()))}
 
     if matches and context['city_arrival'] in flights[(context['city_departure'])]:
-        context['five_nearest'] = {
-            ", ".join(map(str, flights[context['city_departure']][context['city_arrival']][0: 5]))}
+        context['five_nearest'] = flights[context['city_departure']][context['city_arrival']][0: 5]
         return True
     else:
         return False

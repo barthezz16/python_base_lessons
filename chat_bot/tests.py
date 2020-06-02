@@ -8,6 +8,7 @@ from vk_api.bot_longpoll import VkBotEvent
 
 import settings
 from bot import Bot
+from handlers import flights
 
 
 class Test1(TestCase):
@@ -53,17 +54,15 @@ class Test1(TestCase):
         settings.SCENARIOS['registration']['steps']['step1']['text'],
         settings.SCENARIOS['registration']['steps']['step2']['text'],
         "Вы ищите рейс из Moscow в Berlin?.\n Пять ближайших рейсов из Moscow в Berlin: "
-        "{'31.05.2020, 05.06.2020, 10.06.2020, 14.06.2020, 19.06.2020'}."
-        "\n\n\nВведите желаемую дату вылета в формате DD.MM.YYYY.",
-        "Выберите желаемую дату вылета из ближайших к желаемой дате вылета "
-        "['31.05.2020', '05.06.2020', '10.06.2020', '14.06.2020', '19.06.2020'].",
+        f"{flights['Moscow']['Berlin'][0:5]}.\n\n\nВведите желаемую дату вылета в формате DD.MM.YYYY.",
+        f"Выберите желаемую дату вылета из ближайших к желаемой дате вылета {flights['Moscow']['Berlin'][0:5]}.",
         settings.SCENARIOS['registration']['steps']['step5']['text'],
         settings.SCENARIOS['registration']['steps']['step6']['text'],
         'Проверьте пожалуйста введенные данные, если все верно, введите "Да".\nГород вылета: Moscow. '
-        '\nГород прилета: Berlin.\nДата: 31.05.2020. \nКоличество мест: 5.\nКомментарий: ok.',
+        f'\nГород прилета: Berlin.\nДата: {date}. \nКоличество мест: 5.\nКомментарий: ok.',
         settings.SCENARIOS['registration']['steps']['step8']['text'],
         'Спасибо за покупку, мы свяжемся с вами по указанному номеру (9179631309)..',
-    ]  # TODO неужели надо вот так расписать, чтобы тест прошел?
+    ]
 
     def test_tun_ok(self):
         print('-' * 84)
