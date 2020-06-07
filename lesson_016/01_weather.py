@@ -57,10 +57,12 @@ import cv2
 class WeatherMaker:
     def __init__(self):
         self.weather_dict = OrderedDict({})
-        self.response = requests.get(
+        self.response = requests.get(  # TODO тут стоит создать атрибут с URL (кстати сам Url можно параметром задать)
+            # TODO А реквесты уже делать в самом методе
             'https://yandex.ru/pogoda/new-york?utm_campaign=informer&utm_content=main_informer&utm_medium'
             '=web&utm_source=home&utm_term=main_number')
-
+    # TODO А где у вас тут происходит управление датами? Или пока этим не занимались?
+    # TODO Хорошо бы добавить возможность по диапазону дат получать информацию.
     def get_weather(self):
         if self.response.status_code == 200:
             html_doc = BeautifulSoup(self.response.text, features='html.parser')
@@ -80,9 +82,15 @@ pprint(weather_dict.get_weather())
 class ImageMaker:
 
     def __init__(self):
+        # TODO Лучше тут добавить только строки с путями
+        # TODO А инициализировать уже картинку в методе.
+        # TODO Чтобы была возможность вызывать метод для рисования каждой из открыток
+        # TODO Т.е. будем получать данные, для каждого дня вызывать метод рисующий открытку
         self.background_image_cv = cv2.imread('python_snippets/external_data/probe1.jpg')
-        self.weather_dict_to_draw = WeatherMaker()
-        self.data = self.weather_dict_to_draw.get_weather()
+        self.weather_dict_to_draw = WeatherMaker()  # TODO Лучше собирать разные классы в одном отдельном
+        # TODO "менеджере" классов, который будет управлять данными
+        self.data = self.weather_dict_to_draw.get_weather()  # TODO сами данные лушче передавать в метод
+        # TODO который рисует по итогу текст.
         self.image_pil = Image.open("python_snippets/external_data/probe.jpg")
         self.pixels = self.image_pil.load()
         self.draw = ImageDraw.Draw(self.image_pil)
@@ -100,7 +108,13 @@ class ImageMaker:
             for j in range(self.height, -1):
                 self.draw.line((i, j), (i, i, i * 2))
         self.image_pil.save('python_snippets/external_data/probe1.jpg')
-        # TODO пока тоже не совем понял как лучше градиент сделать
+        # пока тоже не совем понял как лучше градиент сделать
+        # TODO В целом циклы верные, надо пройти по всем пикселям и закрасить их
+        # TODO только цвет надо передавать какой-нибудь параметром
+        # TODO Сами цифры для любого цвета можно найти тут https://colorscheme.ru/color-converter.html
+        # TODO И далее после каждого ряда увеличивать числа на +1 (только не больше 255)
+        # TODO Например передали красный цвет (255, 0, 0)
+        # TODO С каждым рядом +1 прибавляем (255, 1, 1) -- (255, 2, 2) и тд
 
     def get_data(self):
         pass
@@ -110,13 +124,18 @@ class ImageMaker:
         cv2.putText(self.background_image_cv, 'New York',
                     (0, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (255, 0, 0), 2)
         cv2.putText(self.background_image_cv, self.data[date][0],
-                    (0, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2) # TODO не совсем тут понял как мне
-        #  TODO использовать другой шрифт.
+                    (0, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+        # не совсем тут понял как мне
+        # использовать другой шрифт.
+        # TODO Используйте cv2.FONT_HERSHEY_COMPLEX лучше, там русские буквы корректно отображаются
         cv2.putText(self.background_image_cv, self.data[date][1],
                     (0, 200), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
+        # TODO Названия стоит вынести в атрибуты
         cv2.imwrite('python_snippets/external_data/probe1.jpg', self.background_image_cv)
         self.background_image_cv = Image.open("python_snippets/external_data/probe1.jpg")
         print(self.data[date][1])
+        # TODO А вот этот выбор можно произвести при помощи словаря
+        # TODO т.е. добавить в атрибуты словарь, в котором названия будут ключами, а пути к картинке значениями
         if self.data[date][1] == 'Небольшой дождь' or 'Дождь':
             img_to_paste = Image.open('python_snippets/external_data/weather_img/rain.png')
         if self.data[date][1] == 'Облачно с прояснениями' or 'Малооблачно':
@@ -125,6 +144,7 @@ class ImageMaker:
             img_to_paste = Image.open('python_snippets/external_data/weather_img/sun.png')
         if self.data[date][1] == 'Снег':
             img_to_paste = Image.open('python_snippets/external_data/weather_img/snow.png')
+        # TODO Тогда тут можно будет просто по ключу получать путь
         self.background_image_cv.paste(img_to_paste, (400, 25))
         self.background_image_cv.save('python_snippets/external_data/probe1.jpg', 'JPEG')
 
@@ -134,7 +154,7 @@ class ImageMaker:
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
-# TODO про базу данных все помню, завтра этим займусь, этот процесс скидываю скорее чтобы проверить, правльно ли
-# TODO я двигаюсь
+# про базу данных все помню, завтра этим займусь, этот процесс скидываю скорее чтобы проверить, правльно ли
+# я двигаюсь
 image = ImageMaker()
 image.run()
